@@ -1,0 +1,252 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>PushMQ, long polling pub/sub for JavaScript</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="PushMQ provides an easy publish/subscribe JavaScript interface to RESTful message queues.
+
+Cross-browser compatibility is guaranteed by jQuery AJAX implementation. The project has been successfully tested on nginx HTTP Push Module and makes up the backbone of tweeckie.
+
+">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+<meta name="google-site-verification" content="-Pof3b1_qR1iiTunLBZdJwz97Wh63qhs134ZIKNAwyY" />
+
+<!-- Twitter -->
+
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="PushMQ, long polling pub/sub for JavaScript" />
+<meta name="twitter:url" content="https://davidederosa.com/2011/07/12/pushmq-javascript-long-polling-publish-subscribe/" />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1543224033" />
+
+
+<meta name="twitter:description" content="PushMQ provides an easy publish/subscribe JavaScript interface to RESTful message queues.
+
+Cross-browser compatibility is guaranteed by jQuery AJAX implementation. The project has been successfully tested on nginx HTTP Push Module and makes up the backbone of tweeckie.
+
+" />
+
+<!-- Facebook -->
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://davidederosa.com/2011/07/12/pushmq-javascript-long-polling-publish-subscribe/" />
+<meta property="og:title" content="PushMQ, long polling pub/sub for JavaScript" />
+<meta property="og:site_name" content="PushMQ, long polling pub/sub for JavaScript" />
+<meta property="og:description" content="PushMQ provides an easy publish/subscribe JavaScript interface to RESTful message queues.
+
+Cross-browser compatibility is guaranteed by jQuery AJAX implementation. The project has been successfully tested on nginx HTTP Push Module and makes up the backbone of tweeckie.
+
+" />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1543224033" />
+
+<!-- Google+ -->
+
+<meta itemprop="name" content="PushMQ, long polling pub/sub for JavaScript" />
+<meta itemprop="description" content="PushMQ provides an easy publish/subscribe JavaScript interface to RESTful message queues.
+
+Cross-browser compatibility is guaranteed by jQuery AJAX implementation. The project has been successfully tested on nginx HTTP Push Module and makes up the backbone of tweeckie.
+
+" />
+<meta itemprop="image" content="https://davidederosa.com/s/keeshux.png?1543224033" />
+
+<link rel="canonical" href="https://davidederosa.com/2011/07/12/pushmq-javascript-long-polling-publish-subscribe/" />
+<link rel="author" href="https://plus.google.com/+keeshux" />
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Davide De Rosa" />
+<link rel="sitemap" href="/sitemap.xml" type="application/xml" title="Sitemap" />
+
+<link rel="prev" href="/2011/10/12/tweeckie-quick-games-with-a-link/" title="tweeckie, 1-on-1 game “quickies” with just a link" />
+
+
+<link rel="next" href="/2011/06/01/crucio-open-source-crossword-and-fill-in-generator/" title="crucio, a crossword and fill-in maker" />
+
+
+<link rel="stylesheet" href="/s/main.css?1543224033" />
+<link rel="stylesheet" href="/s/main-mobile.css?1543224033" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
+
+<link rel="shortcut icon" href="/s/favicon.ico?1543224033" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1543224033" />
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+            
+            
+            <li>
+                
+                <a class="active" href="/">stories</a>
+                
+            </li>
+        
+            
+            
+            <li>
+                
+                <a href="/work/">work</a>
+                
+            </li>
+        
+            
+            
+            <li>
+                
+                <a href="/about/">about</a>
+                
+            </li>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="http://schema.org/Article">
+    <header>
+        
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Jul 12, 2011</span>
+            <h2 itemprop="name">
+                
+                <a href="https://github.com/keeshux/PushMQ" title="PushMQ, long polling pub/sub for JavaScript">PushMQ, long polling pub/sub for JavaScript</a>
+                
+            </h2>
+            <div class="post-list post-categories">
+    in
+    
+    <a href="/category/projects">projects</a>
+    
+</div>
+
+            
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+<p class="post-see"><a href="https://github.com/keeshux/PushMQ" title="PushMQ, long polling pub/sub for JavaScript">
+    
+    <i class="fab fa-github"></i> See on GitHub
+    
+</a></p>
+
+
+        
+
+        <p><em>PushMQ</em> provides an easy publish/subscribe JavaScript interface to RESTful message queues.</p>
+
+<p>Cross-browser compatibility is guaranteed by jQuery AJAX implementation. The project has been successfully tested on <a href="https://github.com/slact/nginx_http_push_module" title="nginx HTTP Push Module">nginx HTTP Push Module</a> and makes up the backbone of <a href="http://tweeckie.davidederosa.com" title="Play games with just a link">tweeckie</a>.</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdavidederosa.com%2F2011%2F07%2F12%2Fpushmq-javascript-long-polling-publish-subscribe%2F&amp;text=PushMQ%2C+long+polling+pub%2Fsub+for+JavaScript&amp;hashtags=&amp;via=keeshux" title="Tweet this post" target="_blank"><i class="fab fa-twitter"></i>Tweet!</a></li>
+        <li><a href="https://twitter.com/keeshux" title="Follow me on Twitter" target="_blank"><i class="fab fa-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    
+<aside class="post-list post-tags">
+    <i class="fa fa-tags"></i>
+    
+    <a href="/tag/http-push">http push</a>, 
+    
+    <a href="/tag/ajax">ajax</a>, 
+    
+    <a href="/tag/comet">comet</a>, 
+    
+    <a href="/tag/long-polling">long polling</a>, 
+    
+    <a href="/tag/nginx">nginx</a>, 
+    
+    <a href="/tag/javascript">javascript</a>
+    
+</aside>
+
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/2018/09/07/tunnel-kit-vpn-library-for-apple-platforms/">TunnelKit, a VPN client for Apple platforms</a></li>
+            
+            <li><a href="/basic-blockchain-programming/wallet-software/">Wallet software</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser newer">
+            
+            <a href="/2011/10/12/tweeckie-quick-games-with-a-link/" title="tweeckie, 1-on-1 game “quickies” with just a link"><i class="fa fa-chevron-left"></i> Newer</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser older">
+            
+            <a href="/2011/06/01/crucio-open-source-crossword-and-fill-in-generator/" title="crucio, a crossword and fill-in maker">Older <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+
+                </main>
+                <footer id="page-footer">
+                    <ul id="social">
+    <li><a href="https://twitter.com/keeshux" title="Follow me on Twitter!" class="fab fa-twitter"></a></li>
+    <li><a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a></li>
+    <li><a href="https://patreon.com/keeshux" title="Support me on Patreon!" class="fab fa-patreon"></a></li>
+    <li><a href="mailto:website@davidederosa.com" title="Send me an email" class="fa fa-edit"></a></li>
+    <li><a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a></li>
+</ul>
+<p>&copy; <a href="https://davidederosa.com">Davide De Rosa</a>. All rights reserved. <a title="Subscribe to my RSS feed" class="fa fa-rss-square" href="/feed.xml"></a></p>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1543224033" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+        <script src="//keeshux.disqus.com/embed.js" async="async"></script>
+        
+    </body>
+</html>

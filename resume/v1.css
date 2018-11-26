@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('ACaslonPro-Regular.otf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('ACaslonPro-Bold.otf');
+    font-weight: bold;
+}
+
+body {
+    font-family: 'MyFont', serif;
+    font-size: 10pt;
+    margin: 1em 2em;
+}
+
+#contacts {
+    width: 27em;
+}

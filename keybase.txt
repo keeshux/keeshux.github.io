@@ -1,0 +1,64 @@
+==================================================================
+https://keybase.io/keeshux
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://davidederosa.com
+  * I am keeshux (https://keybase.io/keeshux) on keybase.
+  * I have a public key with fingerprint 0AD5 FEDB A8DA 7A8B 49B7  07FC 119F F25E F389 A7B2
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "0ad5fedba8da7a8b49b707fc119ff25ef389a7b2",
+            "host": "keybase.io",
+            "key_id": "119ff25ef389a7b2",
+            "uid": "b6eef524c99862a686af5afa106c8d00",
+            "username": "keeshux"
+        },
+        "service": {
+            "hostname": "davidederosa.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1411046465,
+    "expire_in": 157680000,
+    "prev": "5fabdcc757ae8b29b6a24c00d5a961c14ea2dbf8806d5a4811f7d4225f7f9a76",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owFtUVtIFFEY3t3c2pYMIySxjWCIpFhtZpzbLgWSZdpLqUV23c7MnLN7UGe2md1N
+kSUIwZQeRJLUqMxLFxGpyCy6gkSZFb0k+9DVkFqyohtLhtgZsbfOy+F8//d9//+d
+vzl9ns1hX3L2+4EfjReu2kfv/5JtO7JfFtdRsq7WUv46qhLOXghrQWiEDaxFKD9F
+A5VHUJWBpAIRSDLnk0VaRArD+BBieYjyJR8QZZbyUiHdtBTERgYmzMM6wcgjgFWC
+/ocfnS3IAoSIZznF55MEFgiSABAPEGBoQZFUmraIJjQ0UA1nzaEZitZQcS9FwBhW
+oDWy1XmOoIIYVqEKDd0EeYpeTeRhQ4/oil5FqqFIJOy3xJHasMU+DOXAnE9AxppK
+ohNBDBom1jXKzxCmEsGWMcMxDM0JnMB7KVgTxgYMYIvBi4JEk2O1gTFiySMgq4oi
+8iKAksz6ZAGQcDSt8sAnMArDQcCqMpIkWiAQJzEMElWOZXkkIvIzAmUlO6TplJ8j
+Y4IgsTRxUAORqAGpuLvR7kmz2R22+U6HtT2be2HGv53qTS5bQ/OZ3EJl6l68zXE9
+2uKsyDw9ULvaCy9fO1/wrj/t+efEovax/KnJvj9D48WJrz3dWx43efbwy/Gygx+C
+zuR6errvTecKV31asuNEAZ0nnIsfzypKZne99bbU7dog99pOfetd+ayoNGMNeh3t
+G3rk9Bz5dKO1fcH++pp9DrM1dceVXFW+LlWREaHGb2/b2Z0Y3VqN+ytxClecdKcX
+dgtS4cdMsLZrYqBqb4mrQehUEz8HE6Gc922TIzO/n7y69SA1/WIwPPH04fDI9o2b
+j14amBBvxnRvSedwVv6mxi/o4u4mkNtzrHl8aKrUW7K0Y9A94ynLuVJU7inTxhbf
+df4F
+=kZxW
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/keeshux
+
+==================================================================

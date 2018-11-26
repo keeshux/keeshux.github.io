@@ -1,0 +1,1867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Davide De Rosa</title>
+    <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
+    <link>https://davidederosa.com/</link>
+    <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 26 Nov 2018 10:20:33 +0100</pubDate>
+    <lastBuildDate>Mon, 26 Nov 2018 10:20:33 +0100</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>Passepartout is an user-friendly OpenVPN client for iOS/macOS</title>
+        <description>&lt;p&gt;&lt;em&gt;Passepartout&lt;/em&gt; is a non-official, user-friendly &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; client for iOS.&lt;/p&gt;
+
+&lt;p&gt;With its native look &amp;amp; feel, Passepartout focuses on ease of use. It does so by stripping the .ovpn flags that are today obsolete or rarely used. Passepartout can connect to a few well-known VPN providers or import .ovpn configuration files. Trusted networks are also supported along with other cool features.&lt;/p&gt;
+
+&lt;p&gt;It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality.&lt;/p&gt;
+
+&lt;p&gt;Passepartout for iOS is in public beta, you can get the app via &lt;a href=&quot;https://testflight.apple.com/join/XHzgXj6m&quot;&gt;TestFlight&lt;/a&gt;. A macOS version is in the works, &lt;a href=&quot;https://www.patreon.com/join/keeshux/checkout?rid=3009474&quot;&gt;become a Patron&lt;/a&gt; to have a sneak peek!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/s/f/apps/passepartout-snapshots.png&quot;&gt;&lt;img src=&quot;/s/f/apps/passepartout-snapshots.th.png&quot; alt=&quot;Snapshots&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 11 Oct 2018 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/2018/10/11/passepartout-user-friendly-openvpn-client-for-ios/</link>
+        <guid isPermaLink="true">https://davidederosa.com/2018/10/11/passepartout-user-friendly-openvpn-client-for-ios/</guid>
+        
+        <category>openvpn</category>
+        
+        <category>client</category>
+        
+        <category>ios</category>
+        
+        <category>macos</category>
+        
+        
+        <category>apps</category>
+        
+        <category>projects</category>
+        
+      </item>
+    
+      <item>
+        <title>TunnelKit, a VPN client for Apple platforms</title>
+        <description>&lt;p&gt;&lt;em&gt;TunnelKit&lt;/em&gt; is a simplified, non-official &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; client library for the iOS and macOS platforms. It’s a hard fork of &lt;a href=&quot;https://github.com/pia-foss/tunnel-apple&quot; title=&quot;PIATunnel on GitHub&quot;&gt;PIATunnel&lt;/a&gt;, a library that I developed and maintained while working at &lt;a href=&quot;https://www.privateinternetaccess.com&quot; title=&quot;Private Internet Access&quot;&gt;Private Internet Access&lt;/a&gt;, a VPN provider.&lt;/p&gt;
+
+&lt;p&gt;Supports AES-CBC and AES-GCM ciphers, a couple of SHA digests and TLS verification. The feature set is smaller than the standard OpenVPN clients, yet the library provides a much easier, not to mention native Swift API.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 07 Sep 2018 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/2018/09/07/tunnel-kit-vpn-library-for-apple-platforms/</link>
+        <guid isPermaLink="true">https://davidederosa.com/2018/09/07/tunnel-kit-vpn-library-for-apple-platforms/</guid>
+        
+        <category>vpn</category>
+        
+        <category>openvpn</category>
+        
+        <category>mobile</category>
+        
+        <category>ios</category>
+        
+        <category>macos</category>
+        
+        
+        <category>projects</category>
+        
+      </item>
+    
+      <item>
+        <title>Wallet software</title>
+        <description>&lt;p&gt;Commonly, Bitcoin users rely on clients called &lt;em&gt;wallets&lt;/em&gt; to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are &lt;a href=&quot;https://electrum.org&quot;&gt;Electrum&lt;/a&gt;, &lt;a href=&quot;https://hivewallet.com&quot;&gt;Hive&lt;/a&gt; etc. Here I’ll try to describe the components of a wallet.&lt;/p&gt;
+
+&lt;h3 id=&quot;data-model&quot;&gt;Data model&lt;/h3&gt;
+
+&lt;p&gt;These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like &lt;em&gt;change addresses&lt;/em&gt; or encryption are convenient features yet not mandatory for a fully working implementation.&lt;/p&gt;
+
+&lt;h4 id=&quot;keypairs&quot;&gt;Keypairs&lt;/h4&gt;
+
+&lt;p&gt;In the last paragraphs about the &lt;a href=&quot;/basic-blockchain-programming/network-interoperability-part-two/&quot;&gt;Bitcoin network&lt;/a&gt;, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The WIF-encoded private key.&lt;/li&gt;
+  &lt;li&gt;The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins.&lt;/p&gt;
+
+&lt;h4 id=&quot;blockchain&quot;&gt;Blockchain&lt;/h4&gt;
+
+&lt;p&gt;The blockchain component determines if a wallet is &lt;em&gt;thin&lt;/em&gt; or &lt;em&gt;heavyweight&lt;/em&gt;. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones.&lt;/p&gt;
+
+&lt;p&gt;“Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download &lt;em&gt;relevant&lt;/em&gt; transactions, that is transactions in which the user appears as a sender or a receiver.&lt;/p&gt;
+
+&lt;p&gt;Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The user is a receiver when his address appears in a transaction output script.&lt;/li&gt;
+  &lt;li&gt;The user is a sender when his public key appears in a transaction input script.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let’s see why. Consider the typical P2PKH output script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;the typical P2PKH input script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+[public_key]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and the relevancy scan in pseudocode:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;outpoint = struct { txid, index };
+
+relevant_txs = {};  /* txid -&amp;gt; tx */
+utxos = {};         /* outpoint */
+balance = 0;
+
+for (tx in blockchain.txs) {
+
+    /* 1 */
+    for (txout in tx.outputs) {
+        if (!is_p2pkh_output(txout.script)) {
+            continue;
+        }
+        if (txout.script contains hash160(keypair.public_key)) {
+            relevant_txs.add(tx);
+
+            outpoint = outpoint(tx.id, txout.index);
+            utxos.add(outpoint);
+            balance += txout.value;
+        }
+    }
+
+    /* 2 */
+    for (txin in tx.inputs) {
+        if (!is_p2pkh_input(txin.script)) {
+            continue;
+        }
+        if (txin.script contains keypair.public_key) {
+            relevant_txs.add(tx);
+
+            outpoint = txin.outpoint;
+            previous_tx = relevant_txs[outpoint.txid];
+            prev_txout = previous_tx.outputs[outpoint.index];
+            utxos.remove(outpoint);
+            balance -= prev_txout.value;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the &lt;em&gt;output value&lt;/em&gt; of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance.&lt;/p&gt;
+
+&lt;p&gt;(2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases.&lt;/p&gt;
+
+&lt;p&gt;Incidentally, you may notice that the relevant transactions form the &lt;em&gt;history&lt;/em&gt; of a wallet.&lt;/p&gt;
+
+&lt;h4 id=&quot;utxos&quot;&gt;UTXOs&lt;/h4&gt;
+
+&lt;p&gt;So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions.&lt;/p&gt;
+
+&lt;p&gt;We can also compute the wallet balance from the UTXOs:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;balance = 0;
+
+for (outpoint in utxos) {
+    unspent_tx = relevant_txs[outpoint.txid];
+    unspent_txout = unspent_tx.outputs[outpoint.index];
+    balance += unspent_txout.value;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;modularization&quot;&gt;Modularization&lt;/h3&gt;
+
+&lt;p&gt;From an architectural perspective, a wallet software can be split into 3 independent modules:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Signing module.&lt;/li&gt;
+  &lt;li&gt;Public addresses module.&lt;/li&gt;
+  &lt;li&gt;Networking module.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. &lt;a href=&quot;https://www.bitcointrezor.com/&quot;&gt;TREZOR&lt;/a&gt; is a well-known example of hybrid wallet where the signing module is even pushed to an external device.&lt;/p&gt;
+
+&lt;h4 id=&quot;signing&quot;&gt;Signing&lt;/h4&gt;
+
+&lt;p&gt;This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong &lt;a href=&quot;https://en.wikipedia.org/wiki/Two-factor_authentication&quot;&gt;2-factor authentication&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.firebrick.co.uk/images/otp.jpg&quot; alt=&quot;One-Time Password device&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.bitcointrezor.com/images/carousel_4.png&quot; alt=&quot;TREZOR signing device&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys.&lt;/p&gt;
+
+&lt;h4 id=&quot;public-addresses&quot;&gt;Public addresses&lt;/h4&gt;
+
+&lt;p&gt;Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address.&lt;/p&gt;
+
+&lt;p&gt;Public-key distribution would only make sense after learning about &lt;a href=&quot;https://codinginmysleep.com/hd-wallets-in-plain-english/&quot;&gt;deterministic wallets&lt;/a&gt;, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions.&lt;/p&gt;
+
+&lt;h4 id=&quot;networking&quot;&gt;Networking&lt;/h4&gt;
+
+&lt;p&gt;The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Connecting to the Bitcoin p2p network.&lt;/li&gt;
+  &lt;li&gt;Synchronizing and keeping up with the blockchain.&lt;/li&gt;
+  &lt;li&gt;Monitoring relevant transactions.&lt;/li&gt;
+  &lt;li&gt;Publishing transactions.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Especially task 1 and 2 can be a &lt;a href=&quot;https://www.urbandictionary.com/define.php?term=pita&quot;&gt;PITA&lt;/a&gt;, look at the vague protocol description for &lt;a href=&quot;https://en.bitcoin.it/wiki/Block_chain_download&quot;&gt;blockchain download&lt;/a&gt;. It’s no surprise that many wallet manifacturers -like &lt;a href=&quot;https://electrum.org&quot;&gt;Electrum&lt;/a&gt; and &lt;a href=&quot;https://mycelium.com&quot;&gt;Mycelium&lt;/a&gt;- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization.&lt;/p&gt;
+
+&lt;p&gt;Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions.&lt;/p&gt;
+
+&lt;p&gt;Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to &lt;a href=&quot;https://bitcoin.stackexchange.com/questions/1077/what-is-the-coin-selection-algorithm&quot;&gt;coin selection heuristics&lt;/a&gt;. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain.&lt;/p&gt;
+
+&lt;h3 id=&quot;goodbye&quot;&gt;Goodbye!&lt;/h3&gt;
+
+&lt;p&gt;That’s all. From now on, you should be &lt;em&gt;way&lt;/em&gt; more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series.&lt;/p&gt;
+
+&lt;p&gt;This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth.&lt;/p&gt;
+
+&lt;p&gt;And remember, all the code is on my &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/&quot;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Keep mining!&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 23 Jun 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/wallet-software/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/wallet-software/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>wallet</category>
+        
+        <category>ecdsa</category>
+        
+        <category>thin client</category>
+        
+        <category>utxo</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>The first transaction (pt. 2)</title>
+        <description>&lt;p&gt;The &lt;a href=&quot;/basic-blockchain-programming/the-first-transaction-part-one/&quot;&gt;first part&lt;/a&gt; covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;the-input-script&quot;&gt;The input script&lt;/h3&gt;
+
+&lt;p&gt;As a result of &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt;, we built the signable message for our input. In &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c&quot;&gt;ex-tx-sign.c&lt;/a&gt; we’ll reuse the message as a starting point.&lt;/p&gt;
+
+&lt;h4 id=&quot;producing-the-signature&quot;&gt;Producing the signature&lt;/h4&gt;
+
+&lt;p&gt;Rather than the message itself, we’ll sign its hash256 digest:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;62 44 98 0f a0 75 2e 5b
+46 43 ed b3 53 fd a5 23
+8a 9a 3d 44 49 16 76 78
+8e fd d2 5d d6 48 55 ba
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;with our &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem&quot;&gt;ECDSA private key&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is one DER signature I yielded (yours will differ):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44 02 20 11 1a 48 2a
+ba 6a fb a1 2a 6f 27 de
+76 7d d4 d0 64 17 de f6
+65 bd 10 0b c6 8c 42 84
+5c 75 2a 8f 02 20 5e 86
+f5 e0 54 b2 c6 ca c5 d6
+63 66 4e 35 77 9f b0 34
+38 7c 07 84 8b c7 72 44
+42 ca cf 65 93 24 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;flag-and-assembly&quot;&gt;Flag and assembly&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag (now 8-bit) is appended again to the signature, and together with the compressed &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem&quot;&gt;ECDSA public key&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;we’re finally able to build our P2PKH input script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 11 1a 48
+2a ba 6a fb a1 2a 6f 27
+de 76 7d d4 d0 64 17 de
+f6 65 bd 10 0b c6 8c 42
+84 5c 75 2a 8f 02 20 5e
+86 f5 e0 54 b2 c6 ca c5
+d6 63 66 4e 35 77 9f b0
+34 38 7c 07 84 8b c7 72
+44 42 ca cf 65 93 24 01
+
+21 02 82 00 6e 93 98 a6
+98 6e da 61 fe 91 67 4c
+3a 10 8c 39 94 75 bf 1e
+73 8f 19 df c2 db 11 db
+1d 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Yes, the signing process is possibly the most annoying and error-prone part of our work.&lt;/p&gt;
+
+&lt;h3 id=&quot;packing-the-transaction&quot;&gt;Packing the transaction&lt;/h3&gt;
+
+&lt;p&gt;We’re all set to pack the transaction from our inputs and outputs. Let’s look at &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c&quot;&gt;ex-tx-pack.c&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;inputs-and-outputs&quot;&gt;Inputs and outputs&lt;/h4&gt;
+
+&lt;p&gt;Like I did for outputs, I also wrote a C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txin_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_sighash_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We use the macro to create our input, whereas the outputs code is taken from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt; as is:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_outpoint_fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_txin_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;30440220111a482aba6afba12a6f27de767dd4d06...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;0282006e9398a6986eda61fe91674c3a108c39947...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;BBP_SIGHASH_ALL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;18ba14b3682295cb05230e31fecb000892406608&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61900000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;6bf19e55f94d986b4640c154d864699341919511&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;final-structure&quot;&gt;Final structure&lt;/h4&gt;
+
+&lt;p&gt;The easiest step is assembling the transaction structure and feeding it to &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locktime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rawtx_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rawtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;malloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rawtx_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rawtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; to pack a signed transaction instead of a signable message. The serialized transaction is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
+01 00 00 00
+
+/* number of inputs (varint) */
+01
+
+/* UTXO txid (hash256, little-endian) */
+f3 a2 7f 48 5f 98 33 c8
+31 8c 49 04 03 30 7f ef
+13 97 12 1b 5d d8 fe 70
+77 72 36 e7 37 1c 4e f3
+
+/* UTXO index (32-bit) */
+00 00 00 00
+
+/* input script (varint + data) */
+6a 47 30 44 02 20 11 1a
+48 2a ba 6a fb a1 2a 6f
+27 de 76 7d d4 d0 64 17
+de f6 65 bd 10 0b c6 8c
+42 84 5c 75 2a 8f 02 20
+5e 86 f5 e0 54 b2 c6 ca
+c5 d6 63 66 4e 35 77 9f
+b0 34 38 7c 07 84 8b c7
+72 44 42 ca cf 65 93 24
+01 21 02 82 00 6e 93 98
+a6 98 6e da 61 fe 91 67
+4c 3a 10 8c 39 94 75 bf
+1e 73 8f 19 df c2 db 11
+db 1d 28 
+
+/* UTXO sequence */
+ff ff ff ff
+
+/* number of outputs (varint) */
+02
+
+/* output value (64-bit) */
+e0 fe 7e 01 00 00 00 00
+
+/* output script (varint + data) */
+19 76 a9 14 18 ba 14 b3
+68 22 95 cb 05 23 0e 31
+fe cb 00 08 92 40 66 08
+88 ac
+
+/* change output value (64-bit) */
+e0 84 b0 03 00 00 00 00
+
+/* change output script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* locktime (32-bit) */
+00 00 00 00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;99 96 e2 f6 4b 6a f0 23
+2d d9 c8 97 39 5c e5 1f
+dd 35 e6 35 9e dd 28 55
+c6 0f f8 23 d8 d6 57 d1 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;publishing-to-the-network&quot;&gt;Publishing to the network&lt;/h4&gt;
+
+&lt;p&gt;We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.&lt;/p&gt;
+
+&lt;p&gt;For example, the &lt;a href=&quot;https://tbtc.blockr.io/tx/push&quot;&gt;Blockr push service&lt;/a&gt; (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the &lt;code class=&quot;highlighter-rouge&quot;&gt;rawtx&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c&quot;&gt;ex-tx-pack.c&lt;/a&gt; and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.&lt;/p&gt;
+
+&lt;p&gt;However, if you try to publish our sample transaction, you’ll get the following error:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/s/f/basic-blockchain-programming/tx-push-error.png&quot; alt=&quot;Transaction push error&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Don’t worry, that’s because I already published it by myself. See how it looks like on &lt;a href=&quot;https://www.biteasy.com/testnet/transactions/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1&quot;&gt;Biteasy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;get-the-code&quot;&gt;Get the code!&lt;/h3&gt;
+
+&lt;p&gt;Full source on &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/wallet-software/&quot;&gt;next article&lt;/a&gt; we’ll have a look at &lt;em&gt;wallet software&lt;/em&gt;. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 03 Jun 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transaction</category>
+        
+        <category>p2pkh</category>
+        
+        <category>utxo</category>
+        
+        <category>outpoint</category>
+        
+        <category>script</category>
+        
+        <category>hashing</category>
+        
+        <category>ecdsa</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>The first transaction (pt. 1)</title>
+        <description>&lt;p&gt;The core business of the Bitcoin blockchain technology is definitely building &lt;em&gt;transactions&lt;/em&gt;. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;how-to-build-a-p2pkh-transaction&quot;&gt;How to build a P2PKH transaction&lt;/h3&gt;
+
+&lt;p&gt;In order to build a transaction, an ECDSA keypair alone is not enough. We need the blockchain history of the keypair at our disposal, or better said, the transactions sending value to the address associated with our keypair. Then, we’ll use the ECDSA private key to produce signatures for such transaction outputs, so that they become inputs to our transaction.&lt;/p&gt;
+
+&lt;p&gt;Given:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An ECDSA keypair &lt;em&gt;K&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;A third-party P2PKH output address &lt;em&gt;A&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;The amount &lt;em&gt;S&lt;/em&gt; to transfer in satoshis.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;we want to send &lt;em&gt;S&lt;/em&gt; satoshis to address &lt;em&gt;A&lt;/em&gt; via our keypair &lt;em&gt;K&lt;/em&gt;. Here’s the overall procedure:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Scan the blockchain for the relevant UTXOs to &lt;em&gt;K&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Build a transaction output from &lt;em&gt;S&lt;/em&gt; and &lt;em&gt;A&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Gather enough input value from the UTXOs to reach &lt;em&gt;S&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;For each input, generate the subject of its signature.&lt;/li&gt;
+  &lt;li&gt;Generate ECDSA signatures for each input subject.&lt;/li&gt;
+  &lt;li&gt;Pack the transaction.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let’s start from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-utxo-set&quot;&gt;The UTXO set&lt;/h4&gt;
+
+&lt;p&gt;At the very beginning of an ECDSA keypair history, the derived P2PKH address has no transaction outputs associated with it and therefore has no bitcoin value for the blockchain. When someone later publishes a transaction that sends bitcoins to our address, the keypair suddenly becomes a valuable asset. Consider our now famous Testnet address:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and its &lt;a href=&quot;https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK&quot;&gt;blockchain history&lt;/a&gt;. Among all transactions, &lt;a href=&quot;https://api.biteasy.com/testnet/v1/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK/unspent-outputs&quot;&gt;three outputs&lt;/a&gt; are still unspent at the time of writing:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f34e1c37e736...a2f3&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;65216856608d...20c6&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;6b580bada66e...3934&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;totalling a 0.951 BTC output value (= 95100000 satoshis). Specifically, these are the outputs sending money to our address:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The first output of tx 1 (0.87 BTC).&lt;/li&gt;
+  &lt;li&gt;The first output of tx 2 (0.001 BTC).&lt;/li&gt;
+  &lt;li&gt;The second output of tx 3 (0.08 BTC).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you now translate the words into data structures:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;65216856608d...20c6, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;6b580bada66e...3934, 1&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;you have the UTXO outpoints for our keypair/wallet. Besides making up the balance of the wallet, the importance of the UTXO set lies in that it contains the outpoints we can reuse to build our own transactions. After spending an UTXO in a transaction input, it’s removed from the set because an UTXO is always spent in its entirety.&lt;/p&gt;
+
+&lt;p&gt;For what it’s worth, scanning UTXOs would require a lot of networking code, so building a wallet history from web explorers is a quick alternative. This will cost you some privacy though, as you generally don’t want to share your addresses with untrusted services.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-destination-output&quot;&gt;The destination output&lt;/h4&gt;
+
+&lt;p&gt;You should know by now how to build a P2PKH transaction output. Say we want to send 0.251 BTC (25100000 satoshis, little-endian):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;e0 fe 7e 01 00 00 00 00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;to this address:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mhmhRnN58ki9zbRJ63mpNGQXoYvdMXZsXt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;that decodes to the following hash160 digest:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;18 ba 14 b3 68 22 95 cb
+05 23 0e 31 fe cb 00 08
+92 40 66 08
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s the first output of our transaction:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.251 BTC) */
+e0 fe 7e 01 00 00 00 00
+
+/* script length */
+19
+
+/* P2PKH script */
+76 a9 14 18 ba 14 b3 68
+22 95 cb 05 23 0e 31 fe
+cb 00 08 92 40 66 08 88
+ac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I wrote a convenient C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for building P2PKH outputs from a value and a hash160:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hash160&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Basically, the hash160 bytes are enclosed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP OP_HASH160&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUALVERIFY OP_CHECKSIG&lt;/code&gt; opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;18ba14b3682295cb05230e31fecb000892406608&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;gathering-the-inputs&quot;&gt;Gathering the inputs&lt;/h4&gt;
+
+&lt;p&gt;Our UTXO set is worth &amp;lt;0.87, 0.001, 0.08&amp;gt; BTC respectively, so the first one:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;is just enough for a 0.251 BTC output. In fact our input value exceeds the output value by 0.619 BTC, which are silently returned to the transaction miner as a fee. We know an UTXO cannot be spent partially, and since the fee is somewhat relevant to us, we add a second output for &lt;em&gt;change&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our final transaction will have one input and two outputs, the second being a change output that returns the exceeding input value to our own address. Here’s the second output of our transaction:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.619 BTC) */
+e0 84 b0 03 00 00 00 00
+
+/* script length */
+19
+
+/* P2PKH script */
+76 a9 14 6b f1 9e 55 f9
+4d 98 6b 46 40 c1 54 d8
+64 69 93 41 91 95 11 88
+ac
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;On the other hand, it’s quite obvious that output value cannot possibly exceed input value. Non-coinbase transactions never create bitcoin value. This is our second output in code:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;61900000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;6bf19e55f94d986b4640c154d864699341919511&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;building-the-signature-subject&quot;&gt;Building the signature subject&lt;/h4&gt;
+
+&lt;p&gt;This is tricky if not even controversial, because the subject of transaction signatures is not the transaction itself. When studying ECDSA signatures, you learned that the signing process takes three steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Generate an ECDSA keypair.&lt;/li&gt;
+  &lt;li&gt;Create a message.&lt;/li&gt;
+  &lt;li&gt;Sign the message with the private key to produce a signature.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The problem here is that a Bitcoin transaction cannot be signed the usual way, since signatures are actually part of the transaction, namely the input scripts. The approach has to be different. In fact, we’ll produce a different signature for each transaction input, which in turn will embed it in its P2PKH script.&lt;/p&gt;
+
+&lt;p&gt;In practice, for each input &lt;em&gt;I&lt;/em&gt;, the message to be signed is a slightly modified version of the transaction where:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The &lt;em&gt;I&lt;/em&gt; script is set to the output script of the UTXO it refers to.&lt;/li&gt;
+  &lt;li&gt;Input scripts other than &lt;em&gt;I&lt;/em&gt; are truncated to zero-length.&lt;/li&gt;
+  &lt;li&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag is appended.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For a single input transaction we won’t need to truncate any other input script:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_outpoint_fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prev_outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;87000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;6bf19e55f94d986b4640c154d864699341919511&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_txin_create_signable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ins_sign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prev_outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We have the outputs and the signable inputs, so we go ahead and construct the message:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ins_sign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locktime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;msg_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BBP_SIGHASH_ALL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;malloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BBP_SIGHASH_ALL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The external functions all come from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;From the previous post, you know that the &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; functions take care of sizing and serializing a transaction structure to raw bytes.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_outpoint_fill&lt;/code&gt; function fills a &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_outpoint_t&lt;/code&gt; structure from an UTXO. The UTXO reference consist of a previous transaction txid and the output index within the transaction.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_txin_create_signable&lt;/code&gt; function creates a fake input for our message by copying the corresponding UTXO script.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Since we’ll sign all transaction inputs, we set the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter to &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;). Beware that it’s here padded to 32-bit for no apparent reason.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-final-message&quot;&gt;The final message&lt;/h4&gt;
+
+&lt;p&gt;Here’s the subject of our input signature:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
+01 00 00 00
+
+/* number of inputs (varint) */
+01
+
+/* input UTXO txid (hash256, little-endian) */
+f3 a2 7f 48 5f 98 33 c8
+31 8c 49 04 03 30 7f ef
+13 97 12 1b 5d d8 fe 70
+77 72 36 e7 37 1c 4e f3
+
+/* input UTXO index (32-bit) */
+00 00 00 00
+
+/* input UTXO script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* input sequence */
+ff ff ff ff
+
+/* number of outputs (varint) */
+02
+
+/* output value (64-bit) */
+e0 fe 7e 01 00 00 00 00
+
+/* output script (varint + data) */
+19 76 a9 14 18 ba 14 b3
+68 22 95 cb 05 23 0e 31
+fe cb 00 08 92 40 66 08
+88 ac
+
+/* change output value (64-bit) */
+e0 84 b0 03 00 00 00 00
+
+/* change output script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* locktime (32-bit) */
+00 00 00 00
+
+/* SIGHASH (32-bit) */
+01 00 00 00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Compare the above bytes to the &lt;code class=&quot;highlighter-rouge&quot;&gt;msg&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt;. This is also the message against which the &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; opcode validates an input signature.&lt;/p&gt;
+
+&lt;h3 id=&quot;get-the-code&quot;&gt;Get the code!&lt;/h3&gt;
+
+&lt;p&gt;Full source on &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned that the first step in transaction building is obtaining the UTXO set of a keypair. Outputs define the value we need to gather. Transaction output value must not exceed gathered UTXO value. Change outputs solve the indivisibility problem of UTXOs. UTXO scripts appear in the signable message of their corresponding inputs.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/the-first-transaction-part-two/&quot;&gt;next article&lt;/a&gt; we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 03 Jun 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transaction</category>
+        
+        <category>p2pkh</category>
+        
+        <category>utxo</category>
+        
+        <category>outpoint</category>
+        
+        <category>script</category>
+        
+        <category>hashing</category>
+        
+        <category>ecdsa</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Inside transactions</title>
+        <description>&lt;p&gt;With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Unfortunately, transactions and scripts are sort of a chicken and egg situation. Whatever subject you start from, you’ll definitely need a basic grasp of the other one to get things going. I chose to leave transactions last because I liked a bottom-up approach to this series, but I had to take some concepts for granted –like inputs and outputs– that are going to be clear in this final part.&lt;/p&gt;
+
+&lt;h3 id=&quot;transaction-data-structures&quot;&gt;Transaction data structures&lt;/h3&gt;
+
+&lt;p&gt;This is what a transaction embeds:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Some constant values.&lt;/li&gt;
+  &lt;li&gt;An array of one or more inputs.&lt;/li&gt;
+  &lt;li&gt;An array of one or more outputs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Before writing raw transactions, I’m going to describe the data structures defined in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;. Needless to say, all number fields will be serialized little-endian.&lt;/p&gt;
+
+&lt;h4 id=&quot;output&quot;&gt;Output&lt;/h4&gt;
+
+&lt;p&gt;Transaction outputs are the blockchain entities actually holding bitcoin value:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; field is the transferred bitcoin amount in satoshis, and the &lt;code class=&quot;highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.&lt;/p&gt;
+
+&lt;h4 id=&quot;outpoint&quot;&gt;Outpoint&lt;/h4&gt;
+
+&lt;p&gt;Any Bitcoin transaction that is not coinbase (read next section), must refer to one or more previously mined transactions, because what transactions do is moving coins from some outputs to others. Well, an &lt;em&gt;outpoint&lt;/em&gt; is a fixed structure that expresses a pointer to an existing transaction output:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Unsurprisingly, the &lt;code class=&quot;highlighter-rouge&quot;&gt;txid&lt;/code&gt; field is the hash256 identifier of the referred transaction (little-endian), while &lt;code class=&quot;highlighter-rouge&quot;&gt;index&lt;/code&gt; is the 0-based offset of the output in the transaction outputs array.&lt;/p&gt;
+
+&lt;h4 id=&quot;input&quot;&gt;Input&lt;/h4&gt;
+
+&lt;p&gt;A transaction input is an entity able to redeem value from a previously unspent output, also known as UTXO:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sequence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;outpoint&lt;/code&gt; field is the pointer to the UTXO we want to spend. The &lt;code class=&quot;highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The &lt;code class=&quot;highlighter-rouge&quot;&gt;sequence&lt;/code&gt; field is left for advanced operations, most of the time you’ll just set it to &lt;code class=&quot;highlighter-rouge&quot;&gt;ffffffff&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;transaction&quot;&gt;Transaction&lt;/h4&gt;
+
+&lt;p&gt;Now that all subcomponents were described, here’s the layout of a blockchain transaction:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locktime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;version&lt;/code&gt; of a transaction is established by network consensus and is currently constant &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;. I won’t cover &lt;code class=&quot;highlighter-rouge&quot;&gt;locktime&lt;/code&gt; for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.&lt;/p&gt;
+
+&lt;h3 id=&quot;serialization&quot;&gt;Serialization&lt;/h3&gt;
+
+&lt;p&gt;To make things clearer, I want to show you how to serialize a transaction in code. The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function is taken from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_sighash_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* version */&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* inputs count */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bbp_varint_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* inputs */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* outpoint */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;memcpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* script */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;bbp_varint_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;memcpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* sequence */&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sequence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* outputs count */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bbp_varint_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* outputs */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* value */&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* script */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;bbp_varint_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;varlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;memcpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* locktime */&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locktime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* sighash */&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Ignore the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter and assume it’s &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; to skip the last &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on &lt;a href=&quot;/basic-blockchain-programming/serialization-part-one/&quot;&gt;blockchain serialization&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;One last thing. The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function expects a properly allocated byte array, so you must use &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; to get the exact amount of bytes required to serialize the &lt;code class=&quot;highlighter-rouge&quot;&gt;tx&lt;/code&gt; transaction, for example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;malloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;coinbase-transactions&quot;&gt;Coinbase transactions&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Coinbase&lt;/em&gt; transactions (which inspired the &lt;a href=&quot;https://www.coinbase.com/&quot;&gt;Coinbase&lt;/a&gt; company name) are the only transactions without real inputs. They’re sort of genesis transactions, because they create bitcoins from nowhere and are not connected to any previous transaction. Each block in the blockchain has one and one only coinbase transaction that rewards the block miner with the famous ever-halving amount of bitcoins (currently 25 BTC).&lt;/p&gt;
+
+&lt;p&gt;Here’s an example &lt;a href=&quot;https://www.biteasy.com/blockchain/transactions/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60&quot;&gt;coinbase transaction&lt;/a&gt; from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;by using a standard P2PKH output script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+OP_HASH160
+
+[c8 25 a1 ec f2 a6 83 0c
+ 44 01 62 0c 3a 16 f1 99
+ 50 57 c2 ab]
+
+OP_EQUALVERIFY
+OP_CHECKSIG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The push data element is exactly the above address properly Base58Check-decoded. Likewise, the transaction has only one input. Since a coinbase transaction creates bitcoins, its input doesn’t point to any previous UTXO. Typically, coinbase input scripts are placeholders for block metadata, like the block height in the blockchain, the name of the mining software, generic binary data etc.&lt;/p&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned the fundamental transaction data structures. Most transactions draw coins from previous outputs, while coinbase transactions generate coins from nowhere.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/the-first-transaction-part-one/&quot;&gt;next article&lt;/a&gt; you’ll learn to build your first blockchain transaction. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 01 Jun 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/inside-transactions/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/inside-transactions/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transaction</category>
+        
+        <category>utxo</category>
+        
+        <category>outpoint</category>
+        
+        <category>script</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Standard scripts</title>
+        <description>&lt;p&gt;I told you what a script is, but not exactly what it’s needed for. By the way, in the article about &lt;a href=&quot;/basic-blockchain-programming/scripts-in-transaction-processing/&quot;&gt;transaction processing&lt;/a&gt; I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;the-validation-script&quot;&gt;The validation script&lt;/h3&gt;
+
+&lt;p&gt;So far, we learned that a script is a piece of code that executes and yields a result. When building a transaction from an unspent transaction output (UTXO), there are two scripts we’re particularly interested in:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The unspent output script, call it &lt;em&gt;OS&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;The spending input script, call it &lt;em&gt;IS&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The problem is producing such an &lt;em&gt;IS&lt;/em&gt; that the concatenated script &lt;em&gt;VS&lt;/em&gt; = &lt;em&gt;IS&lt;/em&gt; + &lt;em&gt;OS&lt;/em&gt; (the &lt;em&gt;validation script&lt;/em&gt;), after being executed, returns a non-zero value. With this in mind, the validation script decides if the transaction input has right to spend the previous unspent output. It may sound difficult to understand, but it’s not.&lt;/p&gt;
+
+&lt;p&gt;Consider the input script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and the previous output script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_ADD OP_12 OP_EQUAL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now join them to have the following validation script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and see how the stack evolves:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[6]
+[6, 6]
+[12]
+[12, 12]
+[1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Fine, the validation script ends with 1 (&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;) on the stack, so the input script can spend the previous output script.&lt;/p&gt;
+
+&lt;h4 id=&quot;weaknesses&quot;&gt;Weaknesses&lt;/h4&gt;
+
+&lt;p&gt;In fact, many other input scripts comply, like:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;See how anybody with some basic math knowledge could easily steal the output coins. Conversely, look at this very simple output script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_FALSE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;No matter the input script, the validation script will never succeed. Any bitcoin sent to this output will be lost forever.&lt;/p&gt;
+
+&lt;p&gt;In fact, all the above scripts are dangerous and would be rejected by Mainnet for not being &lt;em&gt;standard&lt;/em&gt;. Miners don’t accept transactions with non-standard scripts because in many situations they may result in money loss, directly or indirectly.&lt;/p&gt;
+
+&lt;h3 id=&quot;standard-scripts&quot;&gt;Standard scripts&lt;/h3&gt;
+
+&lt;p&gt;Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the &lt;code class=&quot;highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.&lt;/p&gt;
+
+&lt;p&gt;As of Bitcoin Core 0.10, these are considered standard scripts:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;P2PKH (pay-to-public-key-hash)&lt;/li&gt;
+  &lt;li&gt;P2SH (pay-to-script-hash)&lt;/li&gt;
+  &lt;li&gt;P2PK (pay-to-public-key)&lt;/li&gt;
+  &lt;li&gt;Multisignature&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_RETURN&lt;/code&gt; metadata&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In this course we’ll only treat the first ones. For your information, Testnet miners skip the &lt;code class=&quot;highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check completely, thus making the Testnet network suitable for trying experimental scripts.&lt;/p&gt;
+
+&lt;h3 id=&quot;p2pkh-scripts&quot;&gt;P2PKH scripts&lt;/h3&gt;
+
+&lt;p&gt;The most common standard scripts in the blockchain are named after &lt;a href=&quot;/basic-blockchain-programming/network-interoperability-part-two/&quot;&gt;P2PKH addresses&lt;/a&gt; (pay-to-public-key-hash). By having a destination P2PKH Bitcoin address, we can write an output script that will send coins to it. By having the private key from which the destination address was generated, we can write an input script that will later spend such coins.&lt;/p&gt;
+
+&lt;h4 id=&quot;output-script&quot;&gt;Output script&lt;/h4&gt;
+
+&lt;p&gt;A P2PKH output script contains a Base58Check-decoded destination address, that is the hash160 of an ECDSA public key:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Take our sample compressed public key:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and its hash160 digest:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;6b f1 9e 55 f9 4d 98 6b
+46 40 c1 54 d8 64 69 93
+41 91 95 11
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;that after Testnet versioning and Base58Check encoding is displayed as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The output script that sends money to this address is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;76 (OP_DUP)
+a9 (OP_HASH160)
+
+14 6b f1 9e 55 f9 4d 98
+6b 46 40 c1 54 d8 64 69
+93 41 91 95 11
+
+88 (OP_EQUALVERIFY)
+ac (OP_CHECKSIG)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;14&lt;/code&gt; is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.&lt;/p&gt;
+
+&lt;h4 id=&quot;input-script&quot;&gt;Input script&lt;/h4&gt;
+
+&lt;p&gt;A P2PKH input script contains a DER-encoded ECDSA signature and a raw public key, either uncompressed or compressed. In such an input script, there are no opcodes other than pushes:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+[public_key]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For example, take the 70-bytes signature from the &lt;a href=&quot;/basic-blockchain-programming/elliptic-curve-digital-signatures/&quot;&gt;ECDSA chapter&lt;/a&gt; and append the &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; constant (&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;) to it:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44
+02 20
+2b 2b 52 9b db dc 93 e7
+8a f7 e0 02 28 b1 79 91
+8b 03 2d 76 90 2f 74 ef
+45 44 26 f7 d0 6c d0 f9
+02 20
+62 dd c7 64 51 cd 04 cb
+56 7c a5 c5 e0 47 e8 ac
+41 d3 d4 cf 7c b9 24 34
+d5 5c b4 86 cc cf 6a f2
+01
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; suffix is an advanced topic related to &lt;a href=&quot;https://en.bitcoin.it/wiki/Contracts&quot;&gt;contracts&lt;/a&gt;. In this series we’ll stick with &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; because we’ll always sign all transaction inputs.&lt;/p&gt;
+
+&lt;p&gt;If you now take the public key from the previous paragraph, you have a typical input script:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 2b 2b 52
+9b db dc 93 e7 8a f7 e0
+02 28 b1 79 91 8b 03 2d
+76 90 2f 74 ef 45 44 26
+f7 d0 6c d0 f9 02 20 62
+dd c7 64 51 cd 04 cb 56
+7c a5 c5 e0 47 e8 ac 41
+d3 d4 cf 7c b9 24 34 d5
+5c b4 86 cc cf 6a f2 01
+
+21 02 82 00 6e 93 98 a6
+98 6e da 61 fe 91 67 4c
+3a 10 8c 39 94 75 bf 1e
+73 8f 19 df c2 db 11 db
+1d 28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;47&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;21&lt;/code&gt; are the hex lengths of the pushed signature and public key respectively.&lt;/p&gt;
+
+&lt;h4 id=&quot;validation&quot;&gt;Validation&lt;/h4&gt;
+
+&lt;p&gt;If we want to spend the money we received on our sample address, we must provide a specific input script so that the composite validation script succeeds. If the input is “authentic”, the following script will return non-zero:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+[public_key]
+OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A step by step description in case the input script is valid:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The input signature is pushed.&lt;/li&gt;
+  &lt;li&gt;The input public key is pushed.&lt;/li&gt;
+  &lt;li&gt;The top item (public key) is duplicated on the stack.&lt;/li&gt;
+  &lt;li&gt;The top item (public key) is hashed with hash160.&lt;/li&gt;
+  &lt;li&gt;The output hash160 is pushed.&lt;/li&gt;
+  &lt;li&gt;Input and output hash160 are popped then checked for equality.&lt;/li&gt;
+  &lt;li&gt;The input signature is verified against the public key.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; is pushed as a result of successful signature verification.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let’s see what happens on the stack:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[signature]
+[signature, public_key]
+[signature, public_key, public_key]
+[signature, public_key, hash160(public_key)]
+[signature, public_key, hash160(public_key), hash160(public_key)]
+[signature, public_key]
+[1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The final stack holds &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;, so the transaction input is legit. Along the road, two constraints were satisfied:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The public key in the input script must hash to the Bitcoin address in the output script (step 6).&lt;/li&gt;
+  &lt;li&gt;The signature must be valid for the public key (step 7).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You may think that the input script alone is enough for signature verification, and you’d be wrong. I didn’t mention the third parameter of the verification process: the message! This is left for the next posts about transactions and, for your information, it’s going to be a tricky subject.&lt;/p&gt;
+
+&lt;p&gt;By the way, can you also see how important is to know if a private key is associated to an uncompressed or compressed public key? In case of “compression mismatch” between public keys and addresses, the first constraint would break. As a consequence, you cannot spend bitcoins sent to a compressed address with an input script containing an uncompressed public key, and vice versa.&lt;/p&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned that only a standard subset of all possible scripts are accepted by the Bitcoin network. P2PKH scripts are the most common standard scripts you’ll find in the blockchain. Input and output scripts together form validation scripts. Miners execute validation scripts to either accept or reject a transaction.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/inside-transactions/&quot;&gt;next article&lt;/a&gt; we’ll finally start analyzing &lt;em&gt;transactions&lt;/em&gt;. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 29 May 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/standard-scripts/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/standard-scripts/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transactions</category>
+        
+        <category>script</category>
+        
+        <category>p2pkh</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>The Bitcoin Script language (pt. 2)</title>
+        <description>&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/bitcoin-script-language-part-one/&quot;&gt;first part&lt;/a&gt; I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h4 id=&quot;arithmetic&quot;&gt;Arithmetic&lt;/h4&gt;
+
+&lt;p&gt;Look at some of the many arithmetic opcodes:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;93&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;94&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Both are totally stack-based operations, meaning that they take no explicit argument. &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;55 59 93 56 94
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_5 OP_9 OP_ADD OP_6 OP_SUB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[5]
+[5, 9]
+[14]
+[14, 6]
+[8]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The script returns 8.&lt;/p&gt;
+
+&lt;h4 id=&quot;comparison&quot;&gt;Comparison&lt;/h4&gt;
+
+&lt;p&gt;Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;87&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; pops and compares the top two items on the stack, then pushes &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if they’re equal or &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02 c3 72 02 03 72 01 c0 93 87
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[c3 72]
+[c3 72, 03 72]
+[c3 72, 03 72, c0]
+[c3 72, c3 72]
+[1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s worth noting that the script eventually “succeeds”, because it returns &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;stack-manipulation&quot;&gt;Stack manipulation&lt;/h4&gt;
+
+&lt;p&gt;This is the only opcode you’re going to use for stack manipulation:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;76&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt; takes no arguments, it just duplicates the top stack item.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;04 b9 0c a2 fe 76 87
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[b9 0c a2 fe] OP_DUP OP_EQUAL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[b9 0c a2 fe]
+[b9 0c a2 fe, b9 0c a2 fe]
+[1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Obviously, the script succeeds, since &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; would never fail after &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;!&lt;/p&gt;
+
+&lt;h4 id=&quot;crypto&quot;&gt;Crypto&lt;/h4&gt;
+
+&lt;p&gt;These opcodes are certainly the most interesting:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;a9&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ac&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt; pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if the signature is valid for that public key or &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise. It’s the Script version of OpenSSL’s &lt;code class=&quot;highlighter-rouge&quot;&gt;ECDSA_verify&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Both opcodes will be described in the next post.&lt;/p&gt;
+
+&lt;h3 id=&quot;wheres-the-code&quot;&gt;Where’s the code?&lt;/h3&gt;
+
+&lt;p&gt;There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.&lt;/p&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/standard-scripts/&quot;&gt;next article&lt;/a&gt; we’ll examine the role of keys and addresses in &lt;em&gt;standard scripts&lt;/em&gt;. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 25 May 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transactions</category>
+        
+        <category>script</category>
+        
+        <category>assembly</category>
+        
+        <category>opcode</category>
+        
+        <category>stack</category>
+        
+        <category>hashing</category>
+        
+        <category>ecdsa</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>The Bitcoin Script language (pt. 1)</title>
+        <description>&lt;p&gt;&lt;em&gt;Script&lt;/em&gt; is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;meet-machine-code&quot;&gt;Meet machine code&lt;/h3&gt;
+
+&lt;p&gt;A script is a computer program, and as a programmer you certainly know what a program is. A program takes an input, executes for some time, then returns an output. Programming languages are our tool to write programs that computers will understand, because most languages come with &lt;em&gt;compilers&lt;/em&gt; that map human-friendly code to CPU operations, also known as &lt;em&gt;opcodes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;opcodes&quot;&gt;Opcodes&lt;/h4&gt;
+
+&lt;p&gt;Opcodes include memory manipulation, math, loops, function calls and everything you find in procedural programming languages like C. They make up the spoken language of a CPU, the so-called &lt;em&gt;machine code&lt;/em&gt;. Since bytes are computers’ preferred idiom, no wonder opcodes are bytes as well. As a result, machine code is a string of bytes representing operations to be executed on a CPU.&lt;/p&gt;
+
+&lt;p&gt;Consider this piece of code in a high-level programming language like C:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x4b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x1e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now suppose you want to compile and run this code on a hypothetical little-endian CPU with a single cell of 16-bit memory (a &lt;em&gt;register&lt;/em&gt;) and the following set of opcodes:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+      &lt;th&gt;V&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SET(V)&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ab&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;16-bit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ADD(V)&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ac&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;16-bit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MUL(V)&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ad&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;16-bit&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The opcodes explained:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SET loads the register with the value V.&lt;/li&gt;
+  &lt;li&gt;ADD adds V to the register.&lt;/li&gt;
+  &lt;li&gt;MUL multiplies the register by V.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A compiler for such a CPU would generate these 9 bytes of machine code:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ab 23 00 ac 4b 00 ad 1e 00
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s how it’s interpreted:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Load the register with the value &lt;code class=&quot;highlighter-rouge&quot;&gt;23&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Add &lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt; to the register, that is now &lt;code class=&quot;highlighter-rouge&quot;&gt;23 + 4b = 6e&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiply the register by &lt;code class=&quot;highlighter-rouge&quot;&gt;1e&lt;/code&gt;, yielding &lt;code class=&quot;highlighter-rouge&quot;&gt;6e * 1e = ce4&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The register holds the final result, that is &lt;code class=&quot;highlighter-rouge&quot;&gt;ce4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;stack-memory&quot;&gt;Stack memory&lt;/h4&gt;
+
+&lt;p&gt;Most of the time, we need to track complex program states with &lt;em&gt;variables&lt;/em&gt;. In C, depending on whether a variable is allocated statically or with &lt;code class=&quot;highlighter-rouge&quot;&gt;malloc&lt;/code&gt;, it’s stored in a differently arranged memory. While &lt;code class=&quot;highlighter-rouge&quot;&gt;malloc&lt;/code&gt;-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called &lt;em&gt;stack&lt;/em&gt;. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.&lt;/p&gt;
+
+&lt;p&gt;Consider this dummy function:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* 1 */&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* 2 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xa4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x2a5e7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* 3 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* 4 */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The stack is initially empty (1):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, three variables are pushed (2):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12]
+[12, a4 00]
+[12, a4 00, e7 a5 02 00]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A fourth variable is assigned the sum of the others and pushed onto the stack (3):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00, 9d a6 02 00]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The tip of the stack is the return value and is sent back to the function caller by other means. Each temporary stack variable is popped at the end of the block (4), because the push/pop operations must be balanced so that the stack always goes back to its initial state:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00]
+[12, a4 00]
+[12]
+[]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-script-machine-code&quot;&gt;The Script machine code&lt;/h3&gt;
+
+&lt;p&gt;Likewise, Bitcoin Core has its own “virtual processor” to interpret the &lt;em&gt;Script&lt;/em&gt; machine code. Script features a rich set of opcodes, yet very limited compared to full-fledged CPUs like Intel’s, to name one. Some key facts about Script:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Script does not loop.&lt;/li&gt;
+  &lt;li&gt;Script always terminates.&lt;/li&gt;
+  &lt;li&gt;Script memory access is stack-based.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In fact, point 1 implies 2. Point 3 means there’s no such thing like named variables in Script, you just do your calculations on a stack. Typically, the stack items you push become the operands of subsequent opcodes. At the end of the script, the top stack item is the return value.&lt;/p&gt;
+
+&lt;p&gt;Before presenting real world scripts, let’s first enumerate some opcodes. For a full set please check out the official &lt;a href=&quot;https://en.bitcoin.it/wiki/Script&quot;&gt;wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;constants&quot;&gt;Constants&lt;/h4&gt;
+
+&lt;p&gt;The following opcodes push the numbers 0-16 onto the stack:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_0&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;00&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_1&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_16&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;51&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;60&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;By convention, &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_0&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_1&lt;/code&gt; also express the boolean &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; (zero) and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; (non-zero).&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;54 57 00 60
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_7 OP_0 OP_16
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[4]
+[4, 7]
+[4, 7, 0]
+[4, 7, 0, 16]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The return value is the top item, so the script returns 16. Quite pointless, I know, but it’s a start.&lt;/p&gt;
+
+&lt;h4 id=&quot;push-data&quot;&gt;Push data&lt;/h4&gt;
+
+&lt;p&gt;Several opcodes are provided to push custom data. They differ in the size of the operands:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+      &lt;th&gt;L (length)&lt;/th&gt;
+      &lt;th&gt;D (data)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4c&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;8-bit&lt;/td&gt;
+      &lt;td&gt;L bytes&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA2&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4d&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;16-bit&lt;/td&gt;
+      &lt;td&gt;L bytes&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA4&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4e&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;32-bit&lt;/td&gt;
+      &lt;td&gt;L bytes&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;For example, if your data length can be stored as a 8-bit number, then &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; is your best choice. Look at this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;4c 14 11 06 03 55 04 8a
+0c 70 3e 63 2e 31 26 30
+24 06 6c 95 20 30
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The first byte is clearly a &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; opcode, followed by a 1-byte length of &lt;code class=&quot;highlighter-rouge&quot;&gt;14&lt;/code&gt; that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[11 06 03 55 04 8a 0c 70
+ 3e 63 2e 31 26 30 24 06
+ 6c 95 20 30]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Indeed –like with &lt;a href=&quot;/basic-blockchain-programming/serialization-part-two/&quot;&gt;varints&lt;/a&gt;–, there’s a special encoding for very short data. If an opcode lies between &lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt; (included), it’s a push data operation where the opcode itself is the length in bytes:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;opcode&lt;/th&gt;
+      &lt;th&gt;encoding&lt;/th&gt;
+      &lt;th&gt;L (length)&lt;/th&gt;
+      &lt;th&gt;D (data)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;L&lt;/td&gt;
+      &lt;td&gt;L D&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;L bytes&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;For example, in the string:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;07 8f 49 b2 e2 ec 7c 44
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;the opcode &lt;code class=&quot;highlighter-rouge&quot;&gt;07&lt;/code&gt; means that 7 bytes of data are to be pushed:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[8f 49 b2 e2 ec 7c 44]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;
+
+&lt;p&gt;You learned a little bit about machine code and opcodes. Script is a simple low-level language understood by miners software. Script state is tracked with stack memory.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/bitcoin-script-language-part-two/&quot;&gt;next article&lt;/a&gt; I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 25 May 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transactions</category>
+        
+        <category>script</category>
+        
+        <category>assembly</category>
+        
+        <category>opcode</category>
+        
+        <category>stack</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Scripts in transaction processing</title>
+        <description>&lt;p&gt;With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, &lt;em&gt;scripts&lt;/em&gt; are the last step in the path. Here I’ll give an overview of their role in transaction processing.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;how-bitcoins-move&quot;&gt;How bitcoins move&lt;/h3&gt;
+
+&lt;p&gt;It’s a common belief that bitcoins move from an address to another. In fact, they move through transaction &lt;em&gt;outputs&lt;/em&gt;, whereas mining is the only special case in which bitcoins are created out of thin air. Outputs are the real endpoints holding money in the blockchain. However, when reused to send the money they hold to someone else, outputs become &lt;em&gt;inputs&lt;/em&gt; to other transactions.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-transaction-tree&quot;&gt;The transaction tree&lt;/h4&gt;
+
+&lt;p&gt;Look at the picture below (courtesy of bitcoin.org) and notice how previous transaction outputs convert to spendable transaction inputs. This forms a deep tree of value transfers where each node represents a transaction. Whenever a transaction output is spent, the spending transaction becomes a child node.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/s/f/basic-blockchain-programming/scripts-transaction-propagation.svg&quot; alt=&quot;Transaction propagation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Consider all these 7 transactions to be the only ones relevant to our wallet. Observe the path to TX 3 and assume 10k satoshis (0.0001 BTC) as the standard fee, here’s a textual explanation:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Someone sends 100k to an output we “own”.&lt;/li&gt;
+  &lt;li&gt;The output becomes the spendable input of TX 0.&lt;/li&gt;
+  &lt;li&gt;TX 0 distributes the previous output to new outputs of 40k and 50k.&lt;/li&gt;
+  &lt;li&gt;The remaining value 100k - (40k + 50k) = 10k is the fee.&lt;/li&gt;
+  &lt;li&gt;TX 1 reuses &amp;lt;TX 0, output0&amp;gt;, the one holding 40k.&lt;/li&gt;
+  &lt;li&gt;TX 1 sends 30k to an output plus a 10k fee.&lt;/li&gt;
+  &lt;li&gt;TX 3 reuses &amp;lt;TX 1, output0&amp;gt; to send 20k to output0 plus a 10k fee.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You know, in such a tree there must be a leaf at some point on the right. TX 3 is one of them, the other being TX 6, and both are marked with the &lt;em&gt;UTXO&lt;/em&gt; acronym (Unspent Transaction Output). In our scenario, the leaves of the tree are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&amp;lt;TX 3, output0&amp;gt; = 20k&lt;/li&gt;
+  &lt;li&gt;&amp;lt;TX 6, output0&amp;gt; = 10k&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;They make up the wallet UTXO set and total 30k satoshis (0.0003 BTC), which happens to be the balance of the wallet. For your information, &amp;lt;txid, output&amp;gt; pairs are called &lt;em&gt;outpoints&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;If we extend the UTXO set to all blockchain transactions instead of constraining to a private wallet, we’re able to track all the spendable bitcoins in the world. This is a convenient index to maintain for miners, because it’s their way to find out if any transaction input is trying to double-spend a previously spent transaction output. In other words, transaction inputs must point to outputs in the global UTXO set in order to be spendable.&lt;/p&gt;
+
+&lt;h3 id=&quot;introducing-scripts&quot;&gt;Introducing scripts&lt;/h3&gt;
+
+&lt;p&gt;There must be a mechanism to ensure that we’re only allowed to spend certain transaction outputs, normally the ones associated with our wallet. Bitcoin solves this “authentication” problem in a fairly complex manner, yet extremely extensible and future-oriented: &lt;em&gt;Script&lt;/em&gt;. Script is a programming language in all respects, with its only major limitation being the absence of loops. A script runs, terminates and eventually yields a boolean result.&lt;/p&gt;
+
+&lt;p&gt;I’ll teach you the basics of the Script language in the following articles. For now, just bear in mind that blockchain transactions embed scripts for spending validation. Let’s peek inside the whole thing.&lt;/p&gt;
+
+&lt;h4 id=&quot;transaction-validation&quot;&gt;Transaction validation&lt;/h4&gt;
+
+&lt;p&gt;In the previous section, I spent some words on inputs and outputs. Now’s the time to clarify what informations they pass along.&lt;/p&gt;
+
+&lt;p&gt;Let alone some minor details, a transaction output contains:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The amount of bitcoins to transfer.&lt;/li&gt;
+  &lt;li&gt;A script (the &lt;em&gt;output script&lt;/em&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;while a transaction input contains:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An outpoint reference to the previous transaction output.&lt;/li&gt;
+  &lt;li&gt;A script (the &lt;em&gt;input script&lt;/em&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In order to validate a transaction, all transaction inputs must validate. Follows the input validation process:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go find the transaction referenced by the outpoint.&lt;/li&gt;
+  &lt;li&gt;Find the output through its index in the transaction.&lt;/li&gt;
+  &lt;li&gt;Take the output script.&lt;/li&gt;
+  &lt;li&gt;Append the output script to the input script.&lt;/li&gt;
+  &lt;li&gt;Execute the joined script on the Script interpreter.&lt;/li&gt;
+  &lt;li&gt;If the script succeeds, then the transaction is valid.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;That’s the idea. It’ll be a concrete process as soon as we examine Script and the transaction data structures.&lt;/p&gt;
+
+&lt;h4 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h4&gt;
+
+&lt;p&gt;You learned that a transaction moves bitcoins from output(s) to output(s). When spent, a former output becomes an input to the new transaction. Transaction outputs must not be spent twice. The UTXO set computes the balance of a wallet (or the entire Bitcoin network). Scripts describe the proper way to redeem a transaction output.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;/basic-blockchain-programming/bitcoin-script-language-part-one/&quot;&gt;next article&lt;/a&gt; you’ll get to know &lt;em&gt;Script&lt;/em&gt;, the Bitcoin scripting language. Please share this post if you enjoyed it and use the form below for questions and comments!&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 15 May 2015 00:00:00 +0200</pubDate>
+        <link>https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/</link>
+        <guid isPermaLink="true">https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/</guid>
+        
+        <category>bitcoin</category>
+        
+        <category>blockchain</category>
+        
+        <category>programming</category>
+        
+        <category>development</category>
+        
+        <category>transactions</category>
+        
+        <category>utxo</category>
+        
+        <category>outpoint</category>
+        
+        <category>script</category>
+        
+        
+        <category>basic blockchain programming</category>
+        
+      </item>
+    
+  </channel>
+</rss>
