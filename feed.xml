@@ -5,9 +5,9 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Apr 2019 09:45:36 +0200</pubDate>
-    <lastBuildDate>Thu, 18 Apr 2019 09:45:36 +0200</lastBuildDate>
-    <generator>Jekyll v3.8.4</generator>
+    <pubDate>Fri, 23 Aug 2019 17:43:34 +0200</pubDate>
+    <lastBuildDate>Fri, 23 Aug 2019 17:43:34 +0200</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
     
       <item>
         <title>Passepartout is an user-friendly OpenVPN client for iOS/macOS</title>
@@ -341,7 +341,7 @@ d6 63 66 4e 35 77 9f b0
 
 &lt;p&gt;Like I did for outputs, I also wrote a C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txin_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_txin_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_sighash_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;We use the macro to create our input, whereas the outputs code is taken from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt; as is:&lt;/p&gt;
@@ -597,7 +597,7 @@ ac
 
 &lt;p&gt;I wrote a convenient C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for building P2PKH outputs from a value and a hash160:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hash160&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Basically, the hash160 bytes are enclosed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP OP_HASH160&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUALVERIFY OP_CHECKSIG&lt;/code&gt; opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:&lt;/p&gt;
