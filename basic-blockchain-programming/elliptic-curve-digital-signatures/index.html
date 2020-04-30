@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Elliptic-curve digital signatures" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1585671950" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1588246492" />
 
 
 <meta name="twitter:description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Elliptic-curve digital signatures" />
 <meta property="og:site_name" content="Elliptic-curve digital signatures" />
 <meta property="og:description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1585671950" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1588246492" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Elliptic-curve digital signatures" />
 <meta itemprop="description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1585671950" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1588246492" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys" />
 
 
-<link rel="stylesheet" href="/s/main.css?1585671950" />
-<link rel="stylesheet" href="/s/main-mobile.css?1585671950" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1588246492" />
+<link rel="stylesheet" href="/s/main-mobile.css?1588246492" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1585671950" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1585671950" />
+<link rel="shortcut icon" href="/s/favicon.ico?1588246492" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1588246492" />
 
     </head>
     <body>
@@ -199,7 +199,7 @@ e9 e3 dc 45 f8 9e 2f 01
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -sign ec-priv.pem ex-message.txt &gt;ex-signature.der
 </code></pre></div></div>
 
-<p>The <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-signature.der">ex-signature.der</a> file is the message signature in <em>DER</em> format. OpenSSL uses the <a href="http://en.wikipedia.org/wiki/X.690">DER encoding</a> for any binary output (keys, certificates, signatures etc.), but I’ll skip the underlying details. You don’t need to know the semantic of an ECDSA signature, just remember it’s a simple pair of big numbers <script type="math/tex">(r, s)</script>.</p>
+<p>The <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-signature.der">ex-signature.der</a> file is the message signature in <em>DER</em> format. OpenSSL uses the <a href="http://en.wikipedia.org/wiki/X.690">DER encoding</a> for any binary output (keys, certificates, signatures etc.), but I’ll skip the underlying details. You don’t need to know the semantic of an ECDSA signature, just remember it’s a simple pair of big numbers \((r, s)\).</p>
 
 <p>You’ll probably notice that the signature changes each time you run the program, that is, the default signing process is not <em>deterministic</em>. This can be an issue when serializing blockchain transactions, because signatures are part of the transaction bytes and you probably remember that <a href="/basic-blockchain-programming/bytes-and-hashes/">transaction bytes hash to the txid</a>. As a consequence, the txid would change each time you sign a transaction. This behaviour is namely a source of <a href="http://www.coindesk.com/bitcoin-bug-guide-transaction-malleability/">transaction malleability</a>.</p>
 
@@ -245,7 +245,7 @@ e9 e3 dc 45 f8 9e 2f 01
 <span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">ECDSA_do_sign</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">digest</span><span class="p">),</span> <span class="n">key</span><span class="p">);</span></code></pre></figure>
 
-<p>where <code class="highlighter-rouge">ECDSA_SIG</code> is a simple structure holding the <script type="math/tex">(r, s)</script> pair described in the previous paragraph:</p>
+<p>where <code class="highlighter-rouge">ECDSA_SIG</code> is a simple structure holding the \((r, s)\) pair described in the previous paragraph:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="p">{</span>
     <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">r</span><span class="p">;</span>
@@ -404,7 +404,6 @@ d5 5c b4 86 cc cf 6a f2
                     <ul id="social">
     <li><a href="https://twitter.com/keeshux" title="Follow me on Twitter!" class="fab fa-twitter"></a></li>
     <li><a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a></li>
-    <li><a href="https://patreon.com/keeshux" title="Support me on Patreon!" class="fab fa-patreon"></a></li>
     <li><a href="mailto:website@davidederosa.com" title="Send me an email" class="fa fa-edit"></a></li>
     <li><a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a></li>
 </ul>
@@ -413,7 +412,7 @@ d5 5c b4 86 cc cf 6a f2
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1585671950" async="async"></script>
+        <script src="/s/main.js?1588246492" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

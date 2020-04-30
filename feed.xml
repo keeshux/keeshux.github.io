@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 31 Mar 2020 18:25:50 +0200</pubDate>
-    <lastBuildDate>Tue, 31 Mar 2020 18:25:50 +0200</lastBuildDate>
+    <pubDate>Thu, 30 Apr 2020 13:34:52 +0200</pubDate>
+    <lastBuildDate>Thu, 30 Apr 2020 13:34:52 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -17,10 +17,13 @@
 
 &lt;p&gt;It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality.&lt;/p&gt;
 
-&lt;p&gt;Passepartout for iOS is on the &lt;a href=&quot;https://itunes.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iTunes App Store&lt;/a&gt;. A macOS version is in the works, &lt;a href=&quot;https://www.patreon.com/join/keeshux/checkout?rid=3009474&quot;&gt;become a Patron&lt;/a&gt; to have a sneak peek!&lt;/p&gt;
+&lt;p&gt;Passepartout for iOS is on the &lt;a href=&quot;https://itunes.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iTunes App Store&lt;/a&gt;. A macOS version is in the works, [become a Patron][4] to have a sneak peek!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/s/f/apps/passepartout-snapshots.png&quot;&gt;&lt;img src=&quot;/s/f/apps/passepartout-snapshots.th.png&quot; alt=&quot;Snapshots&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[![Snapshots][5]][6]&lt;/p&gt;
 
+&lt;p&gt;[4]: 
+[5]: /s/f/apps/passepartout-snapshots.th.png
+[6]: /s/f/apps/passepartout-snapshots.png&lt;/p&gt;
 </description>
         <pubDate>Thu, 11 Oct 2018 00:00:00 +0200</pubDate>
         <link>https://davidederosa.com/2018/10/11/passepartout-user-friendly-openvpn-client-for-ios/</link>
