@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 03 May 2020 00:22:32 +0200</pubDate>
-    <lastBuildDate>Sun, 03 May 2020 00:22:32 +0200</lastBuildDate>
+    <pubDate>Sun, 03 May 2020 10:14:07 +0200</pubDate>
+    <lastBuildDate>Sun, 03 May 2020 10:14:07 +0200</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -15,9 +15,9 @@
 
 &lt;p&gt;With its native look &amp;amp; feel, Passepartout focuses on ease of use. It does so by stripping the .ovpn flags that are today obsolete or rarely used. Passepartout can connect to a few well-known VPN providers or import .ovpn configuration files. Trusted networks are also supported along with other cool features.&lt;/p&gt;
 
-&lt;p&gt;It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality.&lt;/p&gt;
+&lt;p&gt;It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality. Passepartout for iOS is on the &lt;a href=&quot;https://itunes.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iTunes App Store&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Passepartout for iOS is on the &lt;a href=&quot;https://itunes.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iTunes App Store&lt;/a&gt;. A macOS version is among the goals of a &lt;a href=&quot;https://www.kickstarter.com/projects/keeshux/passepartout-your-only-multi-provider-vpn-client&quot;&gt;Kickstarter campaign&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A macOS version is among the goals of a &lt;a href=&quot;https://www.kickstarter.com/projects/keeshux/passepartout-your-only-multi-provider-vpn-client&quot;&gt;Kickstarter campaign&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;/s/f/apps/passepartout-snapshots.png&quot;&gt;&lt;img src=&quot;/s/f/apps/passepartout-snapshots.th.png&quot; alt=&quot;Snapshots&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
