@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 28 Oct 2020 23:45:44 +0100</pubDate>
-    <lastBuildDate>Wed, 28 Oct 2020 23:45:44 +0100</lastBuildDate>
+    <pubDate>Thu, 05 Nov 2020 19:08:49 +0100</pubDate>
+    <lastBuildDate>Thu, 05 Nov 2020 19:08:49 +0100</lastBuildDate>
     <generator>Jekyll v4.0.1</generator>
     
       <item>
@@ -449,7 +449,7 @@ c6 0f f8 23 d8 d6 57 d1
 
 &lt;p&gt;&lt;img src=&quot;/s/f/basic-blockchain-programming/tx-push-error.png&quot; alt=&quot;Transaction push error&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Don’t worry, that’s because I already published it by myself. See how it looks like on &lt;a href=&quot;https://www.biteasy.com/testnet/transactions/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1&quot;&gt;Biteasy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Don’t worry, that’s because I already published it by myself. See how it looks like on &lt;a href=&quot;https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1&quot;&gt;Biteasy&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;get-the-code&quot;&gt;Get the code!&lt;/h3&gt;
 
@@ -534,9 +534,9 @@ c6 0f f8 23 d8 d6 57 d1
 &lt;p&gt;and its &lt;a href=&quot;https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK&quot;&gt;blockchain history&lt;/a&gt;. Among all transactions, &lt;a href=&quot;https://api.biteasy.com/testnet/v1/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK/unspent-outputs&quot;&gt;three outputs&lt;/a&gt; are still unspent at the time of writing:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f34e1c37e736...a2f3&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;65216856608d...20c6&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.biteasy.com/testnet/transactions/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;6b580bada66e...3934&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f34e1c37e736...a2f3&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;65216856608d...20c6&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;6b580bada66e...3934&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;totalling a 0.951 BTC output value (= 95100000 satoshis). Specifically, these are the outputs sending money to our address:&lt;/p&gt;
@@ -941,7 +941,7 @@ d8 64 69 93 41 91 95 11
 
 &lt;p&gt;&lt;em&gt;Coinbase&lt;/em&gt; transactions (which inspired the &lt;a href=&quot;https://www.coinbase.com/&quot;&gt;Coinbase&lt;/a&gt; company name) are the only transactions without real inputs. They’re sort of genesis transactions, because they create bitcoins from nowhere and are not connected to any previous transaction. Each block in the blockchain has one and one only coinbase transaction that rewards the block miner with the famous ever-halving amount of bitcoins (currently 25 BTC).&lt;/p&gt;
 
-&lt;p&gt;Here’s an example &lt;a href=&quot;https://www.biteasy.com/blockchain/transactions/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60&quot;&gt;coinbase transaction&lt;/a&gt; from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:&lt;/p&gt;
+&lt;p&gt;Here’s an example &lt;a href=&quot;https://blockstream.info/tx/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60&quot;&gt;coinbase transaction&lt;/a&gt; from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
