@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 05 Nov 2020 19:08:49 +0100</pubDate>
-    <lastBuildDate>Thu, 05 Nov 2020 19:08:49 +0100</lastBuildDate>
+    <pubDate>Fri, 06 Nov 2020 16:36:43 +0100</pubDate>
+    <lastBuildDate>Fri, 06 Nov 2020 16:36:43 +0100</lastBuildDate>
     <generator>Jekyll v4.0.1</generator>
     
       <item>
@@ -449,7 +449,7 @@ c6 0f f8 23 d8 d6 57 d1
 
 &lt;p&gt;&lt;img src=&quot;/s/f/basic-blockchain-programming/tx-push-error.png&quot; alt=&quot;Transaction push error&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Don’t worry, that’s because I already published it by myself. See how it looks like on &lt;a href=&quot;https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1&quot;&gt;Biteasy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Don’t worry, that’s because I already published it by myself. See how it looks like &lt;a href=&quot;https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1&quot;&gt;on a block explorer&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;get-the-code&quot;&gt;Get the code!&lt;/h3&gt;
 
