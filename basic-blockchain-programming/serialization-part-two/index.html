@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Serialization (pt. 2)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-two/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Things get a little trickier when the length of a binary string can’t be predicted, but the solution is pretty straightforward: the string is prefixed with useful information about its length. The core of variable-length serialization is the varint pseudotype...." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Serialization (pt. 2)" />
 <meta property="og:site_name" content="Serialization (pt. 2)" />
 <meta property="og:description" content="Things get a little trickier when the length of a binary string can’t be predicted, but the solution is pretty straightforward: the string is prefixed with useful information about its length. The core of variable-length serialization is the varint pseudotype...." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Serialization (pt. 2)" />
 <meta itemprop="description" content="Things get a little trickier when the length of a binary string can’t be predicted, but the solution is pretty straightforward: the string is prefixed with useful information about its length. The core of variable-length serialization is the varint pseudotype...." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/serialization-part-two/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -198,28 +198,28 @@
   <tbody>
     <tr>
       <td>8-bit</td>
-      <td><code class="highlighter-rouge">8c</code></td>
-      <td><code class="highlighter-rouge">8c</code></td>
+      <td><code class="language-plaintext highlighter-rouge">8c</code></td>
+      <td><code class="language-plaintext highlighter-rouge">8c</code></td>
     </tr>
     <tr>
       <td>16-bit</td>
-      <td><code class="highlighter-rouge">12 a4</code></td>
-      <td><em><code class="highlighter-rouge">fd</code></em> <code class="highlighter-rouge">12 a4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">fd</code></em> <code class="language-plaintext highlighter-rouge">12 a4</code></td>
     </tr>
     <tr>
       <td>32-bit</td>
-      <td><code class="highlighter-rouge">12 a4 5b 78</code></td>
-      <td><em><code class="highlighter-rouge">fe</code></em> <code class="highlighter-rouge">12 a4 5b 78</code></td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4 5b 78</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">fe</code></em> <code class="language-plaintext highlighter-rouge">12 a4 5b 78</code></td>
     </tr>
     <tr>
       <td>64-bit</td>
-      <td><code class="highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
-      <td><em><code class="highlighter-rouge">ff</code></em> <code class="highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">ff</code></em> <code class="language-plaintext highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
     </tr>
   </tbody>
 </table>
 
-<p>See how the varint prefix introduces the size of the number coming after. The only limitation of varint8 is that it’s unable to represent the <code class="highlighter-rouge">fd</code>-<code class="highlighter-rouge">ff</code> values as they have a special meaning, so a varint16 would be required.</p>
+<p>See how the varint prefix introduces the size of the number coming after. The only limitation of varint8 is that it’s unable to represent the <code class="language-plaintext highlighter-rouge">fd</code>-<code class="language-plaintext highlighter-rouge">ff</code> values as they have a special meaning, so a varint16 would be required.</p>
 
 <p>Check out <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/varint.h">varint.h</a> for a varint parsing implementation.</p>
 
@@ -227,7 +227,7 @@
 
 <p>Consider the byte string:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>13 9c fd 7d 80 44 6b a2 20 cc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>13 9c fd 7d 80 44 6b a2 20 cc
 </code></pre></div></div>
 
 <p>as seen in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-varints.c">ex-varints.c</a>:</p>
@@ -260,21 +260,21 @@
 <p>In other words:</p>
 
 <ol>
-  <li>The first field is an int16: <code class="highlighter-rouge">9c13</code>.</li>
-  <li>Go ahead and move to <code class="highlighter-rouge">bytes + 2</code> (int16 takes 2 bytes).</li>
-  <li><code class="highlighter-rouge">bytes + 2</code> holds <code class="highlighter-rouge">fd</code> and announces a varint16.</li>
+  <li>The first field is an int16: <code class="language-plaintext highlighter-rouge">9c13</code>.</li>
+  <li>Go ahead and move to <code class="language-plaintext highlighter-rouge">bytes + 2</code> (int16 takes 2 bytes).</li>
+  <li><code class="language-plaintext highlighter-rouge">bytes + 2</code> holds <code class="language-plaintext highlighter-rouge">fd</code> and announces a varint16.</li>
   <li>Skip to the following 2 bytes.</li>
-  <li>The second field is <code class="highlighter-rouge">807d</code>.</li>
-  <li>Go ahead and move to <code class="highlighter-rouge">bytes + 5</code> (varint16 takes <code class="highlighter-rouge">varlen = 3</code> bytes).</li>
-  <li>The third field is an int32: <code class="highlighter-rouge">20a26b44</code>.</li>
-  <li>The fourth field is an int8: <code class="highlighter-rouge">cc</code>.</li>
+  <li>The second field is <code class="language-plaintext highlighter-rouge">807d</code>.</li>
+  <li>Go ahead and move to <code class="language-plaintext highlighter-rouge">bytes + 5</code> (varint16 takes <code class="language-plaintext highlighter-rouge">varlen = 3</code> bytes).</li>
+  <li>The third field is an int32: <code class="language-plaintext highlighter-rouge">20a26b44</code>.</li>
+  <li>The fourth field is an int8: <code class="language-plaintext highlighter-rouge">cc</code>.</li>
 </ol>
 
 <h3 id="variable-data">Variable data</h3>
 
 <p>Now that you’re able to read a varint, deserializing variable data is a no-brainer. Technically, variable data is just some binary data prefixed with a varint holding its length. Consider the 13-bytes string:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fd 0a 00 e3 03 41 8b a6
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fd 0a 00 e3 03 41 8b a6
 20 e1 b7 83 60
 </code></pre></div></div>
 
@@ -296,7 +296,7 @@
 <span class="n">len</span> <span class="o">=</span> <span class="n">bbp_varint_get</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
 <span class="n">memcpy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bytes</span> <span class="o">+</span> <span class="n">varlen</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span></code></pre></figure>
 
-<p>Like in the previous example, we find a varint16 at the beginning of the array holding the value <code class="highlighter-rouge">0a</code>, that is 10 in decimal base. 10 is the length of the data coming next, so we read 10 bytes starting from <code class="highlighter-rouge">byte + 3</code> because a varint16 takes <code class="highlighter-rouge">varlen = 3</code> bytes. That’s it!</p>
+<p>Like in the previous example, we find a varint16 at the beginning of the array holding the value <code class="language-plaintext highlighter-rouge">0a</code>, that is 10 in decimal base. 10 is the length of the data coming next, so we read 10 bytes starting from <code class="language-plaintext highlighter-rouge">byte + 3</code> because a varint16 takes <code class="language-plaintext highlighter-rouge">varlen = 3</code> bytes. That’s it!</p>
 
 <p>The same applies for variable strings, you just encode them in UTF-8 before serialization.</p>
 
@@ -391,7 +391,7 @@
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

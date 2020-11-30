@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Elliptic-curve digital signatures" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Elliptic-curve digital signatures" />
 <meta property="og:site_name" content="Elliptic-curve digital signatures" />
 <meta property="og:description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Elliptic-curve digital signatures" />
 <meta itemprop="description" content="Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -185,12 +185,12 @@
 
 <p>The first step is putting our message into a file, say <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-message.txt">ex-message.txt</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is a very confidential message
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is a very confidential message
 </code></pre></div></div>
 
-<p>whose SHA-256 digest is (don’t forget the trailing <code class="highlighter-rouge">\n</code>):</p>
+<p>whose SHA-256 digest is (don’t forget the trailing <code class="language-plaintext highlighter-rouge">\n</code>):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>45 54 81 3e 91 f3 d5 be
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>45 54 81 3e 91 f3 d5 be
 79 0c 7c 60 8f 80 b2 b0
 0f 3e a7 75 12 d4 90 39
 e9 e3 dc 45 f8 9e 2f 01
@@ -198,28 +198,28 @@ e9 e3 dc 45 f8 9e 2f 01
 
 <p>After that, we sign the SHA-256 digest of the message with the private key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -sign ec-priv.pem ex-message.txt &gt;ex-signature.der
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -sign ec-priv.pem ex-message.txt &gt;ex-signature.der
 </code></pre></div></div>
 
 <p>The <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-signature.der">ex-signature.der</a> file is the message signature in <em>DER</em> format. OpenSSL uses the <a href="http://en.wikipedia.org/wiki/X.690">DER encoding</a> for any binary output (keys, certificates, signatures etc.), but I’ll skip the underlying details. You don’t need to know the semantic of an ECDSA signature, just remember it’s a simple pair of big numbers \((r, s)\).</p>
 
 <p>You’ll probably notice that the signature changes each time you run the program, that is, the default signing process is not <em>deterministic</em>. This can be an issue when serializing blockchain transactions, because signatures are part of the transaction bytes and you probably remember that <a href="/basic-blockchain-programming/bytes-and-hashes/">transaction bytes hash to the txid</a>. As a consequence, the txid would change each time you sign a transaction. This behaviour is namely a source of <a href="http://www.coindesk.com/bitcoin-bug-guide-transaction-malleability/">transaction malleability</a>.</p>
 
-<p>To display a hex-encoded signature, just add the <code class="highlighter-rouge">-hex</code> flag:</p>
+<p>To display a hex-encoded signature, just add the <code class="language-plaintext highlighter-rouge">-hex</code> flag:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -hex -sign ec-priv.pem ex-message.txt
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -hex -sign ec-priv.pem ex-message.txt
 </code></pre></div></div>
 
 <p>For a repeatable output, though, you’d better hexdump the DER file:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hexdump ex-signature.der
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hexdump ex-signature.der
 </code></pre></div></div>
 
 <h4 id="verify">Verify</h4>
 
 <p>Whenever an authenticated message is published to the network, the readers expect to find a signature attached. Both files are the input to the verification routine, provided that we received the author’s public key in advance:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -verify ec-pub.pem -signature ex-signature.der ex-message.txt
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -verify ec-pub.pem -signature ex-signature.der ex-message.txt
 </code></pre></div></div>
 
 <p>If the signature is verified, we’re able to state that the message is authentic.</p>
@@ -247,7 +247,7 @@ e9 e3 dc 45 f8 9e 2f 01
 <span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">ECDSA_do_sign</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">digest</span><span class="p">),</span> <span class="n">key</span><span class="p">);</span></code></pre></figure>
 
-<p>where <code class="highlighter-rouge">ECDSA_SIG</code> is a simple structure holding the \((r, s)\) pair described in the previous paragraph:</p>
+<p>where <code class="language-plaintext highlighter-rouge">ECDSA_SIG</code> is a simple structure holding the \((r, s)\) pair described in the previous paragraph:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="p">{</span>
     <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">r</span><span class="p">;</span>
@@ -256,20 +256,20 @@ e9 e3 dc 45 f8 9e 2f 01
 
 <p>My test output (yours will differ):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r: 2B2B529BDBDC93E78AF7E00228B179918B032D76902F74EF454426F7D06CD0F9
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r: 2B2B529BDBDC93E78AF7E00228B179918B032D76902F74EF454426F7D06CD0F9
 s: 62DDC76451CD04CB567CA5C5E047E8AC41D3D4CF7CB92434D55CB486CCCF6AF2
 </code></pre></div></div>
 
-<p>With the <code class="highlighter-rouge">i2d_ECDSA_SIG</code> function we also get the DER-encoded signature:</p>
+<p>With the <code class="language-plaintext highlighter-rouge">i2d_ECDSA_SIG</code> function we also get the DER-encoded signature:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">der_len</span> <span class="o">=</span> <span class="n">ECDSA_size</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
 <span class="n">der</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">der_len</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">));</span>
 <span class="n">der_copy</span> <span class="o">=</span> <span class="n">der</span><span class="p">;</span>
 <span class="n">i2d_ECDSA_SIG</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">der_copy</span><span class="p">);</span></code></pre></figure>
 
-<p>that in my test is tidily rendered like this (can you spot <code class="highlighter-rouge">r</code> and <code class="highlighter-rouge">s</code> inside?):</p>
+<p>that in my test is tidily rendered like this (can you spot <code class="language-plaintext highlighter-rouge">r</code> and <code class="language-plaintext highlighter-rouge">s</code> inside?):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
 02 20
 2b 2b 52 9b db dc 93 e7
 8a f7 e0 02 28 b1 79 91
@@ -302,24 +302,24 @@ d5 5c b4 86 cc cf 6a f2
 <span class="n">der_bytes_copy</span> <span class="o">=</span> <span class="n">der_bytes</span><span class="p">;</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">d2i_ECDSA_SIG</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">der_bytes_copy</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">der_bytes</span><span class="p">));</span></code></pre></figure>
 
-<p>Since we don’t own the private key, we’ll have to decode <code class="highlighter-rouge">pub_bytes</code> into a compressed public key with the following helper from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec.h">ec.h</a>:</p>
+<p>Since we don’t own the private key, we’ll have to decode <code class="language-plaintext highlighter-rouge">pub_bytes</code> into a compressed public key with the following helper from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec.h">ec.h</a>:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">EC_KEY</span> <span class="o">*</span><span class="nf">bbp_ec_new_pubkey</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub_bytes</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">pub_len</span><span class="p">);</span></code></pre></figure>
 
-<p>On the other hand, <code class="highlighter-rouge">der_bytes</code> is the DER-encoded signature returned by the signing program. We decode the DER signature into a convenient <code class="highlighter-rouge">ECDSA_SIG</code> structure and then do the verification against the same SHA-256 message digest:</p>
+<p>On the other hand, <code class="language-plaintext highlighter-rouge">der_bytes</code> is the DER-encoded signature returned by the signing program. We decode the DER signature into a convenient <code class="language-plaintext highlighter-rouge">ECDSA_SIG</code> structure and then do the verification against the same SHA-256 message digest:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
 <span class="n">verified</span> <span class="o">=</span> <span class="n">ECDSA_do_verify</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">digest</span><span class="p">),</span> <span class="n">signature</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">ECDSA_do_verify</code> function returns:</p>
+<p>The <code class="language-plaintext highlighter-rouge">ECDSA_do_verify</code> function returns:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">1</code> if the signature is valid.</li>
-  <li><code class="highlighter-rouge">0</code> if the signature is not valid.</li>
-  <li><code class="highlighter-rouge">-1</code> for unexpected errors.</li>
+  <li><code class="language-plaintext highlighter-rouge">1</code> if the signature is valid.</li>
+  <li><code class="language-plaintext highlighter-rouge">0</code> if the signature is not valid.</li>
+  <li><code class="language-plaintext highlighter-rouge">-1</code> for unexpected errors.</li>
 </ul>
 
-<p>Note: the signature decoding can be skipped by using <code class="highlighter-rouge">ECDSA_verify</code>, which takes a DER-encoded signature directly.</p>
+<p>Note: the signature decoding can be skipped by using <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>, which takes a DER-encoded signature directly.</p>
 
 <h3 id="get-the-code">Get the code!</h3>
 
@@ -414,7 +414,7 @@ d5 5c b4 86 cc cf 6a f2
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Network interoperability (pt. 2)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Network interoperability (pt. 2)" />
 <meta property="og:site_name" content="Network interoperability (pt. 2)" />
 <meta property="og:description" content="Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Network interoperability (pt. 2)" />
 <meta itemprop="description" content="Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -179,7 +179,7 @@
 
 <p>By now you should be familiar with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">sample private key</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
 16 73 62 2a c8 a5 b0 45
 fc 3e a4 af 70 f7 27 f3
 f9 e9 2b dd 3a 1d dc 42
@@ -201,11 +201,11 @@ f9 e9 2b dd 3a 1d dc 42
   <tbody>
     <tr>
       <td>Mainnet</td>
-      <td><code class="highlighter-rouge">80</code></td>
+      <td><code class="language-plaintext highlighter-rouge">80</code></td>
     </tr>
     <tr>
       <td>Testnet3</td>
-      <td><code class="highlighter-rouge">ef</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
     </tr>
   </tbody>
 </table>
@@ -213,14 +213,14 @@ f9 e9 2b dd 3a 1d dc 42
 <p>we get the WIF representation of a private key this way:</p>
 
 <ol>
-  <li>Prepend <code class="highlighter-rouge">80</code> for Mainnet or <code class="highlighter-rouge">ef</code> for Testnet3.</li>
-  <li>Append <code class="highlighter-rouge">01</code> if the key will correspond to a compressed public key.</li>
+  <li>Prepend <code class="language-plaintext highlighter-rouge">80</code> for Mainnet or <code class="language-plaintext highlighter-rouge">ef</code> for Testnet3.</li>
+  <li>Append <code class="language-plaintext highlighter-rouge">01</code> if the key will correspond to a compressed public key.</li>
   <li>Encode to Base58Check.</li>
 </ol>
 
 <p>See our sample key encoded to WIF:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (Testnet3 version) */
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (Testnet3 version) */
 
 ef
 16 26 07 83 e4 0b 16 73
@@ -272,7 +272,7 @@ cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
 <ul>
   <li>A 1-byte version.</li>
   <li>A 32-bytes ECDSA private key.</li>
-  <li>An optional <code class="highlighter-rouge">01</code>.</li>
+  <li>An optional <code class="language-plaintext highlighter-rouge">01</code>.</li>
   <li>A 4-bytes checksum.</li>
 </ul>
 
@@ -290,7 +290,7 @@ cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
 
 <p>Given our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">sample public key</a> (in compressed form):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
 8c 39 94 75 bf 1e 73 8f
@@ -309,11 +309,11 @@ da 61 fe 91 67 4c 3a 10
   <tbody>
     <tr>
       <td>Mainnet</td>
-      <td><code class="highlighter-rouge">00</code></td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
     </tr>
     <tr>
       <td>Testnet3</td>
-      <td><code class="highlighter-rouge">6f</code></td>
+      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
     </tr>
   </tbody>
 </table>
@@ -322,13 +322,13 @@ da 61 fe 91 67 4c 3a 10
 
 <ol>
   <li>Perform hash160 on the public key.</li>
-  <li>Prepend <code class="highlighter-rouge">00</code> for Mainnet or <code class="highlighter-rouge">6f</code> for Testnet3.</li>
+  <li>Prepend <code class="language-plaintext highlighter-rouge">00</code> for Mainnet or <code class="language-plaintext highlighter-rouge">6f</code> for Testnet3.</li>
   <li>Encode to Base58Check.</li>
 </ol>
 
 <p>Indeed, another example of Base58Check encoding. See the address generated from our public key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (hash160 of public key) */
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (hash160 of public key) */
 
 6b f1 9e 55 f9 4d 98 6b
 46 40 c1 54 d8 64 69 93
@@ -379,7 +379,7 @@ mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 
 <h4 id="a-note-on-conversion-form">A note on conversion form</h4>
 
-<p>In the paragraph about WIF, I said that <code class="highlighter-rouge">01</code> must be appended to the private key in case we’ll use the corresponding public key in compressed form. Now that you know how to generate a P2PKH address, you should figure that compressed and uncompressed public keys yield different hash160 digests and therefore different addresses. A private key has in fact 2 corresponding public keys and addresses, and you’ll soon realize that this may have undesirable consequences in transaction validation.</p>
+<p>In the paragraph about WIF, I said that <code class="language-plaintext highlighter-rouge">01</code> must be appended to the private key in case we’ll use the corresponding public key in compressed form. Now that you know how to generate a P2PKH address, you should figure that compressed and uncompressed public keys yield different hash160 digests and therefore different addresses. A private key has in fact 2 corresponding public keys and addresses, and you’ll soon realize that this may have undesirable consequences in transaction validation.</p>
 
 <h3 id="magic-version-prefixes">Magic version prefixes</h3>
 
@@ -396,23 +396,23 @@ mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
   <tbody>
     <tr>
       <td>Mainnet keys</td>
-      <td><code class="highlighter-rouge">80</code></td>
-      <td><code class="highlighter-rouge">5</code>,<code class="highlighter-rouge">K</code>,<code class="highlighter-rouge">L</code></td>
+      <td><code class="language-plaintext highlighter-rouge">80</code></td>
+      <td><code class="language-plaintext highlighter-rouge">5</code>,<code class="language-plaintext highlighter-rouge">K</code>,<code class="language-plaintext highlighter-rouge">L</code></td>
     </tr>
     <tr>
       <td>Testnet3 keys</td>
-      <td><code class="highlighter-rouge">ef</code></td>
-      <td><code class="highlighter-rouge">9</code>,<code class="highlighter-rouge">c</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
+      <td><code class="language-plaintext highlighter-rouge">9</code>,<code class="language-plaintext highlighter-rouge">c</code></td>
     </tr>
     <tr>
       <td>Mainnet addresses</td>
-      <td><code class="highlighter-rouge">00</code></td>
-      <td><code class="highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
     </tr>
     <tr>
       <td>Testnet3 addresses</td>
-      <td><code class="highlighter-rouge">6f</code></td>
-      <td><code class="highlighter-rouge">m</code>,<code class="highlighter-rouge">n</code></td>
+      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
+      <td><code class="language-plaintext highlighter-rouge">m</code>,<code class="language-plaintext highlighter-rouge">n</code></td>
     </tr>
   </tbody>
 </table>
@@ -423,7 +423,7 @@ mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 
 <p>A lot of work huh? At last we have a wallet-friendly keypair for Testnet3:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WIF: cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WIF: cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
 Address: mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 </code></pre></div></div>
 
@@ -536,7 +536,7 @@ Address: mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

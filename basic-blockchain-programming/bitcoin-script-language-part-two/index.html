@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="The Bitcoin Script language (pt. 2)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="The Bitcoin Script language (pt. 2)" />
 <meta property="og:site_name" content="The Bitcoin Script language (pt. 2)" />
 <meta property="og:description" content="In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="The Bitcoin Script language (pt. 2)" />
 <meta itemprop="description" content="In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -186,31 +186,31 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_ADD</code></td>
-      <td><code class="highlighter-rouge">93</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">93</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">OP_SUB</code></td>
-      <td><code class="highlighter-rouge">94</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
+      <td><code class="language-plaintext highlighter-rouge">94</code></td>
     </tr>
   </tbody>
 </table>
 
-<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="highlighter-rouge">OP_ADD</code> (<code class="highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
+<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
 </code></pre></div></div>
 
 <p>or:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
 </code></pre></div></div>
 
 <p>Here’s how the stack evolves:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [5]
 [5, 9]
 [14]
@@ -233,27 +233,27 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_EQUAL</code></td>
-      <td><code class="highlighter-rouge">87</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">87</code></td>
     </tr>
   </tbody>
 </table>
 
-<p><code class="highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="highlighter-rouge">OP_FALSE</code> otherwise.</p>
+<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
 </code></pre></div></div>
 
 <p>or:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
 </code></pre></div></div>
 
 <p>Here’s how the stack evolves:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [c3 72]
 [c3 72, 03 72]
 [c3 72, 03 72, c0]
@@ -261,7 +261,7 @@
 [1]
 </code></pre></div></div>
 
-<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="highlighter-rouge">OP_TRUE</code>.</p>
+<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
 
 <h4 id="stack-manipulation">Stack manipulation</h4>
 
@@ -276,33 +276,33 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_DUP</code></td>
-      <td><code class="highlighter-rouge">76</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">76</code></td>
     </tr>
   </tbody>
 </table>
 
-<p><code class="highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
+<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
 </code></pre></div></div>
 
 <p>or:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
 </code></pre></div></div>
 
 <p>Here’s how the stack evolves:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [b9 0c a2 fe]
 [b9 0c a2 fe, b9 0c a2 fe]
 [1]
 </code></pre></div></div>
 
-<p>Obviously, the script succeeds, since <code class="highlighter-rouge">OP_EQUAL</code> would never fail after <code class="highlighter-rouge">OP_DUP</code>!</p>
+<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
 
 <h4 id="crypto">Crypto</h4>
 
@@ -317,19 +317,19 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_HASH160</code></td>
-      <td><code class="highlighter-rouge">a9</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">OP_CHECKSIG</code></td>
-      <td><code class="highlighter-rouge">ac</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
     </tr>
   </tbody>
 </table>
 
-<p><code class="highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
+<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
 
-<p><code class="highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="highlighter-rouge">ECDSA_verify</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
 
 <p>Both opcodes will be described in the next post.</p>
 
@@ -434,7 +434,7 @@
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="The first transaction (pt. 2)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="The first transaction (pt. 2)" />
 <meta property="og:site_name" content="The first transaction (pt. 2)" />
 <meta property="og:description" content="The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="The first transaction (pt. 2)" />
 <meta itemprop="description" content="The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/the-first-transaction-part-one/" title="The first transaction (pt. 1)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -181,7 +181,7 @@
 
 <p>Rather than the message itself, we’ll sign its hash256 digest:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
 46 43 ed b3 53 fd a5 23
 8a 9a 3d 44 49 16 76 78
 8e fd d2 5d d6 48 55 ba
@@ -189,7 +189,7 @@
 
 <p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
 16 73 62 2a c8 a5 b0 45
 fc 3e a4 af 70 f7 27 f3
 f9 e9 2b dd 3a 1d dc 42
@@ -197,7 +197,7 @@ f9 e9 2b dd 3a 1d dc 42
 
 <p>This is one DER signature I yielded (yours will differ):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
 ba 6a fb a1 2a 6f 27 de
 76 7d d4 d0 64 17 de f6
 65 bd 10 0b c6 8c 42 84
@@ -210,9 +210,9 @@ f5 e0 54 b2 c6 ca c5 d6
 
 <h4 id="flag-and-assembly">Flag and assembly</h4>
 
-<p>The <code class="highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
+<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
 8c 39 94 75 bf 1e 73 8f
@@ -221,7 +221,7 @@ da 61 fe 91 67 4c 3a 10
 
 <p>we’re finally able to build our P2PKH input script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
 2a ba 6a fb a1 2a 6f 27
 de 76 7d d4 d0 64 17 de
 f6 65 bd 10 0b c6 8c 42
@@ -246,7 +246,7 @@ d6 63 66 4e 35 77 9f b0
 
 <h4 id="inputs-and-outputs">Inputs and outputs</h4>
 
-<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="highlighter-rouge">SIGHASH</code> flag:</p>
+<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
         <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
@@ -267,7 +267,7 @@ d6 63 66 4e 35 77 9f b0
 
 <h4 id="final-structure">Final structure</h4>
 
-<p>The easiest step is assembling the transaction structure and feeding it to <code class="highlighter-rouge">bbp_tx_serialize</code>:</p>
+<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
@@ -279,9 +279,9 @@ d6 63 66 4e 35 77 9f b0
 <span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
 <span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">flag</code> parameter is set to <code class="highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
+<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
 01 00 00 00
 
 /* number of inputs (varint) */
@@ -342,7 +342,7 @@ d8 64 69 93 41 91 95 11
 
 <p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
 2d d9 c8 97 39 5c e5 1f
 dd 35 e6 35 9e dd 28 55
 c6 0f f8 23 d8 d6 57 d1 
@@ -352,7 +352,7 @@ c6 0f f8 23 d8 d6 57 d1
 
 <p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
 
-<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
+<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
 
 <p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
 
@@ -461,7 +461,7 @@ c6 0f f8 23 d8 d6 57 d1
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

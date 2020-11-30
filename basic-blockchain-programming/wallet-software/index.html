@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Wallet software" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/wallet-software/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Wallet software" />
 <meta property="og:site_name" content="Wallet software" />
 <meta property="og:description" content="Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Wallet software" />
 <meta itemprop="description" content="Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/wallet-software/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -201,7 +201,7 @@
 
 <p>Let’s see why. Consider the typical P2PKH output script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
 OP_HASH160
 [hash160(public_key)]
 OP_EQUALVERIFY
@@ -210,13 +210,13 @@ OP_CHECKSIG
 
 <p>the typical P2PKH input script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
 [public_key]
 </code></pre></div></div>
 
 <p>and the relevancy scan in pseudocode:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>outpoint = struct { txid, index };
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>outpoint = struct { txid, index };
 
 relevant_txs = {};  /* txid -&gt; tx */
 utxos = {};         /* outpoint */
@@ -268,7 +268,7 @@ for (tx in blockchain.txs) {
 
 <p>We can also compute the wallet balance from the UTXOs:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>balance = 0;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>balance = 0;
 
 for (outpoint in utxos) {
     unspent_tx = relevant_txs[outpoint.txid];
@@ -419,7 +419,7 @@ for (outpoint in utxos) {
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

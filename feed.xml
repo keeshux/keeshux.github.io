@@ -5,9 +5,9 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 06 Nov 2020 16:36:43 +0100</pubDate>
-    <lastBuildDate>Fri, 06 Nov 2020 16:36:43 +0100</lastBuildDate>
-    <generator>Jekyll v4.0.1</generator>
+    <pubDate>Mon, 30 Nov 2020 16:41:47 +0100</pubDate>
+    <lastBuildDate>Mon, 30 Nov 2020 16:41:47 +0100</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>Passepartout is an user-friendly OpenVPN client for iOS/macOS</title>
@@ -99,7 +99,7 @@
 
 &lt;p&gt;Let’s see why. Consider the typical P2PKH output script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
 OP_HASH160
 [hash160(public_key)]
 OP_EQUALVERIFY
@@ -108,13 +108,13 @@ OP_CHECKSIG
 
 &lt;p&gt;the typical P2PKH input script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
 [public_key]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;and the relevancy scan in pseudocode:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;outpoint = struct { txid, index };
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;outpoint = struct { txid, index };
 
 relevant_txs = {};  /* txid -&amp;gt; tx */
 utxos = {};         /* outpoint */
@@ -166,7 +166,7 @@ for (tx in blockchain.txs) {
 
 &lt;p&gt;We can also compute the wallet balance from the UTXOs:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;balance = 0;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;balance = 0;
 
 for (outpoint in utxos) {
     unspent_tx = relevant_txs[outpoint.txid];
@@ -272,7 +272,7 @@ for (outpoint in utxos) {
 
 &lt;p&gt;Rather than the message itself, we’ll sign its hash256 digest:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;62 44 98 0f a0 75 2e 5b
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;62 44 98 0f a0 75 2e 5b
 46 43 ed b3 53 fd a5 23
 8a 9a 3d 44 49 16 76 78
 8e fd d2 5d d6 48 55 ba
@@ -280,7 +280,7 @@ for (outpoint in utxos) {
 
 &lt;p&gt;with our &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem&quot;&gt;ECDSA private key&lt;/a&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;16 26 07 83 e4 0b 16 73
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;16 26 07 83 e4 0b 16 73
 16 73 62 2a c8 a5 b0 45
 fc 3e a4 af 70 f7 27 f3
 f9 e9 2b dd 3a 1d dc 42
@@ -288,7 +288,7 @@ f9 e9 2b dd 3a 1d dc 42
 
 &lt;p&gt;This is one DER signature I yielded (yours will differ):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44 02 20 11 1a 48 2a
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44 02 20 11 1a 48 2a
 ba 6a fb a1 2a 6f 27 de
 76 7d d4 d0 64 17 de f6
 65 bd 10 0b c6 8c 42 84
@@ -301,9 +301,9 @@ f5 e0 54 b2 c6 ca c5 d6
 
 &lt;h4 id=&quot;flag-and-assembly&quot;&gt;Flag and assembly&lt;/h4&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag (now 8-bit) is appended again to the signature, and together with the compressed &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem&quot;&gt;ECDSA public key&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag (now 8-bit) is appended again to the signature, and together with the compressed &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem&quot;&gt;ECDSA public key&lt;/a&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
 8c 39 94 75 bf 1e 73 8f
@@ -312,7 +312,7 @@ da 61 fe 91 67 4c 3a 10
 
 &lt;p&gt;we’re finally able to build our P2PKH input script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 11 1a 48
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 11 1a 48
 2a ba 6a fb a1 2a 6f 27
 de 76 7d d4 d0 64 17 de
 f6 65 bd 10 0b c6 8c 42
@@ -337,7 +337,7 @@ d6 63 66 4e 35 77 9f b0
 
 &lt;h4 id=&quot;inputs-and-outputs&quot;&gt;Inputs and outputs&lt;/h4&gt;
 
-&lt;p&gt;Like I did for outputs, I also wrote a C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag:&lt;/p&gt;
+&lt;p&gt;Like I did for outputs, I also wrote a C macro in &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt; for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_txin_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_sighash_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -358,7 +358,7 @@ d6 63 66 4e 35 77 9f b0
 
 &lt;h4 id=&quot;final-structure&quot;&gt;Final structure&lt;/h4&gt;
 
-&lt;p&gt;The easiest step is assembling the transaction structure and feeding it to &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;The easiest step is assembling the transaction structure and feeding it to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt;:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_eint32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BBP_LITTLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs_len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -370,9 +370,9 @@ d6 63 66 4e 35 77 9f b0
 &lt;span class=&quot;n&quot;&gt;rawtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;malloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rawtx_len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rawtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; to pack a signed transaction instead of a signable message. The serialized transaction is:&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter is set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt; to pack a signed transaction instead of a signable message. The serialized transaction is:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
 01 00 00 00
 
 /* number of inputs (varint) */
@@ -433,7 +433,7 @@ d8 64 69 93 41 91 95 11
 
 &lt;p&gt;and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;99 96 e2 f6 4b 6a f0 23
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;99 96 e2 f6 4b 6a f0 23
 2d d9 c8 97 39 5c e5 1f
 dd 35 e6 35 9e dd 28 55
 c6 0f f8 23 d8 d6 57 d1 
@@ -443,7 +443,7 @@ c6 0f f8 23 d8 d6 57 d1
 
 &lt;p&gt;We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.&lt;/p&gt;
 
-&lt;p&gt;For example, the &lt;a href=&quot;https://tbtc.blockr.io/tx/push&quot;&gt;Blockr push service&lt;/a&gt; (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the &lt;code class=&quot;highlighter-rouge&quot;&gt;rawtx&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c&quot;&gt;ex-tx-pack.c&lt;/a&gt; and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.&lt;/p&gt;
+&lt;p&gt;For example, the &lt;a href=&quot;https://tbtc.blockr.io/tx/push&quot;&gt;Blockr push service&lt;/a&gt; (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rawtx&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c&quot;&gt;ex-tx-pack.c&lt;/a&gt; and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.&lt;/p&gt;
 
 &lt;p&gt;However, if you try to publish our sample transaction, you’ll get the following error:&lt;/p&gt;
 
@@ -528,15 +528,15 @@ c6 0f f8 23 d8 d6 57 d1
 
 &lt;p&gt;At the very beginning of an ECDSA keypair history, the derived P2PKH address has no transaction outputs associated with it and therefore has no bitcoin value for the blockchain. When someone later publishes a transaction that sends bitcoins to our address, the keypair suddenly becomes a valuable asset. Consider our now famous Testnet address:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;and its &lt;a href=&quot;https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK&quot;&gt;blockchain history&lt;/a&gt;. Among all transactions, &lt;a href=&quot;https://api.biteasy.com/testnet/v1/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK/unspent-outputs&quot;&gt;three outputs&lt;/a&gt; are still unspent at the time of writing:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f34e1c37e736...a2f3&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;65216856608d...20c6&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;6b580bada66e...3934&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;f34e1c37e736...a2f3&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;65216856608d...20c6&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blockstream.info/testnet/tx/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6b580bada66e...3934&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;totalling a 0.951 BTC output value (= 95100000 satoshis). Specifically, these are the outputs sending money to our address:&lt;/p&gt;
@@ -550,9 +550,9 @@ c6 0f f8 23 d8 d6 57 d1
 &lt;p&gt;If you now translate the words into data structures:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;65216856608d...20c6, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;6b580bada66e...3934, 1&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;65216856608d...20c6, 0&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;6b580bada66e...3934, 1&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;you have the UTXO outpoints for our keypair/wallet. Besides making up the balance of the wallet, the importance of the UTXO set lies in that it contains the outpoints we can reuse to build our own transactions. After spending an UTXO in a transaction input, it’s removed from the set because an UTXO is always spent in its entirety.&lt;/p&gt;
@@ -563,24 +563,24 @@ c6 0f f8 23 d8 d6 57 d1
 
 &lt;p&gt;You should know by now how to build a P2PKH transaction output. Say we want to send 0.251 BTC (25100000 satoshis, little-endian):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;e0 fe 7e 01 00 00 00 00
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;e0 fe 7e 01 00 00 00 00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;to this address:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mhmhRnN58ki9zbRJ63mpNGQXoYvdMXZsXt
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mhmhRnN58ki9zbRJ63mpNGQXoYvdMXZsXt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;that decodes to the following hash160 digest:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;18 ba 14 b3 68 22 95 cb
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;18 ba 14 b3 68 22 95 cb
 05 23 0e 31 fe cb 00 08
 92 40 66 08
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s the first output of our transaction:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.251 BTC) */
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.251 BTC) */
 e0 fe 7e 01 00 00 00 00
 
 /* script length */
@@ -598,7 +598,7 @@ ac
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint64_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hash160&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Basically, the hash160 bytes are enclosed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP OP_HASH160&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUALVERIFY OP_CHECKSIG&lt;/code&gt; opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:&lt;/p&gt;
+&lt;p&gt;Basically, the hash160 bytes are enclosed in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_DUP OP_HASH160&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_EQUALVERIFY OP_CHECKSIG&lt;/code&gt; opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_txout_create_p2pkh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;s&quot;&gt;&quot;18ba14b3682295cb05230e31fecb000892406608&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -607,14 +607,14 @@ ac
 
 &lt;p&gt;Our UTXO set is worth &amp;lt;0.87, 0.001, 0.08&amp;gt; BTC respectively, so the first one:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;f34e1c37e736...a2f3, 0&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;is just enough for a 0.251 BTC output. In fact our input value exceeds the output value by 0.619 BTC, which are silently returned to the transaction miner as a fee. We know an UTXO cannot be spent partially, and since the fee is somewhat relevant to us, we add a second output for &lt;em&gt;change&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;Our final transaction will have one input and two outputs, the second being a change output that returns the exceeding input value to our own address. Here’s the second output of our transaction:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.619 BTC) */
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* value (0.619 BTC) */
 e0 84 b0 03 00 00 00 00
 
 /* script length */
@@ -649,7 +649,7 @@ ac
 &lt;ol&gt;
   &lt;li&gt;The &lt;em&gt;I&lt;/em&gt; script is set to the output script of the UTXO it refers to.&lt;/li&gt;
   &lt;li&gt;Input scripts other than &lt;em&gt;I&lt;/em&gt; are truncated to zero-length.&lt;/li&gt;
-  &lt;li&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag is appended.&lt;/li&gt;
+  &lt;li&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; flag is appended.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;For a single input transaction we won’t need to truncate any other input script:&lt;/p&gt;
@@ -675,18 +675,18 @@ ac
 &lt;p&gt;The external functions all come from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;From the previous post, you know that the &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; functions take care of sizing and serializing a transaction structure to raw bytes.&lt;/li&gt;
-  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_outpoint_fill&lt;/code&gt; function fills a &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_outpoint_t&lt;/code&gt; structure from an UTXO. The UTXO reference consist of a previous transaction txid and the output index within the transaction.&lt;/li&gt;
-  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_txin_create_signable&lt;/code&gt; function creates a fake input for our message by copying the corresponding UTXO script.&lt;/li&gt;
+  &lt;li&gt;From the previous post, you know that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; functions take care of sizing and serializing a transaction structure to raw bytes.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_outpoint_fill&lt;/code&gt; function fills a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_outpoint_t&lt;/code&gt; structure from an UTXO. The UTXO reference consist of a previous transaction txid and the output index within the transaction.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_txin_create_signable&lt;/code&gt; function creates a fake input for our message by copying the corresponding UTXO script.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Since we’ll sign all transaction inputs, we set the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter to &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;). Beware that it’s here padded to 32-bit for no apparent reason.&lt;/p&gt;
+&lt;p&gt;Since we’ll sign all transaction inputs, we set the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;01&lt;/code&gt;). Beware that it’s here padded to 32-bit for no apparent reason.&lt;/p&gt;
 
 &lt;h4 id=&quot;the-final-message&quot;&gt;The final message&lt;/h4&gt;
 
 &lt;p&gt;Here’s the subject of our input signature:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* version (32-bit) */
 01 00 00 00
 
 /* number of inputs (varint) */
@@ -738,7 +738,7 @@ d8 64 69 93 41 91 95 11
 01 00 00 00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Compare the above bytes to the &lt;code class=&quot;highlighter-rouge&quot;&gt;msg&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt;. This is also the message against which the &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; opcode validates an input signature.&lt;/p&gt;
+&lt;p&gt;Compare the above bytes to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;msg&lt;/code&gt; output from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c&quot;&gt;ex-tx-build.c&lt;/a&gt;. This is also the message against which the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; opcode validates an input signature.&lt;/p&gt;
 
 &lt;h3 id=&quot;get-the-code&quot;&gt;Get the code!&lt;/h3&gt;
 
@@ -812,7 +812,7 @@ d8 64 69 93 41 91 95 11
     &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txout_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; field is the transferred bitcoin amount in satoshis, and the &lt;code class=&quot;highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt; field is the transferred bitcoin amount in satoshis, and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.&lt;/p&gt;
 
 &lt;h4 id=&quot;outpoint&quot;&gt;Outpoint&lt;/h4&gt;
 
@@ -823,7 +823,7 @@ d8 64 69 93 41 91 95 11
     &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_outpoint_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Unsurprisingly, the &lt;code class=&quot;highlighter-rouge&quot;&gt;txid&lt;/code&gt; field is the hash256 identifier of the referred transaction (little-endian), while &lt;code class=&quot;highlighter-rouge&quot;&gt;index&lt;/code&gt; is the 0-based offset of the output in the transaction outputs array.&lt;/p&gt;
+&lt;p&gt;Unsurprisingly, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;txid&lt;/code&gt; field is the hash256 identifier of the referred transaction (little-endian), while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index&lt;/code&gt; is the 0-based offset of the output in the transaction outputs array.&lt;/p&gt;
 
 &lt;h4 id=&quot;input&quot;&gt;Input&lt;/h4&gt;
 
@@ -836,7 +836,7 @@ d8 64 69 93 41 91 95 11
     &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sequence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_txin_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;outpoint&lt;/code&gt; field is the pointer to the UTXO we want to spend. The &lt;code class=&quot;highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The &lt;code class=&quot;highlighter-rouge&quot;&gt;sequence&lt;/code&gt; field is left for advanced operations, most of the time you’ll just set it to &lt;code class=&quot;highlighter-rouge&quot;&gt;ffffffff&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;outpoint&lt;/code&gt; field is the pointer to the UTXO we want to spend. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;script_len&lt;/code&gt; (varint) plus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;script&lt;/code&gt; (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sequence&lt;/code&gt; field is left for advanced operations, most of the time you’ll just set it to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ffffffff&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;transaction&quot;&gt;Transaction&lt;/h4&gt;
 
@@ -851,11 +851,11 @@ d8 64 69 93 41 91 95 11
     &lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locktime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;version&lt;/code&gt; of a transaction is established by network consensus and is currently constant &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;. I won’t cover &lt;code class=&quot;highlighter-rouge&quot;&gt;locktime&lt;/code&gt; for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;version&lt;/code&gt; of a transaction is established by network consensus and is currently constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;. I won’t cover &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locktime&lt;/code&gt; for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.&lt;/p&gt;
 
 &lt;h3 id=&quot;serialization&quot;&gt;Serialization&lt;/h3&gt;
 
-&lt;p&gt;To make things clearer, I want to show you how to serialize a transaction in code. The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function is taken from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;To make things clearer, I want to show you how to serialize a transaction in code. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function is taken from &lt;a href=&quot;https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h&quot;&gt;tx.h&lt;/a&gt;:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bbp_tx_serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bbp_sighash_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;kt&quot;&gt;uint8_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -923,9 +923,9 @@ d8 64 69 93 41 91 95 11
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Ignore the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter and assume it’s &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; to skip the last &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on &lt;a href=&quot;/basic-blockchain-programming/serialization-part-one/&quot;&gt;blockchain serialization&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ignore the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;flag&lt;/code&gt; parameter and assume it’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt; to skip the last &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt; block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on &lt;a href=&quot;/basic-blockchain-programming/serialization-part-one/&quot;&gt;blockchain serialization&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;One last thing. The &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function expects a properly allocated byte array, so you must use &lt;code class=&quot;highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; to get the exact amount of bytes required to serialize the &lt;code class=&quot;highlighter-rouge&quot;&gt;tx&lt;/code&gt; transaction, for example:&lt;/p&gt;
+&lt;p&gt;One last thing. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_serialize&lt;/code&gt; function expects a properly allocated byte array, so you must use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bbp_tx_size&lt;/code&gt; to get the exact amount of bytes required to serialize the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tx&lt;/code&gt; transaction, for example:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;bbp_tx_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -943,12 +943,12 @@ d8 64 69 93 41 91 95 11
 
 &lt;p&gt;Here’s an example &lt;a href=&quot;https://blockstream.info/tx/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60&quot;&gt;coinbase transaction&lt;/a&gt; from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;by using a standard P2PKH output script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
 OP_HASH160
 
 [c8 25 a1 ec f2 a6 83 0c
@@ -1012,22 +1012,22 @@ OP_CHECKSIG
 
 &lt;p&gt;Consider the input script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;and the previous output script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_ADD OP_12 OP_EQUAL
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_ADD OP_12 OP_EQUAL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now join them to have the following validation script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;and see how the stack evolves:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [6]
 [6, 6]
 [12]
@@ -1035,23 +1035,23 @@ OP_CHECKSIG
 [1]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Fine, the validation script ends with 1 (&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;) on the stack, so the input script can spend the previous output script.&lt;/p&gt;
+&lt;p&gt;Fine, the validation script ends with 1 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;) on the stack, so the input script can spend the previous output script.&lt;/p&gt;
 
 &lt;h4 id=&quot;weaknesses&quot;&gt;Weaknesses&lt;/h4&gt;
 
 &lt;p&gt;In fact, many other input scripts comply, like:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_8
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_8
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;or:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;See how anybody with some basic math knowledge could easily steal the output coins. Conversely, look at this very simple output script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_FALSE
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_FALSE
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;No matter the input script, the validation script will never succeed. Any bitcoin sent to this output will be lost forever.&lt;/p&gt;
@@ -1060,7 +1060,7 @@ OP_CHECKSIG
 
 &lt;h3 id=&quot;standard-scripts&quot;&gt;Standard scripts&lt;/h3&gt;
 
-&lt;p&gt;Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the &lt;code class=&quot;highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.&lt;/p&gt;
+&lt;p&gt;Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.&lt;/p&gt;
 
 &lt;p&gt;As of Bitcoin Core 0.10, these are considered standard scripts:&lt;/p&gt;
 
@@ -1069,10 +1069,10 @@ OP_CHECKSIG
   &lt;li&gt;P2SH (pay-to-script-hash)&lt;/li&gt;
   &lt;li&gt;P2PK (pay-to-public-key)&lt;/li&gt;
   &lt;li&gt;Multisignature&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_RETURN&lt;/code&gt; metadata&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_RETURN&lt;/code&gt; metadata&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;In this course we’ll only treat the first ones. For your information, Testnet miners skip the &lt;code class=&quot;highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check completely, thus making the Testnet network suitable for trying experimental scripts.&lt;/p&gt;
+&lt;p&gt;In this course we’ll only treat the first ones. For your information, Testnet miners skip the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsStandard&lt;/code&gt; check completely, thus making the Testnet network suitable for trying experimental scripts.&lt;/p&gt;
 
 &lt;h3 id=&quot;p2pkh-scripts&quot;&gt;P2PKH scripts&lt;/h3&gt;
 
@@ -1082,7 +1082,7 @@ OP_CHECKSIG
 
 &lt;p&gt;A P2PKH output script contains a Base58Check-decoded destination address, that is the hash160 of an ECDSA public key:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_DUP
 OP_HASH160
 [hash160(public_key)]
 OP_EQUALVERIFY
@@ -1091,7 +1091,7 @@ OP_CHECKSIG
 
 &lt;p&gt;Take our sample compressed public key:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
 8c 39 94 75 bf 1e 73 8f
@@ -1100,19 +1100,19 @@ da 61 fe 91 67 4c 3a 10
 
 &lt;p&gt;and its hash160 digest:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;6b f1 9e 55 f9 4d 98 6b
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;6b f1 9e 55 f9 4d 98 6b
 46 40 c1 54 d8 64 69 93
 41 91 95 11
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;that after Testnet versioning and Base58Check encoding is displayed as:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The output script that sends money to this address is:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;76 (OP_DUP)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;76 (OP_DUP)
 a9 (OP_HASH160)
 
 14 6b f1 9e 55 f9 4d 98
@@ -1123,19 +1123,19 @@ a9 (OP_HASH160)
 ac (OP_CHECKSIG)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;14&lt;/code&gt; is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.&lt;/p&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;14&lt;/code&gt; is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.&lt;/p&gt;
 
 &lt;h4 id=&quot;input-script&quot;&gt;Input script&lt;/h4&gt;
 
 &lt;p&gt;A P2PKH input script contains a DER-encoded ECDSA signature and a raw public key, either uncompressed or compressed. In such an input script, there are no opcodes other than pushes:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
 [public_key]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For example, take the 70-bytes signature from the &lt;a href=&quot;/basic-blockchain-programming/elliptic-curve-digital-signatures/&quot;&gt;ECDSA chapter&lt;/a&gt; and append the &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; constant (&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;) to it:&lt;/p&gt;
+&lt;p&gt;For example, take the 70-bytes signature from the &lt;a href=&quot;/basic-blockchain-programming/elliptic-curve-digital-signatures/&quot;&gt;ECDSA chapter&lt;/a&gt; and append the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; constant (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;01&lt;/code&gt;) to it:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 44
 02 20
 2b 2b 52 9b db dc 93 e7
 8a f7 e0 02 28 b1 79 91
@@ -1149,11 +1149,11 @@ d5 5c b4 86 cc cf 6a f2
 01
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; suffix is an advanced topic related to &lt;a href=&quot;https://en.bitcoin.it/wiki/Contracts&quot;&gt;contracts&lt;/a&gt;. In this series we’ll stick with &lt;code class=&quot;highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; because we’ll always sign all transaction inputs.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH&lt;/code&gt; suffix is an advanced topic related to &lt;a href=&quot;https://en.bitcoin.it/wiki/Contracts&quot;&gt;contracts&lt;/a&gt;. In this series we’ll stick with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIGHASH_ALL&lt;/code&gt; because we’ll always sign all transaction inputs.&lt;/p&gt;
 
 &lt;p&gt;If you now take the public key from the previous paragraph, you have a typical input script:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 2b 2b 52
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;47 30 44 02 20 2b 2b 52
 9b db dc 93 e7 8a f7 e0
 02 28 b1 79 91 8b 03 2d
 76 90 2f 74 ef 45 44 26
@@ -1170,13 +1170,13 @@ d3 d4 cf 7c b9 24 34 d5
 1d 28
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;47&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;21&lt;/code&gt; are the hex lengths of the pushed signature and public key respectively.&lt;/p&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;47&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;21&lt;/code&gt; are the hex lengths of the pushed signature and public key respectively.&lt;/p&gt;
 
 &lt;h4 id=&quot;validation&quot;&gt;Validation&lt;/h4&gt;
 
 &lt;p&gt;If we want to spend the money we received on our sample address, we must provide a specific input script so that the composite validation script succeeds. If the input is “authentic”, the following script will return non-zero:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[signature]
 [public_key]
 OP_DUP
 OP_HASH160
@@ -1195,12 +1195,12 @@ OP_CHECKSIG
   &lt;li&gt;The output hash160 is pushed.&lt;/li&gt;
   &lt;li&gt;Input and output hash160 are popped then checked for equality.&lt;/li&gt;
   &lt;li&gt;The input signature is verified against the public key.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; is pushed as a result of successful signature verification.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; is pushed as a result of successful signature verification.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;Let’s see what happens on the stack:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [signature]
 [signature, public_key]
 [signature, public_key, public_key]
@@ -1210,7 +1210,7 @@ OP_CHECKSIG
 [1]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The final stack holds &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;, so the transaction input is legit. Along the road, two constraints were satisfied:&lt;/p&gt;
+&lt;p&gt;The final stack holds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;, so the transaction input is legit. Along the road, two constraints were satisfied:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;The public key in the input script must hash to the Bitcoin address in the output script (step 6).&lt;/li&gt;
@@ -1270,31 +1270,31 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;93&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;93&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;94&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;94&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Both are totally stack-based operations, meaning that they take no explicit argument. &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.&lt;/p&gt;
+&lt;p&gt;Both are totally stack-based operations, meaning that they take no explicit argument. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_ADD&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_SUB&lt;/code&gt;) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.&lt;/p&gt;
 
 &lt;p&gt;Example:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;55 59 93 56 94
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;55 59 93 56 94
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;or:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_5 OP_9 OP_ADD OP_6 OP_SUB
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_5 OP_9 OP_ADD OP_6 OP_SUB
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [5]
 [5, 9]
 [14]
@@ -1317,27 +1317,27 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;87&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;87&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; pops and compares the top two items on the stack, then pushes &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if they’re equal or &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; pops and compares the top two items on the stack, then pushes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if they’re equal or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise.&lt;/p&gt;
 
 &lt;p&gt;Example:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02 c3 72 02 03 72 01 c0 93 87
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;02 c3 72 02 03 72 01 c0 93 87
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;or:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [c3 72]
 [c3 72, 03 72]
 [c3 72, 03 72, c0]
@@ -1345,7 +1345,7 @@ OP_CHECKSIG
 [1]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;It’s worth noting that the script eventually “succeeds”, because it returns &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It’s worth noting that the script eventually “succeeds”, because it returns &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;stack-manipulation&quot;&gt;Stack manipulation&lt;/h4&gt;
 
@@ -1360,33 +1360,33 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;76&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;76&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt; takes no arguments, it just duplicates the top stack item.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt; takes no arguments, it just duplicates the top stack item.&lt;/p&gt;
 
 &lt;p&gt;Example:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;04 b9 0c a2 fe 76 87
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;04 b9 0c a2 fe 76 87
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;or:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[b9 0c a2 fe] OP_DUP OP_EQUAL
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[b9 0c a2 fe] OP_DUP OP_EQUAL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [b9 0c a2 fe]
 [b9 0c a2 fe, b9 0c a2 fe]
 [1]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Obviously, the script succeeds, since &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; would never fail after &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;Obviously, the script succeeds, since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_EQUAL&lt;/code&gt; would never fail after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_DUP&lt;/code&gt;!&lt;/p&gt;
 
 &lt;h4 id=&quot;crypto&quot;&gt;Crypto&lt;/h4&gt;
 
@@ -1401,19 +1401,19 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;a9&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a9&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ac&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ac&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt; pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_HASH160&lt;/code&gt; pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if the signature is valid for that public key or &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise. It’s the Script version of OpenSSL’s &lt;code class=&quot;highlighter-rouge&quot;&gt;ECDSA_verify&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_CHECKSIG&lt;/code&gt; pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; if the signature is valid for that public key or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; otherwise. It’s the Script version of OpenSSL’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ECDSA_verify&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Both opcodes will be described in the next post.&lt;/p&gt;
 
@@ -1492,17 +1492,17 @@ OP_CHECKSIG
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;SET(V)&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ab&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ab&lt;/code&gt; V&lt;/td&gt;
       &lt;td&gt;16-bit&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;ADD(V)&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ac&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ac&lt;/code&gt; V&lt;/td&gt;
       &lt;td&gt;16-bit&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;MUL(V)&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ad&lt;/code&gt; V&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ad&lt;/code&gt; V&lt;/td&gt;
       &lt;td&gt;16-bit&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -1518,22 +1518,22 @@ OP_CHECKSIG
 
 &lt;p&gt;A compiler for such a CPU would generate these 9 bytes of machine code:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ab 23 00 ac 4b 00 ad 1e 00
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ab 23 00 ac 4b 00 ad 1e 00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s how it’s interpreted:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Load the register with the value &lt;code class=&quot;highlighter-rouge&quot;&gt;23&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Add &lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt; to the register, that is now &lt;code class=&quot;highlighter-rouge&quot;&gt;23 + 4b = 6e&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Multiply the register by &lt;code class=&quot;highlighter-rouge&quot;&gt;1e&lt;/code&gt;, yielding &lt;code class=&quot;highlighter-rouge&quot;&gt;6e * 1e = ce4&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Load the register with the value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;23&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4b&lt;/code&gt; to the register, that is now &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;23 + 4b = 6e&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiply the register by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1e&lt;/code&gt;, yielding &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6e * 1e = ce4&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;The register holds the final result, that is &lt;code class=&quot;highlighter-rouge&quot;&gt;ce4&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The register holds the final result, that is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ce4&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;stack-memory&quot;&gt;Stack memory&lt;/h4&gt;
 
-&lt;p&gt;Most of the time, we need to track complex program states with &lt;em&gt;variables&lt;/em&gt;. In C, depending on whether a variable is allocated statically or with &lt;code class=&quot;highlighter-rouge&quot;&gt;malloc&lt;/code&gt;, it’s stored in a differently arranged memory. While &lt;code class=&quot;highlighter-rouge&quot;&gt;malloc&lt;/code&gt;-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called &lt;em&gt;stack&lt;/em&gt;. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.&lt;/p&gt;
+&lt;p&gt;Most of the time, we need to track complex program states with &lt;em&gt;variables&lt;/em&gt;. In C, depending on whether a variable is allocated statically or with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;malloc&lt;/code&gt;, it’s stored in a differently arranged memory. While &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;malloc&lt;/code&gt;-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called &lt;em&gt;stack&lt;/em&gt;. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.&lt;/p&gt;
 
 &lt;p&gt;Consider this dummy function:&lt;/p&gt;
 
@@ -1556,24 +1556,24 @@ OP_CHECKSIG
 
 &lt;p&gt;The stack is initially empty (1):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then, three variables are pushed (2):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12]
 [12, a4 00]
 [12, a4 00, e7 a5 02 00]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;A fourth variable is assigned the sum of the others and pushed onto the stack (3):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00, 9d a6 02 00]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00, 9d a6 02 00]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The tip of the stack is the return value and is sent back to the function caller by other means. Each temporary stack variable is popped at the end of the block (4), because the push/pop operations must be balanced so that the stack always goes back to its initial state:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[12, a4 00, e7 a5 02 00]
 [12, a4 00]
 [12]
 []
@@ -1606,31 +1606,31 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_0&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;00&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_0&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;00&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_1&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_16&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;51&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;60&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_1&lt;/code&gt;-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_16&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;51&lt;/code&gt;-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;60&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;By convention, &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_0&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_1&lt;/code&gt; also express the boolean &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; (zero) and &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; (non-zero).&lt;/p&gt;
+&lt;p&gt;By convention, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_0&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_1&lt;/code&gt; also express the boolean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_FALSE&lt;/code&gt; (zero) and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_TRUE&lt;/code&gt; (non-zero).&lt;/p&gt;
 
 &lt;p&gt;Example:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;54 57 00 60
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;54 57 00 60
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;or:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_7 OP_0 OP_16
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OP_4 OP_7 OP_0 OP_16
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s how the stack evolves:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
 [4]
 [4, 7]
 [4, 7, 0]
@@ -1654,41 +1654,41 @@ OP_CHECKSIG
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4c&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4c&lt;/code&gt; L D&lt;/td&gt;
       &lt;td&gt;8-bit&lt;/td&gt;
       &lt;td&gt;L bytes&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA2&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4d&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_PUSHDATA2&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4d&lt;/code&gt; L D&lt;/td&gt;
       &lt;td&gt;16-bit&lt;/td&gt;
       &lt;td&gt;L bytes&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA4&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;4e&lt;/code&gt; L D&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_PUSHDATA4&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4e&lt;/code&gt; L D&lt;/td&gt;
       &lt;td&gt;32-bit&lt;/td&gt;
       &lt;td&gt;L bytes&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;For example, if your data length can be stored as a 8-bit number, then &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; is your best choice. Look at this:&lt;/p&gt;
+&lt;p&gt;For example, if your data length can be stored as a 8-bit number, then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; is your best choice. Look at this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;4c 14 11 06 03 55 04 8a
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;4c 14 11 06 03 55 04 8a
 0c 70 3e 63 2e 31 26 30
 24 06 6c 95 20 30
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The first byte is clearly a &lt;code class=&quot;highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; opcode, followed by a 1-byte length of &lt;code class=&quot;highlighter-rouge&quot;&gt;14&lt;/code&gt; that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:&lt;/p&gt;
+&lt;p&gt;The first byte is clearly a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OP_PUSHDATA1&lt;/code&gt; opcode, followed by a 1-byte length of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;14&lt;/code&gt; that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[11 06 03 55 04 8a 0c 70
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[11 06 03 55 04 8a 0c 70
  3e 63 2e 31 26 30 24 06
  6c 95 20 30]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Indeed –like with &lt;a href=&quot;/basic-blockchain-programming/serialization-part-two/&quot;&gt;varints&lt;/a&gt;–, there’s a special encoding for very short data. If an opcode lies between &lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt; (included), it’s a push data operation where the opcode itself is the length in bytes:&lt;/p&gt;
+&lt;p&gt;Indeed –like with &lt;a href=&quot;/basic-blockchain-programming/serialization-part-two/&quot;&gt;varints&lt;/a&gt;–, there’s a special encoding for very short data. If an opcode lies between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;01&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4b&lt;/code&gt; (included), it’s a push data operation where the opcode itself is the length in bytes:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -1703,7 +1703,7 @@ OP_CHECKSIG
     &lt;tr&gt;
       &lt;td&gt;L&lt;/td&gt;
       &lt;td&gt;L D&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;01&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;4b&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;01&lt;/code&gt;-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4b&lt;/code&gt;&lt;/td&gt;
       &lt;td&gt;L bytes&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -1711,12 +1711,12 @@ OP_CHECKSIG
 
 &lt;p&gt;For example, in the string:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;07 8f 49 b2 e2 ec 7c 44
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;07 8f 49 b2 e2 ec 7c 44
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;the opcode &lt;code class=&quot;highlighter-rouge&quot;&gt;07&lt;/code&gt; means that 7 bytes of data are to be pushed:&lt;/p&gt;
+&lt;p&gt;the opcode &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;07&lt;/code&gt; means that 7 bytes of data are to be pushed:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[8f 49 b2 e2 ec 7c 44]
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[8f 49 b2 e2 ec 7c 44]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;next-block-in-chain&quot;&gt;Next block in chain?&lt;/h3&gt;

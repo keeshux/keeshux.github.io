@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="The Bitcoin Script language (pt. 1)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="The Bitcoin Script language (pt. 1)" />
 <meta property="og:site_name" content="The Bitcoin Script language (pt. 1)" />
 <meta property="og:description" content="Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="The Bitcoin Script language (pt. 1)" />
 <meta itemprop="description" content="Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -200,17 +200,17 @@
   <tbody>
     <tr>
       <td>SET(V)</td>
-      <td><code class="highlighter-rouge">ab</code> V</td>
+      <td><code class="language-plaintext highlighter-rouge">ab</code> V</td>
       <td>16-bit</td>
     </tr>
     <tr>
       <td>ADD(V)</td>
-      <td><code class="highlighter-rouge">ac</code> V</td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code> V</td>
       <td>16-bit</td>
     </tr>
     <tr>
       <td>MUL(V)</td>
-      <td><code class="highlighter-rouge">ad</code> V</td>
+      <td><code class="language-plaintext highlighter-rouge">ad</code> V</td>
       <td>16-bit</td>
     </tr>
   </tbody>
@@ -226,22 +226,22 @@
 
 <p>A compiler for such a CPU would generate these 9 bytes of machine code:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ab 23 00 ac 4b 00 ad 1e 00
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ab 23 00 ac 4b 00 ad 1e 00
 </code></pre></div></div>
 
 <p>Here’s how it’s interpreted:</p>
 
 <ol>
-  <li>Load the register with the value <code class="highlighter-rouge">23</code>.</li>
-  <li>Add <code class="highlighter-rouge">4b</code> to the register, that is now <code class="highlighter-rouge">23 + 4b = 6e</code>.</li>
-  <li>Multiply the register by <code class="highlighter-rouge">1e</code>, yielding <code class="highlighter-rouge">6e * 1e = ce4</code>.</li>
+  <li>Load the register with the value <code class="language-plaintext highlighter-rouge">23</code>.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">4b</code> to the register, that is now <code class="language-plaintext highlighter-rouge">23 + 4b = 6e</code>.</li>
+  <li>Multiply the register by <code class="language-plaintext highlighter-rouge">1e</code>, yielding <code class="language-plaintext highlighter-rouge">6e * 1e = ce4</code>.</li>
 </ol>
 
-<p>The register holds the final result, that is <code class="highlighter-rouge">ce4</code>.</p>
+<p>The register holds the final result, that is <code class="language-plaintext highlighter-rouge">ce4</code>.</p>
 
 <h4 id="stack-memory">Stack memory</h4>
 
-<p>Most of the time, we need to track complex program states with <em>variables</em>. In C, depending on whether a variable is allocated statically or with <code class="highlighter-rouge">malloc</code>, it’s stored in a differently arranged memory. While <code class="highlighter-rouge">malloc</code>-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called <em>stack</em>. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.</p>
+<p>Most of the time, we need to track complex program states with <em>variables</em>. In C, depending on whether a variable is allocated statically or with <code class="language-plaintext highlighter-rouge">malloc</code>, it’s stored in a differently arranged memory. While <code class="language-plaintext highlighter-rouge">malloc</code>-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called <em>stack</em>. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.</p>
 
 <p>Consider this dummy function:</p>
 
@@ -264,24 +264,24 @@
 
 <p>The stack is initially empty (1):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 </code></pre></div></div>
 
 <p>Then, three variables are pushed (2):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12]
 [12, a4 00]
 [12, a4 00, e7 a5 02 00]
 </code></pre></div></div>
 
 <p>A fourth variable is assigned the sum of the others and pushed onto the stack (3):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00, 9d a6 02 00]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00, 9d a6 02 00]
 </code></pre></div></div>
 
 <p>The tip of the stack is the return value and is sent back to the function caller by other means. Each temporary stack variable is popped at the end of the block (4), because the push/pop operations must be balanced so that the stack always goes back to its initial state:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00]
 [12, a4 00]
 [12]
 []
@@ -314,31 +314,31 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_0</code></td>
-      <td><code class="highlighter-rouge">00</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_0</code></td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">OP_1</code>-<code class="highlighter-rouge">OP_16</code></td>
-      <td><code class="highlighter-rouge">51</code>-<code class="highlighter-rouge">60</code></td>
+      <td><code class="language-plaintext highlighter-rouge">OP_1</code>-<code class="language-plaintext highlighter-rouge">OP_16</code></td>
+      <td><code class="language-plaintext highlighter-rouge">51</code>-<code class="language-plaintext highlighter-rouge">60</code></td>
     </tr>
   </tbody>
 </table>
 
-<p>By convention, <code class="highlighter-rouge">OP_0</code> and <code class="highlighter-rouge">OP_1</code> also express the boolean <code class="highlighter-rouge">OP_FALSE</code> (zero) and <code class="highlighter-rouge">OP_TRUE</code> (non-zero).</p>
+<p>By convention, <code class="language-plaintext highlighter-rouge">OP_0</code> and <code class="language-plaintext highlighter-rouge">OP_1</code> also express the boolean <code class="language-plaintext highlighter-rouge">OP_FALSE</code> (zero) and <code class="language-plaintext highlighter-rouge">OP_TRUE</code> (non-zero).</p>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>54 57 00 60
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>54 57 00 60
 </code></pre></div></div>
 
 <p>or:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_7 OP_0 OP_16
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_7 OP_0 OP_16
 </code></pre></div></div>
 
 <p>Here’s how the stack evolves:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [4]
 [4, 7]
 [4, 7, 0]
@@ -362,41 +362,41 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">OP_PUSHDATA1</code></td>
-      <td><code class="highlighter-rouge">4c</code> L D</td>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4c</code> L D</td>
       <td>8-bit</td>
       <td>L bytes</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">OP_PUSHDATA2</code></td>
-      <td><code class="highlighter-rouge">4d</code> L D</td>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4d</code> L D</td>
       <td>16-bit</td>
       <td>L bytes</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">OP_PUSHDATA4</code></td>
-      <td><code class="highlighter-rouge">4e</code> L D</td>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4e</code> L D</td>
       <td>32-bit</td>
       <td>L bytes</td>
     </tr>
   </tbody>
 </table>
 
-<p>For example, if your data length can be stored as a 8-bit number, then <code class="highlighter-rouge">OP_PUSHDATA1</code> is your best choice. Look at this:</p>
+<p>For example, if your data length can be stored as a 8-bit number, then <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> is your best choice. Look at this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4c 14 11 06 03 55 04 8a
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4c 14 11 06 03 55 04 8a
 0c 70 3e 63 2e 31 26 30
 24 06 6c 95 20 30
 </code></pre></div></div>
 
-<p>The first byte is clearly a <code class="highlighter-rouge">OP_PUSHDATA1</code> opcode, followed by a 1-byte length of <code class="highlighter-rouge">14</code> that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:</p>
+<p>The first byte is clearly a <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> opcode, followed by a 1-byte length of <code class="language-plaintext highlighter-rouge">14</code> that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[11 06 03 55 04 8a 0c 70
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[11 06 03 55 04 8a 0c 70
  3e 63 2e 31 26 30 24 06
  6c 95 20 30]
 </code></pre></div></div>
 
-<p>Indeed –like with <a href="/basic-blockchain-programming/serialization-part-two/">varints</a>–, there’s a special encoding for very short data. If an opcode lies between <code class="highlighter-rouge">01</code> and <code class="highlighter-rouge">4b</code> (included), it’s a push data operation where the opcode itself is the length in bytes:</p>
+<p>Indeed –like with <a href="/basic-blockchain-programming/serialization-part-two/">varints</a>–, there’s a special encoding for very short data. If an opcode lies between <code class="language-plaintext highlighter-rouge">01</code> and <code class="language-plaintext highlighter-rouge">4b</code> (included), it’s a push data operation where the opcode itself is the length in bytes:</p>
 
 <table>
   <thead>
@@ -411,7 +411,7 @@
     <tr>
       <td>L</td>
       <td>L D</td>
-      <td><code class="highlighter-rouge">01</code>-<code class="highlighter-rouge">4b</code></td>
+      <td><code class="language-plaintext highlighter-rouge">01</code>-<code class="language-plaintext highlighter-rouge">4b</code></td>
       <td>L bytes</td>
     </tr>
   </tbody>
@@ -419,12 +419,12 @@
 
 <p>For example, in the string:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>07 8f 49 b2 e2 ec 7c 44
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>07 8f 49 b2 e2 ec 7c 44
 </code></pre></div></div>
 
-<p>the opcode <code class="highlighter-rouge">07</code> means that 7 bytes of data are to be pushed:</p>
+<p>the opcode <code class="language-plaintext highlighter-rouge">07</code> means that 7 bytes of data are to be pushed:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[8f 49 b2 e2 ec 7c 44]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[8f 49 b2 e2 ec 7c 44]
 </code></pre></div></div>
 
 <h3 id="next-block-in-chain">Next block in chain?</h3>
@@ -520,7 +520,7 @@
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

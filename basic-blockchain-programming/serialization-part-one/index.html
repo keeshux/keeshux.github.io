@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Serialization (pt. 1)" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what int..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Serialization (pt. 1)" />
 <meta property="og:site_name" content="Serialization (pt. 1)" />
 <meta property="og:description" content="Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what int..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Serialization (pt. 1)" />
 <meta itemprop="description" content="Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what int..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -169,7 +169,7 @@
 
         
 
-        <p>Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what <code class="highlighter-rouge">int</code> and <code class="highlighter-rouge">char</code> mean before defining a custom <code class="highlighter-rouge">struct</code>.</p>
+        <p>Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what <code class="language-plaintext highlighter-rouge">int</code> and <code class="language-plaintext highlighter-rouge">char</code> mean before defining a custom <code class="language-plaintext highlighter-rouge">struct</code>.</p>
 
 <!--more-->
 
@@ -195,9 +195,9 @@
 
 <p>If the machine is little-endian, the numbers are stored without additional manipulation. If not, their bytes are reversed.</p>
 
-<p>The resulting <code class="highlighter-rouge">ser</code> array (15 bytes):</p>
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (15 bytes):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01
 23 45
 67 89 ab cd
 ef 12 34 56 78 9a bc de
@@ -205,11 +205,11 @@ ef 12 34 56 78 9a bc de
 
 <h3 id="fixed-length-data">Fixed-length data</h3>
 
-<p>By fixed-length data I mean data whose length is known in advance and therefore doesn’t need to be attached. In actual code, <code class="highlighter-rouge">memcpy</code> is all we need to serialize binary data.</p>
+<p>By fixed-length data I mean data whose length is known in advance and therefore doesn’t need to be attached. In actual code, <code class="language-plaintext highlighter-rouge">memcpy</code> is all we need to serialize binary data.</p>
 
 <h4 id="null-padded-strings">Null-padded strings</h4>
 
-<p>Fixed-length strings are encoded in UTF-8 and padded with <code class="highlighter-rouge">\0</code> characters up to the desired length. This is the case of the Bitcoin p2p protocol, where messages are identified by human-readable names like <code class="highlighter-rouge">version</code>, <code class="highlighter-rouge">tx</code>, <code class="highlighter-rouge">getblocks</code> etc. with a maximum length of 12 characters. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-fixed-strings.c">ex-fixed-strings.c</a>:</p>
+<p>Fixed-length strings are encoded in UTF-8 and padded with <code class="language-plaintext highlighter-rouge">\0</code> characters up to the desired length. This is the case of the Bitcoin p2p protocol, where messages are identified by human-readable names like <code class="language-plaintext highlighter-rouge">version</code>, <code class="language-plaintext highlighter-rouge">tx</code>, <code class="language-plaintext highlighter-rouge">getblocks</code> etc. with a maximum length of 12 characters. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-fixed-strings.c">ex-fixed-strings.c</a>:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint32_t</span> <span class="n">n32</span> <span class="o">=</span> <span class="mh">0x68f7a38b</span><span class="p">;</span>
 <span class="kt">char</span> <span class="n">str</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"FooBar"</span><span class="p">;</span>
@@ -232,9 +232,9 @@ ef 12 34 56 78 9a bc de
 <span class="p">}</span>
 <span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">str_len</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint16</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n16</span><span class="p">);</span></code></pre></figure>
 
-<p>The resulting <code class="highlighter-rouge">ser</code> array (16 bytes):</p>
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (16 bytes):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8b a3 f7 68
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8b a3 f7 68
 46 6f 6f 42 61 72 00 00 00 00
 12 ee
 </code></pre></div></div>
@@ -252,9 +252,9 @@ ef 12 34 56 78 9a bc de
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span></code></pre></figure>
 
-<p>The SHA-256 algorithm yields a 256-bit digest, so we allocate an array of 32 bytes in advance. <code class="highlighter-rouge">SHA256_DIGEST_LENGTH</code> would be equivalent here, but I want to be as explicit as possible. The SHA-256 digest for the “Hello Bitcoin!” string is:</p>
+<p>The SHA-256 algorithm yields a 256-bit digest, so we allocate an array of 32 bytes in advance. <code class="language-plaintext highlighter-rouge">SHA256_DIGEST_LENGTH</code> would be equivalent here, but I want to be as explicit as possible. The SHA-256 digest for the “Hello Bitcoin!” string is:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>51 8a d5 a3 75 fa 52 f8
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>51 8a d5 a3 75 fa 52 f8
 4b 2b 3d f7 93 3a d6 85
 eb 62 cf 69 86 9a 96 73
 15 61 f9 4d 10 82 6b 5c
@@ -266,13 +266,13 @@ eb 62 cf 69 86 9a 96 73
 
 <p>we get the hash256 digest:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>90 98 6e a4 e2 8b 84 7c
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>90 98 6e a4 e2 8b 84 7c
 c7 f9 be ba 87 ea 81 b2
 21 ca 6e af 98 28 a8 b0
 4c 29 0c 21 d8 91 bc da
 </code></pre></div></div>
 
-<p>with <code class="highlighter-rouge">90</code> being the MSB because SHA-256 works big-endian. Final packing:</p>
+<p>with <code class="language-plaintext highlighter-rouge">90</code> being the MSB because SHA-256 works big-endian. Final packing:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">ser</span><span class="p">[</span><span class="mi">35</span><span class="p">];</span>
 
@@ -280,9 +280,9 @@ c7 f9 be ba 87 ea 81 b2
 <span class="n">memcpy</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
 <span class="o">*</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span> <span class="o">=</span> <span class="n">suffix</span><span class="p">;</span></code></pre></figure>
 
-<p>The resulting <code class="highlighter-rouge">ser</code> array (35 bytes):</p>
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (35 bytes):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7f d1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7f d1
 90 98 6e a4 e2 8b 84 7c
 c7 f9 be ba 87 ea 81 b2
 21 ca 6e af 98 28 a8 b0
@@ -381,7 +381,7 @@ c7 f9 be ba 87 ea 81 b2
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

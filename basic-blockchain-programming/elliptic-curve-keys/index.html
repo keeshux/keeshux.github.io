@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Elliptic-curve keys" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-keys/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="In the previous post I gave you an overview of public-key cryptography and its relation with the blockchain. You’re about to familiarize with real crypto functions to generate Bitcoin keypairs. In the hope of making the topic as clear as..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Elliptic-curve keys" />
 <meta property="og:site_name" content="Elliptic-curve keys" />
 <meta property="og:description" content="In the previous post I gave you an overview of public-key cryptography and its relation with the blockchain. You’re about to familiarize with real crypto functions to generate Bitcoin keypairs. In the hope of making the topic as clear as..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Elliptic-curve keys" />
 <meta itemprop="description" content="In the previous post I gave you an overview of public-key cryptography and its relation with the blockchain. You’re about to familiarize with real crypto functions to generate Bitcoin keypairs. In the hope of making the topic as clear as..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-keys/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/keys-as-property/" title="Keys as property" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -198,17 +198,17 @@
 
 <p>Getting a new, random key is straightforward:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ecparam -name secp256k1 -genkey -out ec-priv.pem
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ecparam -name secp256k1 -genkey -out ec-priv.pem
 </code></pre></div></div>
 
 <p>The output file <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ec-priv.pem</a> includes the curve name (secp256k1) and the private key, both encoded base64 with other additional stuff. The file can be quickly decoded to text so that you can see the raw hexes:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -text -noout
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -text -noout
 </code></pre></div></div>
 
 <p>Here’s what my keypair looks like (your output will differ):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
 Private-Key: (256 bit)
 priv:
     16:26:07:83:e4:0b:16:73:16:73:62:2a:c8:a5:b0:
@@ -225,7 +225,7 @@ ASN1 OID: secp256k1
 
 <p>where the private key is better displayed as:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
 16 73 62 2a c8 a5 b0 45
 fc 3e a4 af 70 f7 27 f3
 f9 e9 2b dd 3a 1d dc 42
@@ -243,17 +243,17 @@ f9 e9 2b dd 3a 1d dc 42
 
 <p>From the private key, it’s possible to take out the public part and store it to an external file I called <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ec-pub.pem</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -pubout -out ec-pub.pem
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -pubout -out ec-pub.pem
 </code></pre></div></div>
 
 <p>If we now decode the public key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout
 </code></pre></div></div>
 
 <p>the text description will obviously not include the private key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
 Private-Key: (256 bit)
 pub: 
     04:82:00:6e:93:98:a6:98:6e:da:61:fe:91:67:4c:
@@ -266,7 +266,7 @@ ASN1 OID: secp256k1
 
 <p>A more readable version:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04
 
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
@@ -282,14 +282,14 @@ b1 d8 6f 85 c0 38 a5 8c
 <p>The uncompressed conversion form takes 65 bytes:</p>
 
 <ul>
-  <li>The constant <code class="highlighter-rouge">04</code> prefix.</li>
+  <li>The constant <code class="language-plaintext highlighter-rouge">04</code> prefix.</li>
   <li>The 32-byte \(x\) coordinate.</li>
   <li>The 32-byte \(y\) coordinate.</li>
 </ul>
 
-<p>It’s easy to convert an uncompressed public key to the compressed form, we just omit the \(y\) and change the prefix according to its value. The first byte becomes <code class="highlighter-rouge">02</code> for even values of \(y\) and <code class="highlighter-rouge">03</code> for odd values. My \(y\) ends with <code class="highlighter-rouge">8c</code>, so the new prefix is <code class="highlighter-rouge">02</code>:</p>
+<p>It’s easy to convert an uncompressed public key to the compressed form, we just omit the \(y\) and change the prefix according to its value. The first byte becomes <code class="language-plaintext highlighter-rouge">02</code> for even values of \(y\) and <code class="language-plaintext highlighter-rouge">03</code> for odd values. My \(y\) ends with <code class="language-plaintext highlighter-rouge">8c</code>, so the new prefix is <code class="language-plaintext highlighter-rouge">02</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
 
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
@@ -299,12 +299,12 @@ da 61 fe 91 67 4c 3a 10
 
 <p>The same is accomplished with:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout -conv_form compressed
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout -conv_form compressed
 </code></pre></div></div>
 
 <p>that yields:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
 Private-Key: (256 bit)
 pub: 
     02:82:00:6e:93:98:a6:98:6e:da:61:fe:91:67:4c:
@@ -316,7 +316,7 @@ ASN1 OID: secp256k1
 <p>In conclusion, the compressed conversion form takes 33 bytes:</p>
 
 <ul>
-  <li>The constant <code class="highlighter-rouge">02</code> or <code class="highlighter-rouge">03</code> prefix.</li>
+  <li>The constant <code class="language-plaintext highlighter-rouge">02</code> or <code class="language-plaintext highlighter-rouge">03</code> prefix.</li>
   <li>The 32-byte \(x\) coordinate.</li>
 </ul>
 
@@ -329,24 +329,24 @@ ASN1 OID: secp256k1
 <p>Let’s analyze part of its code together. Several OpenSSL data structures are involved:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">BN_CTX</code>, <code class="highlighter-rouge">BIGNUM</code></li>
-  <li><code class="highlighter-rouge">EC_KEY</code></li>
-  <li><code class="highlighter-rouge">EC_GROUP</code>, <code class="highlighter-rouge">EC_POINT</code></li>
+  <li><code class="language-plaintext highlighter-rouge">BN_CTX</code>, <code class="language-plaintext highlighter-rouge">BIGNUM</code></li>
+  <li><code class="language-plaintext highlighter-rouge">EC_KEY</code></li>
+  <li><code class="language-plaintext highlighter-rouge">EC_GROUP</code>, <code class="language-plaintext highlighter-rouge">EC_POINT</code></li>
 </ul>
 
-<p>The first two <code class="highlighter-rouge">struct</code>s belong to the arbitrary-precision arithmetic area of OpenSSL, because we need to deal with very big numbers. All the other types relate to EC crypto. <code class="highlighter-rouge">EC_KEY</code> can be a full keypair (private + public) or just a public key, whereas <code class="highlighter-rouge">EC_GROUP</code> and <code class="highlighter-rouge">EC_POINT</code> help us calculate the public key from a private key.</p>
+<p>The first two <code class="language-plaintext highlighter-rouge">struct</code>s belong to the arbitrary-precision arithmetic area of OpenSSL, because we need to deal with very big numbers. All the other types relate to EC crypto. <code class="language-plaintext highlighter-rouge">EC_KEY</code> can be a full keypair (private + public) or just a public key, whereas <code class="language-plaintext highlighter-rouge">EC_GROUP</code> and <code class="language-plaintext highlighter-rouge">EC_POINT</code> help us calculate the public key from a private key.</p>
 
-<p>Most importantly, we create an <code class="highlighter-rouge">EC_KEY</code> structure to hold the keypair:</p>
+<p>Most importantly, we create an <code class="language-plaintext highlighter-rouge">EC_KEY</code> structure to hold the keypair:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">key</span> <span class="o">=</span> <span class="n">EC_KEY_new_by_curve_name</span><span class="p">(</span><span class="n">NID_secp256k1</span><span class="p">);</span></code></pre></figure>
 
-<p>Loading the private key is easy, but requires an intermediate step. Before feeding the input <code class="highlighter-rouge">priv_bytes</code> to the keypair, we need to translate it to a <code class="highlighter-rouge">BIGNUM</code>, here named <code class="highlighter-rouge">priv</code>:</p>
+<p>Loading the private key is easy, but requires an intermediate step. Before feeding the input <code class="language-plaintext highlighter-rouge">priv_bytes</code> to the keypair, we need to translate it to a <code class="language-plaintext highlighter-rouge">BIGNUM</code>, here named <code class="language-plaintext highlighter-rouge">priv</code>:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">BN_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span>
 <span class="n">BN_bin2bn</span><span class="p">(</span><span class="n">priv_bytes</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span>
 <span class="n">EC_KEY_set_private_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span></code></pre></figure>
 
-<p>For complex big numbers operations, OpenSSL needs a context, that’s why a <code class="highlighter-rouge">BN_CTX</code> is also created. The public key derivation needs a deeper understanding of EC math, which is not the aim of this series. Basically, we locate a fixed point \(G\) on the curve (the <em>generator</em>, <code class="highlighter-rouge">group</code> in the code) and multiply it by the scalar private key \(n\), a virtually irreversible operation in modular arithmetic. The resulting \(P = n * G\) is a second point, the public key <code class="highlighter-rouge">pub</code>. Eventually, the public key is loaded into the keypair:</p>
+<p>For complex big numbers operations, OpenSSL needs a context, that’s why a <code class="language-plaintext highlighter-rouge">BN_CTX</code> is also created. The public key derivation needs a deeper understanding of EC math, which is not the aim of this series. Basically, we locate a fixed point \(G\) on the curve (the <em>generator</em>, <code class="language-plaintext highlighter-rouge">group</code> in the code) and multiply it by the scalar private key \(n\), a virtually irreversible operation in modular arithmetic. The resulting \(P = n * G\) is a second point, the public key <code class="language-plaintext highlighter-rouge">pub</code>. Eventually, the public key is loaded into the keypair:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">ctx</span> <span class="o">=</span> <span class="n">BN_CTX_new</span><span class="p">();</span>
 <span class="n">BN_CTX_start</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
@@ -360,7 +360,7 @@ ASN1 OID: secp256k1
 
 <h3 id="example">Example</h3>
 
-<p>It’s finally time to test our keypair in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-ec-keypair.c">ex-ec-keypair.c</a>. We expect the code to output the same results we got from <code class="highlighter-rouge">openssl</code> on the command line, given that <code class="highlighter-rouge">priv_bytes</code> holds our sample private key:</p>
+<p>It’s finally time to test our keypair in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-ec-keypair.c">ex-ec-keypair.c</a>. We expect the code to output the same results we got from <code class="language-plaintext highlighter-rouge">openssl</code> on the command line, given that <code class="language-plaintext highlighter-rouge">priv_bytes</code> holds our sample private key:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">priv_bytes</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
    <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span>
@@ -414,14 +414,14 @@ ASN1 OID: secp256k1
 <p>The test proceeds this way:</p>
 
 <ol>
-  <li>Initializes an <code class="highlighter-rouge">EC_KEY</code> keypair with <code class="highlighter-rouge">priv_bytes</code>.</li>
-  <li>Puts the private key back into <code class="highlighter-rouge">priv</code> through a <code class="highlighter-rouge">BIGNUM</code>.</li>
-  <li>Puts the derived public key into <code class="highlighter-rouge">pub</code> in all conversion forms.</li>
+  <li>Initializes an <code class="language-plaintext highlighter-rouge">EC_KEY</code> keypair with <code class="language-plaintext highlighter-rouge">priv_bytes</code>.</li>
+  <li>Puts the private key back into <code class="language-plaintext highlighter-rouge">priv</code> through a <code class="language-plaintext highlighter-rouge">BIGNUM</code>.</li>
+  <li>Puts the derived public key into <code class="language-plaintext highlighter-rouge">pub</code> in all conversion forms.</li>
 </ol>
 
-<p>The third step is the most complicated. The conversion form is set first, which in turn affects the length of the public key (33 or 65). The actual length is obtained with a <code class="highlighter-rouge">NULL</code>-argument call to <code class="highlighter-rouge">i2o_ECPublicKey</code>, so that <code class="highlighter-rouge">pub</code> is allocated enough bytes to hold the output. <code class="highlighter-rouge">i2o_ECPublicKey</code> finally converts the public key from the internal representation to octects, hence the <code class="highlighter-rouge">i2o</code> prefix (octet = byte). The encoded bytes are written to <code class="highlighter-rouge">pub</code> through <code class="highlighter-rouge">pub_copy</code>.</p>
+<p>The third step is the most complicated. The conversion form is set first, which in turn affects the length of the public key (33 or 65). The actual length is obtained with a <code class="language-plaintext highlighter-rouge">NULL</code>-argument call to <code class="language-plaintext highlighter-rouge">i2o_ECPublicKey</code>, so that <code class="language-plaintext highlighter-rouge">pub</code> is allocated enough bytes to hold the output. <code class="language-plaintext highlighter-rouge">i2o_ECPublicKey</code> finally converts the public key from the internal representation to octects, hence the <code class="language-plaintext highlighter-rouge">i2o</code> prefix (octet = byte). The encoded bytes are written to <code class="language-plaintext highlighter-rouge">pub</code> through <code class="language-plaintext highlighter-rouge">pub_copy</code>.</p>
 
-<p>Try running the program and compare it with the output of the <code class="highlighter-rouge">openssl</code> command line tool.</p>
+<p>Try running the program and compare it with the output of the <code class="language-plaintext highlighter-rouge">openssl</code> command line tool.</p>
 
 <h3 id="get-the-code">Get the code!</h3>
 
@@ -514,7 +514,7 @@ ASN1 OID: secp256k1
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

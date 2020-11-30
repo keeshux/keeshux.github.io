@@ -49,11 +49,8 @@
                         <li>All-purpose development</li>
                         <li>CocoaPods</li>
                         <li>Storyboards + Autolayout</li>
-                        <li>Core Data</li>
-                        <li>Static libraries</li>
                         <li>Localization/i18n</li>
                         <li>In-app purchases</li>
-                        <li>Game Center</li>
                         <li>iTunes App Store</li>
                     </ul>
                 </div>
@@ -65,9 +62,6 @@
                         <li>EJB</li>
                         <li>Struts</li>
                         <li>JPA/Hibernate</li>
-                        <li>JUnit</li>
-                        <li>JSP/JSTL</li>
-                        <li>JSF</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
@@ -84,39 +78,28 @@
                     </ul>
                 </div>
                 <div class="skill-cell">
-                    <h3>Bitcoin</h3>
-                    <ul>
-                        <li>Advanced use</li>
-                        <li>Client development</li>
-                        <li>Blockchain technologies</li>
-                    </ul>
-                </div>
-                <div class="skill-cell">
                     <h3>Web</h3>
                     <ul>
                         <li>(X)HTML</li>
                         <li>CSS</li>
                         <li>JavaScript</li>
-                        <li>jQuery</li>
                         <li>Jekyll</li>
-                        <li>HTTP Push</li>
-                        <li>PHP</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
                     <h3>Versioning</h3>
                     <ul>
-                        <li>Git/GitHub</li>
-                        <li>Subversion</li>
-                        <li>CVS</li>
+                        <li>Git</li>
+                        <li>GitHub</li>
+                        <li>GitLab</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
-                    <h3>DevOps</h3>
+                    <h3>Continuous Integration</h3>
                     <ul>
-                        <li>Continuous integration</li>
-                        <li>GitLab CI/CD</li>
                         <li>fastlane</li>
+                        <li>GitLab CI/CD</li>
+                        <li>Travis CI</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
@@ -124,37 +107,23 @@
                     <ul>
                         <li>Introduction to computers</li>
                         <li>Programming fundamentals</li>
-                        <li>Making iOS apps</li>
-                        <li>Basic JEE applications</li>
-                        <li>Bitcoin use and development</li>
                         <li>Software design</li>
-                    </ul>
-                </div>
-                <div class="skill-cell">
-                    <h3>Cryptography</h3>
-                    <ul>
-                        <li>Symmetric encryption</li>
-                        <li>Public-key encryption</li>
-                        <li>Digital signatures</li>
-                        <li>Hashing algorithms</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
                     <h3>Database</h3>
                     <ul>
                         <li>MySQL</li>
-                        <li>MongoDB</li>
-                        <li>SQLite</li>
-                        <li>Oracle</li>
                         <li>PostgreSQL</li>
+                        <li>SQLite</li>
+                        <li>MongoDB</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
                     <h3>Operating systems</h3>
                     <ul>
-                        <li>Mac OS X</li>
+                        <li>macOS</li>
                         <li>Linux</li>
-                        <li>*BSD</li>
                         <li>Other UNIX flavours</li>
                         <li>Windows</li>
                     </ul>
@@ -169,9 +138,8 @@
                             <h3>Freelance Developer & Trainer</h3>
                             <ul>
                                 <li>I'm working on an OpenVPN app for iOS/macOS. - <a href="https://passepartoutvpn.app">passepartoutvpn.app</a></li>
-                                <li>I've developed a native OpenVPN client library for iOS/macOS. - <a href="https://github.com/passepartoutvpn/tunnelkit/">github.com/passepartoutvpn/tunnelkit</a></li>
                                 <li>I've developed a Bitcoin library for iOS. - <a href="https://github.com/keeshux/bitcoinspv/">github.com/keeshux/bitcoinspv</a></li>
-                                <li>I write articles about Bitcoin programming. - <a href="https://davidederosa.com/tag/bitcoin">davidederosa.com/tag/bitcoin/</a></li>
+                                <li>I wrote articles about Bitcoin programming. - <a href="https://davidederosa.com/tag/bitcoin">davidederosa.com/tag/bitcoin/</a></li>
                                 <li>I‘ve published a few iOS apps. - <a href="https://davidederosa.com/category/apps/">davidederosa.com/category/apps/</a></li>
                             </ul>
                         </td>
@@ -218,8 +186,6 @@
                         <td>
                             <h3>Senior iOS Developer</h3>
                             at <h4>Reply</h4> (Rome, Italy)
-                            <p>I realized apps for Esselunga, a famous Italian supermarket chain. I enforced good software design with deadlines in mind and my personal solutions offered dramatic advantages over established conventions.</p>
-                            <p>I led the development of an advanced iOS library to view PDF documents on iPhone and iPad. Its modularity allows for a high degree of customization and rapid integration with other Reply projects.</p>
                         </td>
                     </tr>
                     <tr>
@@ -227,7 +193,6 @@
                         <td>
                             <h3>Senior Java Developer</h3>
                             at <h4>Caser Seguros</h4> (Madrid, Spain)
-                            <p>Creation of Java EE services for communication with Hummingbird/OpenText in the Madrid offices. Client relationship, documentation, requirements meeting, problem solving and improvement proposals. Training for new employees.</p>
                         </td>
                     </tr>
                     <tr>
@@ -235,7 +200,6 @@
                         <td>
                             <h3>Java Developer</h3>
                             at <h4>INPDAP Direzione Generale</h4> (Rome, Italy)
-                            <p>Development, maintenance, refactoring and deployment of two large J2EE projects. Bug resolution on a daily basis.</p>
                         </td>
                     </tr>
                     <tr>

@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Inside transactions" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Inside transactions" />
 <meta property="og:site_name" content="Inside transactions" />
 <meta property="og:description" content="With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Inside transactions" />
 <meta itemprop="description" content="With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -197,7 +197,7 @@
     <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">script</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">bbp_txout_t</span><span class="p">;</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">value</code> field is the transferred bitcoin amount in satoshis, and the <code class="highlighter-rouge">script_len</code> (varint) plus <code class="highlighter-rouge">script</code> (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.</p>
+<p>The <code class="language-plaintext highlighter-rouge">value</code> field is the transferred bitcoin amount in satoshis, and the <code class="language-plaintext highlighter-rouge">script_len</code> (varint) plus <code class="language-plaintext highlighter-rouge">script</code> (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.</p>
 
 <h4 id="outpoint">Outpoint</h4>
 
@@ -208,7 +208,7 @@
     <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">bbp_outpoint_t</span><span class="p">;</span></code></pre></figure>
 
-<p>Unsurprisingly, the <code class="highlighter-rouge">txid</code> field is the hash256 identifier of the referred transaction (little-endian), while <code class="highlighter-rouge">index</code> is the 0-based offset of the output in the transaction outputs array.</p>
+<p>Unsurprisingly, the <code class="language-plaintext highlighter-rouge">txid</code> field is the hash256 identifier of the referred transaction (little-endian), while <code class="language-plaintext highlighter-rouge">index</code> is the 0-based offset of the output in the transaction outputs array.</p>
 
 <h4 id="input">Input</h4>
 
@@ -221,7 +221,7 @@
     <span class="kt">uint32_t</span> <span class="n">sequence</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">bbp_txin_t</span><span class="p">;</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">outpoint</code> field is the pointer to the UTXO we want to spend. The <code class="highlighter-rouge">script_len</code> (varint) plus <code class="highlighter-rouge">script</code> (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The <code class="highlighter-rouge">sequence</code> field is left for advanced operations, most of the time you’ll just set it to <code class="highlighter-rouge">ffffffff</code>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">outpoint</code> field is the pointer to the UTXO we want to spend. The <code class="language-plaintext highlighter-rouge">script_len</code> (varint) plus <code class="language-plaintext highlighter-rouge">script</code> (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The <code class="language-plaintext highlighter-rouge">sequence</code> field is left for advanced operations, most of the time you’ll just set it to <code class="language-plaintext highlighter-rouge">ffffffff</code>.</p>
 
 <h4 id="transaction">Transaction</h4>
 
@@ -236,11 +236,11 @@
     <span class="kt">uint32_t</span> <span class="n">locktime</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">bbp_tx_t</span><span class="p">;</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">version</code> of a transaction is established by network consensus and is currently constant <code class="highlighter-rouge">1</code>. I won’t cover <code class="highlighter-rouge">locktime</code> for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.</p>
+<p>The <code class="language-plaintext highlighter-rouge">version</code> of a transaction is established by network consensus and is currently constant <code class="language-plaintext highlighter-rouge">1</code>. I won’t cover <code class="language-plaintext highlighter-rouge">locktime</code> for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.</p>
 
 <h3 id="serialization">Serialization</h3>
 
-<p>To make things clearer, I want to show you how to serialize a transaction in code. The <code class="highlighter-rouge">bbp_tx_serialize</code> function is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>:</p>
+<p>To make things clearer, I want to show you how to serialize a transaction in code. The <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> function is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_tx_serialize</span><span class="p">(</span><span class="k">const</span> <span class="n">bbp_tx_t</span> <span class="o">*</span><span class="n">tx</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">raw</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
@@ -308,9 +308,9 @@
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Ignore the <code class="highlighter-rouge">flag</code> parameter and assume it’s <code class="highlighter-rouge">0</code> to skip the last <code class="highlighter-rouge">if</code> block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on <a href="/basic-blockchain-programming/serialization-part-one/">blockchain serialization</a>.</p>
+<p>Ignore the <code class="language-plaintext highlighter-rouge">flag</code> parameter and assume it’s <code class="language-plaintext highlighter-rouge">0</code> to skip the last <code class="language-plaintext highlighter-rouge">if</code> block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on <a href="/basic-blockchain-programming/serialization-part-one/">blockchain serialization</a>.</p>
 
-<p>One last thing. The <code class="highlighter-rouge">bbp_tx_serialize</code> function expects a properly allocated byte array, so you must use <code class="highlighter-rouge">bbp_tx_size</code> to get the exact amount of bytes required to serialize the <code class="highlighter-rouge">tx</code> transaction, for example:</p>
+<p>One last thing. The <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> function expects a properly allocated byte array, so you must use <code class="language-plaintext highlighter-rouge">bbp_tx_size</code> to get the exact amount of bytes required to serialize the <code class="language-plaintext highlighter-rouge">tx</code> transaction, for example:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_tx_t</span> <span class="n">tx</span><span class="p">;</span>
 <span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
@@ -328,12 +328,12 @@
 
 <p>Here’s an example <a href="https://blockstream.info/tx/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60">coinbase transaction</a> from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
 </code></pre></div></div>
 
 <p>by using a standard P2PKH output script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
 OP_HASH160
 
 [c8 25 a1 ec f2 a6 83 0c
@@ -437,7 +437,7 @@ OP_CHECKSIG
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

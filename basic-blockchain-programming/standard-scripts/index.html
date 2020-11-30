@@ -29,7 +29,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Standard scripts" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/standard-scripts/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re..." />
@@ -41,13 +41,13 @@
 <meta property="og:title" content="Standard scripts" />
 <meta property="og:site_name" content="Standard scripts" />
 <meta property="og:description" content="I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re..." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
 <meta itemprop="name" content="Standard scripts" />
 <meta itemprop="description" content="I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re..." />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/standard-scripts/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -60,13 +60,13 @@
 <link rel="next" href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -186,22 +186,22 @@
 
 <p>Consider the input script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP
 </code></pre></div></div>
 
 <p>and the previous output script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_ADD OP_12 OP_EQUAL
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_ADD OP_12 OP_EQUAL
 </code></pre></div></div>
 
 <p>Now join them to have the following validation script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
 </code></pre></div></div>
 
 <p>and see how the stack evolves:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [6]
 [6, 6]
 [12]
@@ -209,23 +209,23 @@
 [1]
 </code></pre></div></div>
 
-<p>Fine, the validation script ends with 1 (<code class="highlighter-rouge">OP_TRUE</code>) on the stack, so the input script can spend the previous output script.</p>
+<p>Fine, the validation script ends with 1 (<code class="language-plaintext highlighter-rouge">OP_TRUE</code>) on the stack, so the input script can spend the previous output script.</p>
 
 <h4 id="weaknesses">Weaknesses</h4>
 
 <p>In fact, many other input scripts comply, like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_8
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_8
 </code></pre></div></div>
 
 <p>or:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
 </code></pre></div></div>
 
 <p>See how anybody with some basic math knowledge could easily steal the output coins. Conversely, look at this very simple output script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_FALSE
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_FALSE
 </code></pre></div></div>
 
 <p>No matter the input script, the validation script will never succeed. Any bitcoin sent to this output will be lost forever.</p>
@@ -234,7 +234,7 @@
 
 <h3 id="standard-scripts">Standard scripts</h3>
 
-<p>Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the <code class="highlighter-rouge">IsStandard</code> check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.</p>
+<p>Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the <code class="language-plaintext highlighter-rouge">IsStandard</code> check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.</p>
 
 <p>As of Bitcoin Core 0.10, these are considered standard scripts:</p>
 
@@ -243,10 +243,10 @@
   <li>P2SH (pay-to-script-hash)</li>
   <li>P2PK (pay-to-public-key)</li>
   <li>Multisignature</li>
-  <li><code class="highlighter-rouge">OP_RETURN</code> metadata</li>
+  <li><code class="language-plaintext highlighter-rouge">OP_RETURN</code> metadata</li>
 </ol>
 
-<p>In this course we’ll only treat the first ones. For your information, Testnet miners skip the <code class="highlighter-rouge">IsStandard</code> check completely, thus making the Testnet network suitable for trying experimental scripts.</p>
+<p>In this course we’ll only treat the first ones. For your information, Testnet miners skip the <code class="language-plaintext highlighter-rouge">IsStandard</code> check completely, thus making the Testnet network suitable for trying experimental scripts.</p>
 
 <h3 id="p2pkh-scripts">P2PKH scripts</h3>
 
@@ -256,7 +256,7 @@
 
 <p>A P2PKH output script contains a Base58Check-decoded destination address, that is the hash160 of an ECDSA public key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
 OP_HASH160
 [hash160(public_key)]
 OP_EQUALVERIFY
@@ -265,7 +265,7 @@ OP_CHECKSIG
 
 <p>Take our sample compressed public key:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
 82 00 6e 93 98 a6 98 6e
 da 61 fe 91 67 4c 3a 10
 8c 39 94 75 bf 1e 73 8f
@@ -274,19 +274,19 @@ da 61 fe 91 67 4c 3a 10
 
 <p>and its hash160 digest:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6b f1 9e 55 f9 4d 98 6b
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6b f1 9e 55 f9 4d 98 6b
 46 40 c1 54 d8 64 69 93
 41 91 95 11
 </code></pre></div></div>
 
 <p>that after Testnet versioning and Base58Check encoding is displayed as:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
 </code></pre></div></div>
 
 <p>The output script that sends money to this address is:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>76 (OP_DUP)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>76 (OP_DUP)
 a9 (OP_HASH160)
 
 14 6b f1 9e 55 f9 4d 98
@@ -297,19 +297,19 @@ a9 (OP_HASH160)
 ac (OP_CHECKSIG)
 </code></pre></div></div>
 
-<p>where <code class="highlighter-rouge">14</code> is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.</p>
+<p>where <code class="language-plaintext highlighter-rouge">14</code> is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.</p>
 
 <h4 id="input-script">Input script</h4>
 
 <p>A P2PKH input script contains a DER-encoded ECDSA signature and a raw public key, either uncompressed or compressed. In such an input script, there are no opcodes other than pushes:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
 [public_key]
 </code></pre></div></div>
 
-<p>For example, take the 70-bytes signature from the <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/">ECDSA chapter</a> and append the <code class="highlighter-rouge">SIGHASH_ALL</code> constant (<code class="highlighter-rouge">01</code>) to it:</p>
+<p>For example, take the 70-bytes signature from the <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/">ECDSA chapter</a> and append the <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> constant (<code class="language-plaintext highlighter-rouge">01</code>) to it:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
 02 20
 2b 2b 52 9b db dc 93 e7
 8a f7 e0 02 28 b1 79 91
@@ -323,11 +323,11 @@ d5 5c b4 86 cc cf 6a f2
 01
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">SIGHASH</code> suffix is an advanced topic related to <a href="https://en.bitcoin.it/wiki/Contracts">contracts</a>. In this series we’ll stick with <code class="highlighter-rouge">SIGHASH_ALL</code> because we’ll always sign all transaction inputs.</p>
+<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> suffix is an advanced topic related to <a href="https://en.bitcoin.it/wiki/Contracts">contracts</a>. In this series we’ll stick with <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> because we’ll always sign all transaction inputs.</p>
 
 <p>If you now take the public key from the previous paragraph, you have a typical input script:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 2b 2b 52
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 2b 2b 52
 9b db dc 93 e7 8a f7 e0
 02 28 b1 79 91 8b 03 2d
 76 90 2f 74 ef 45 44 26
@@ -344,13 +344,13 @@ d3 d4 cf 7c b9 24 34 d5
 1d 28
 </code></pre></div></div>
 
-<p>where <code class="highlighter-rouge">47</code> and <code class="highlighter-rouge">21</code> are the hex lengths of the pushed signature and public key respectively.</p>
+<p>where <code class="language-plaintext highlighter-rouge">47</code> and <code class="language-plaintext highlighter-rouge">21</code> are the hex lengths of the pushed signature and public key respectively.</p>
 
 <h4 id="validation">Validation</h4>
 
 <p>If we want to spend the money we received on our sample address, we must provide a specific input script so that the composite validation script succeeds. If the input is “authentic”, the following script will return non-zero:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
 [public_key]
 OP_DUP
 OP_HASH160
@@ -369,12 +369,12 @@ OP_CHECKSIG
   <li>The output hash160 is pushed.</li>
   <li>Input and output hash160 are popped then checked for equality.</li>
   <li>The input signature is verified against the public key.</li>
-  <li><code class="highlighter-rouge">OP_TRUE</code> is pushed as a result of successful signature verification.</li>
+  <li><code class="language-plaintext highlighter-rouge">OP_TRUE</code> is pushed as a result of successful signature verification.</li>
 </ol>
 
 <p>Let’s see what happens on the stack:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
 [signature]
 [signature, public_key]
 [signature, public_key, public_key]
@@ -384,7 +384,7 @@ OP_CHECKSIG
 [1]
 </code></pre></div></div>
 
-<p>The final stack holds <code class="highlighter-rouge">OP_TRUE</code>, so the transaction input is legit. Along the road, two constraints were satisfied:</p>
+<p>The final stack holds <code class="language-plaintext highlighter-rouge">OP_TRUE</code>, so the transaction input is legit. Along the road, two constraints were satisfied:</p>
 
 <ol>
   <li>The public key in the input script must hash to the Bitcoin address in the output script (step 6).</li>
@@ -484,7 +484,7 @@ OP_CHECKSIG
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>

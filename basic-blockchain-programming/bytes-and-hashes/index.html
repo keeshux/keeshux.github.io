@@ -31,7 +31,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Bytes and hashes" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bytes-and-hashes/" />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 
 <meta name="twitter:description" content="Hashing algorithms take a front seat in the Bitcoin ecosystem, you’re going to find them everywhere in the blockchain so I believe it’s the best subject to start with.
@@ -47,7 +47,7 @@
 <meta property="og:description" content="Hashing algorithms take a front seat in the Bitcoin ecosystem, you’re going to find them everywhere in the blockchain so I believe it’s the best subject to start with.
 
 " />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <!-- Google+ -->
 
@@ -55,7 +55,7 @@
 <meta itemprop="description" content="Hashing algorithms take a front seat in the Bitcoin ecosystem, you’re going to find them everywhere in the blockchain so I believe it’s the best subject to start with.
 
 " />
-<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1604677003" />
+<meta itemprop="image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1606750907" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/bytes-and-hashes/" />
 <link rel="author" href="https://plus.google.com/+keeshux" />
@@ -68,13 +68,13 @@
 <link rel="next" href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin" />
 
 
-<link rel="stylesheet" href="/s/main.css?1604677003" />
-<link rel="stylesheet" href="/s/main-mobile.css?1604677003" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/main.css?1606750907" />
+<link rel="stylesheet" href="/s/main-mobile.css?1606750907" media="only screen and (max-width: 600px)" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
 
-<link rel="shortcut icon" href="/s/favicon.ico?1604677003" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1604677003" />
+<link rel="shortcut icon" href="/s/favicon.ico?1606750907" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1606750907" />
 
     </head>
     <body>
@@ -232,7 +232,7 @@
 
 <p>Block and transaction hashes follow the little-endian rule and that’s why your first attempts at publishing a raw transaction may be puzzling when you poll back the web explorers. For example, take the 64-chars hash of the above transaction (sometimes called <em>txid</em>) as seen on blockchain.info and split it into 32 groups of 2 hex digits (one byte each):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>46 28 71 64 db 45 a7 8a
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>46 28 71 64 db 45 a7 8a
 91 96 25 7d a4 5b 62 88
 1e 39 4a 3d 11 fb 40 39
 43 bb bf 8e c4 aa f9 ee
@@ -242,13 +242,13 @@
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">txid</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="p">...,</span> <span class="mh">0xee</span> <span class="p">};</span></code></pre></figure>
 
-<p>Now consider the nature of the txid, a big multibyte integer (256-bit) stored in an array due to the lack of a fitting primitive type. Our rough guess expects <code class="highlighter-rouge">46</code> to be the MSB (most significant byte) for being the leftmost in the string, yet we stored it at the lowest index. If we were on an Intel machine the <code class="highlighter-rouge">46</code> would be the LSB (least significant byte) instead. Weak.</p>
+<p>Now consider the nature of the txid, a big multibyte integer (256-bit) stored in an array due to the lack of a fitting primitive type. Our rough guess expects <code class="language-plaintext highlighter-rouge">46</code> to be the MSB (most significant byte) for being the leftmost in the string, yet we stored it at the lowest index. If we were on an Intel machine the <code class="language-plaintext highlighter-rouge">46</code> would be the LSB (least significant byte) instead. Weak.</p>
 
 <p>Here’s a less intuitive encoding:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">txid</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0xee</span><span class="p">,</span> <span class="p">...,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x46</span> <span class="p">};</span></code></pre></figure>
 
-<p>See how <code class="highlighter-rouge">46</code> is now the MSB of the array for a little-endian machine that stores more significant bytes at higher memory locations? Fine, this finally makes sense.</p>
+<p>See how <code class="language-plaintext highlighter-rouge">46</code> is now the MSB of the array for a little-endian machine that stores more significant bytes at higher memory locations? Fine, this finally makes sense.</p>
 
 <p>Remember this when dealing with raw Bitcoin traffic, because a direct consequence is that we see “reversed hashes” on the wire.</p>
 
@@ -341,7 +341,7 @@
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1604677003" async="async"></script>
+        <script src="/s/main.js?1606750907" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
         <script src="//keeshux.disqus.com/embed.js" async="async"></script>
