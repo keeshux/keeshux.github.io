@@ -5,17 +5,17 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 30 Nov 2020 16:41:47 +0100</pubDate>
-    <lastBuildDate>Mon, 30 Nov 2020 16:41:47 +0100</lastBuildDate>
-    <generator>Jekyll v4.1.1</generator>
+    <pubDate>Fri, 01 Jan 2021 01:33:13 +0100</pubDate>
+    <lastBuildDate>Fri, 01 Jan 2021 01:33:13 +0100</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
     
       <item>
         <title>Passepartout is an user-friendly OpenVPN client for iOS/macOS</title>
-        <description>&lt;p&gt;&lt;em&gt;Passepartout&lt;/em&gt; is a non-official, user-friendly &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; client for iOS.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;em&gt;Passepartout&lt;/em&gt; is a non-official, user-friendly &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; client for iOS and macOS.&lt;/p&gt;
 
-&lt;p&gt;With its native look &amp;amp; feel, Passepartout focuses on ease of use. It does so by stripping the .ovpn flags that are today obsolete or rarely used. Passepartout can connect to a few well-known VPN providers or import .ovpn configuration files. Trusted networks are also supported along with other cool features.&lt;/p&gt;
+&lt;p&gt;With its native look &amp;amp; feel, Passepartout focuses on ease of use. It does so by stripping the .ovpn flags that are today obsolete or rarely used. Passepartout can connect to a few well-known VPN providers or import .ovpn configuration files. Trusted networks are also supported along with other cool features. It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality.&lt;/p&gt;
 
-&lt;p&gt;It relies on &lt;a href=&quot;https://github.com/keeshux/tunnelkit&quot;&gt;TunnelKit&lt;/a&gt; for most VPN functionality. Passepartout for iOS is on the &lt;a href=&quot;https://itunes.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iTunes App Store&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Passepartout is available on the App Store for &lt;a href=&quot;https://apps.apple.com/us/app/passepartout-vpn/id1433648537?mt=8&quot;&gt;iOS&lt;/a&gt; and &lt;a href=&quot;https://apps.apple.com/us/app/passepartout-vpn/id1433645014?mt=8&quot;&gt;macOS&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;/s/f/apps/passepartout-snapshots.png&quot;&gt;&lt;img src=&quot;/s/f/apps/passepartout-snapshots.th.png&quot; alt=&quot;Snapshots&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
