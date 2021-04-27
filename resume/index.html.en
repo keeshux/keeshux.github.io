@@ -33,9 +33,9 @@
                 <div class="skill-cell">
                     <h3>Languages</h3>
                     <ul>
-                        <li>Java</li>
                         <li>Swift</li>
                         <li>Objective-C</li>
+                        <li>Java</li>
                         <li>C/C++</li>
                         <li>JavaScript</li>
                         <li>JSON</li>
@@ -47,6 +47,9 @@
                     <h3>iOS</h3>
                     <ul>
                         <li>All-purpose development</li>
+                        <li>SwiftPM</li>
+                        <li>SwiftUI</li>
+                        <li>Combine</li>
                         <li>CocoaPods</li>
                         <li>Storyboards + Autolayout</li>
                         <li>Localization/i18n</li>
