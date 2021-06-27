@@ -36,6 +36,7 @@
                         <li>Swift</li>
                         <li>Objective-C</li>
                         <li>Java</li>
+                        <li>Python</li>
                         <li>C/C++</li>
                         <li>JavaScript</li>
                         <li>JSON</li>
@@ -85,6 +86,7 @@
                     <ul>
                         <li>(X)HTML</li>
                         <li>CSS</li>
+                        <li>Django</li>
                         <li>JavaScript</li>
                         <li>Jekyll</li>
                     </ul>

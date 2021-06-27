@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 27 Jun 2021 12:34:02 +0200</pubDate>
-    <lastBuildDate>Sun, 27 Jun 2021 12:34:02 +0200</lastBuildDate>
+    <pubDate>Sun, 27 Jun 2021 12:49:53 +0200</pubDate>
+    <lastBuildDate>Sun, 27 Jun 2021 12:49:53 +0200</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -254,7 +254,7 @@ for (outpoint in utxos) {
         <category>utxo</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -489,7 +489,7 @@ c6 0f f8 23 d8 d6 57 d1
         <category>ecdsa</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -778,7 +778,7 @@ d8 64 69 93 41 91 95 11
         <category>ecdsa</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -989,7 +989,7 @@ OP_CHECKSIG
         <category>script</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -1247,7 +1247,7 @@ OP_CHECKSIG
         <category>p2pkh</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -1455,7 +1455,7 @@ OP_CHECKSIG
         <category>ecdsa</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -1749,7 +1749,7 @@ OP_CHECKSIG
         <category>stack</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
@@ -1857,7 +1857,7 @@ OP_CHECKSIG
         <category>script</category>
         
         
-        <category>basic blockchain programming</category>
+        <category>bitcoin</category>
         
       </item>
     
