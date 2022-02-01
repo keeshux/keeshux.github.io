@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+   web:
+     image: nginx
+     container_name: davidederosa-web
+     volumes:
+       - ./build:/usr/share/nginx/html
+     environment:
+       VIRTUAL_HOST: davidederosa.wtf
+     expose:
+       - 80
+     restart: always
+
+networks:
+  default:
+    name: nginx-proxy
