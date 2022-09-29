@@ -5,8 +5,8 @@
     <description>Software enthusiast, spare-time musician, casual biker. Not to mention my talent for cooking spaghetti.</description>
     <link>https://davidederosa.com/</link>
     <atom:link href="https://davidederosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 13 Apr 2022 09:40:31 +0200</pubDate>
-    <lastBuildDate>Wed, 13 Apr 2022 09:40:31 +0200</lastBuildDate>
+    <pubDate>Thu, 29 Sep 2022 13:08:08 +0200</pubDate>
+    <lastBuildDate>Thu, 29 Sep 2022 13:08:08 +0200</lastBuildDate>
     <generator>Jekyll v4.2.2</generator>
     
       <item>
@@ -41,7 +41,7 @@
     
       <item>
         <title>TunnelKit, a VPN client for Apple platforms</title>
-        <description>&lt;p&gt;&lt;em&gt;TunnelKit&lt;/em&gt; is a simplified, non-official &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; client library for the iOS and macOS platforms. It’s a hard fork of &lt;a href=&quot;https://github.com/pia-foss/tunnel-apple&quot; title=&quot;PIATunnel on GitHub&quot;&gt;PIATunnel&lt;/a&gt;, a library that I developed and maintained while working at &lt;a href=&quot;https://www.privateinternetaccess.com&quot; title=&quot;Private Internet Access&quot;&gt;Private Internet Access&lt;/a&gt;, a VPN provider.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;em&gt;TunnelKit&lt;/em&gt; is a simplified &lt;a href=&quot;https://openvpn.net/index.php/open-source.html&quot; title=&quot;The OpenVPN project&quot;&gt;OpenVPN®&lt;/a&gt; and &lt;a href=&quot;https://www.wireguard.com/&quot; title=&quot;The WireGuard project&quot;&gt;WireGuard®&lt;/a&gt; client library for the iOS and macOS platforms. It’s a hard fork of &lt;a href=&quot;https://github.com/pia-foss/tunnel-apple&quot; title=&quot;PIATunnel on GitHub&quot;&gt;PIATunnel&lt;/a&gt;, a library that I developed and maintained while working at &lt;a href=&quot;https://www.privateinternetaccess.com&quot; title=&quot;Private Internet Access&quot;&gt;Private Internet Access&lt;/a&gt;, a VPN provider.&lt;/p&gt;
 
 &lt;p&gt;Supports AES-CBC and AES-GCM ciphers, a couple of SHA digests and TLS verification. The feature set is smaller than the standard OpenVPN clients, yet the library provides a much easier, not to mention native Swift API.&lt;/p&gt;
 
@@ -53,6 +53,8 @@
         <category>vpn</category>
         
         <category>openvpn</category>
+        
+        <category>wireguard</category>
         
         <category>mobile</category>
         
