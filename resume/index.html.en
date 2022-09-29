@@ -103,8 +103,8 @@
                     <h3>Continuous Integration</h3>
                     <ul>
                         <li>fastlane</li>
+                        <li>GitHub Actions</li>
                         <li>GitLab CI/CD</li>
-                        <li>Travis CI</li>
                     </ul>
                 </div>
                 <div class="skill-cell">
