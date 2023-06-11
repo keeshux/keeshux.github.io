@@ -12,7 +12,7 @@
         <header>
             <h1>Davide De Rosa</h1>
             <ul id="contacts">
-                <li><i class="fa fa-location-arrow"></i><span>Bilbao, Spain</span></li>
+                <li><i class="fa fa-location-arrow"></i><span>Santander, Spain</span></li>
                 <li><i class="fa fa-at"></i><span><a href="mailto:me@davidederosa.com">me@davidederosa.com</a></span></li>
                 <li><i class="fa fa-link"></i><span><a href="https://davidederosa.com">davidederosa.com</a></span></li>
                 <li><i class="fa fa-linkedin-square"></i><span><a href="https://linkedin.com/in/davidederosa">linkedin.com/in/davidederosa</a></span></li>
