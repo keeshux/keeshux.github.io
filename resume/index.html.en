@@ -144,7 +144,7 @@
                             <ul>
                                 <li>I've made a VPN client for iOS/macOS - <a href="https://passepartoutvpn.app">passepartoutvpn.app</a></li>
                                 <li>I've published a Swift JSON-RPC client for Bitcoin Core - <a href="https://github.com/keeshux/bitcoin-core-tools">github.com/keeshux/bitcoin-core-tools</a></li>
-                                <li>I maintain a native OpenVPN client for iOS/macOS - <a href="https://github.com/passepartoutvpn/tunnelkit">github.com/passepartoutvpn/tunnelkit</a></li>
+                                <li>I maintain a VPN library for iOS/macOS - <a href="https://github.com/passepartoutvpn/tunnelkit">github.com/passepartoutvpn/tunnelkit</a></li>
                                 <li>I wrote articles about Bitcoin programming - <a href="https://davidederosa.com/basic-blockchain-programming/">davidederosa.com/basic-blockchain-programming/</a></li>
                                 <li>I developed a Bitcoin BIP32/SPV library for iOS - <a href="https://github.com/keeshux/bitcoinspv">github.com/keeshux/bitcoinspv</a></li>
                             </ul>
