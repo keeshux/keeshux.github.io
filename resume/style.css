@@ -3,25 +3,16 @@
     padding: 0;
 }
 
-body {
-    position: relative;
-    width: 960px;
-    padding: 2em 0em;
-}
-
 h1 {
     font-size: 3em;
     font-weight: 600;
 }
 
 h2 {
-    position: relative;
     font-size: 1.5em;
-    left: -0.4em;
-    padding: 0.2em 0em 0.2em 0.4em;
-    /*border-bottom: dotted 1px #888;*/
-    margin-bottom: 0.6em;
-    background-color: #f3f3f3;
+    padding-bottom: 0.1em;
+    border-bottom: dotted 1px #888;
+    margin-bottom: 0.4em;
 }
 
 h3, h4 {
@@ -30,16 +21,13 @@ h3, h4 {
 
 a {
     color: #000;
-    text-decoration: none;
-}
-
-ul {
-    list-style: none;
+    /*text-decoration: none;*/
 }
 
 #contacts {
-    margin-left: 1.5em;
-    padding: 2em 0em;
+    width: 27em;
+    margin-left: 1.2em;
+    padding: 1.2em 0em;
 }
 
 #contacts li {
@@ -51,47 +39,24 @@ ul {
 
 #contacts .fa {
     position: absolute;
-    left: -1.5em;
+    left: -1.2em;
 }
 
 section {
-    line-height: 1.5em;
-    margin: 2em 0em;
+    line-height: 1.8em;
+    margin: 0.8em 0em;
 }
 
-.block tr > td:first-child {
+.blocks tr > td:first-child {
     width: 9em;
 }
 
-.block td {
+.blocks td {
     vertical-align: top;
     padding-bottom: 0.3em;
 }
 
-.block p, .block ul {
-    width: 80%;
-    margin-bottom: 1em;
-}
-
-#skills h3 {
-    display: inline;
-    font-size: 1.1em;
-    border-bottom: dotted 1px #bbb;
-}
-
-#skills ul {
-    margin-top: 0.5em;
-}
-
-.skill-cell {
-    display: inline-block;
-    vertical-align: top;
-    width: 16em;
-    margin-bottom: 1.5em;
-}
-
-#experience {
-    margin-top: 18em; /* page break */
+.blocks p {
 }
 
 #experience h3, #experience h4 {
@@ -102,12 +67,9 @@ section {
     font-weight: normal;
 }
 
-#attitude {
-    display: none;
-}
-
 .list ul {
     padding-bottom: 0.6em;
+    list-style: none;
 }
 
 .list ul, .description p {
