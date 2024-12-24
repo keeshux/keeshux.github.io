@@ -51,14 +51,6 @@ section {
     width: 9em;
 }
 
-.blocks td {
-    vertical-align: top;
-    padding-bottom: 0.3em;
-}
-
-.blocks p {
-}
-
 #experience h3, #experience h4 {
     display: inline;
 }
