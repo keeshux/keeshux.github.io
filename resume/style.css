@@ -53,6 +53,7 @@ section {
 
 .blocks td {
     vertical-align: top;
+    height: 100%;
 }
 
 #experience h3, #experience h4 {
