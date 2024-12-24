@@ -22,7 +22,6 @@ markdown: kramdown
 permalink: /:title/
 paginate_path: /pages/:num
 exclude: [Gemfile, exclude, old, scripts, "*.conf", "*.sh", "*.out", "*.yml"]
-destination: build
 excerpt_separator: <!--more-->
 
 plugins:
