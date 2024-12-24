@@ -1,4 +1,5 @@
 # Site settings
+baseurl: ""
 title: Davide De Rosa
 author: Davide De Rosa
 description: I make software. I look around me.
