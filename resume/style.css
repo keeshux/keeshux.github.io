@@ -15,6 +15,10 @@ h2 {
     margin-bottom: 0.4em;
 }
 
+.blocks {
+    font-size: 1em;
+}
+
 h3, h4, .timeline {
     font-size: 1em;
 }
@@ -52,7 +56,7 @@ section {
 }
 
 .blocks td {
-    vertical-align: top;
+    vertical-align: baseline;
 }
 
 #experience h3, #experience h4 {
