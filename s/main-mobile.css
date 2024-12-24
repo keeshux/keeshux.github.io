@@ -14,7 +14,6 @@ body {
     padding: 0px 16px;
     line-height: 50px;
     text-align: left;
-    font-size: 0.8em;
 }
 
 #container > div {
@@ -23,11 +22,6 @@ body {
 }
 
 h1 {
-    font-size: 0.8em;
-}
-
-.main-page h1 {
-    font-size: 1.5em;
 }
 
 h2 {
@@ -49,10 +43,6 @@ p {
 .post-preview .post-icon,
 .post-full .post-icon {
     display: none;
-}
-
-#latest-posts {
-    font-size: 0.9em;
 }
 
 /* links */
