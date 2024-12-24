@@ -1,0 +1,35 @@
+{% if include.entry.series %}
+
+{% assign prev_index = include.entry.series.index | minus:1 %}
+{% assign next_index = include.entry.series.index | plus:1 %}
+
+{% for post in site.posts %}
+    {% if post.series.name == include.entry.series.name %}
+        {% if post.series.index == 0 %}
+        {% assign home_post = post %}
+        {% endif %}
+        {% if post.series.index == prev_index %}
+        {% assign prev_post = post %}
+        {% endif %}
+        {% if post.series.index == next_index %}
+        {% assign next_post = post %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+<div class="post-list post-series-links">
+    part of a <a href="{{ home_post.url }}" title="{{ home_post.title }}">series</a>:
+    {% if prev_post %}
+    <a href="{{ prev_post.url }}" title="{{ prev_post.title }}">&lt; prev</a>
+    {% else %}
+    &lt; prev
+    {% endif %}
+    |
+    {% if next_post %}
+    <a href="{{ next_post.url }}" title="{{ next_post.title }}">next &gt;</a>
+    {% else %}
+    next &gt;
+    {% endif %}
+</div>
+
+{% endif %}

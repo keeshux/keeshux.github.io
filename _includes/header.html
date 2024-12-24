@@ -1,0 +1,23 @@
+<nav id="menu">
+    <ul>
+        {% for item in site.menu %}
+            {% if forloop.first %}
+                {% assign item_path = '' %}
+            {% else %}
+                {% assign item_path = item | append: '/' %}
+            {% endif %}
+            {% if page.menu_item %}
+                {% assign menu_item = page.menu_item %}
+            {% else %}
+                {% assign menu_item = site.menu.first %}
+            {% endif %}
+            <li>
+                {% if item == menu_item %}
+                <a class="active" href="/{{ item_path }}">{{ item }}</a>
+                {% else %}
+                <a href="/{{ item_path }}">{{ item }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

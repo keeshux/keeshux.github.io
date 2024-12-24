@@ -1,0 +1,40 @@
+---
+layout: default
+item: stories
+---
+
+<article class="post post-full" itemscope itemtype="http://schema.org/Article">
+    <header>
+        {% include post-icon.html entry=page %}
+        <div>
+            <span class="post-date" itemprop="datepublished">{{ page.date | date: "%b %-d, %Y" }}</span>
+            <h2 itemprop="name">
+                {% if page.ext_url %}
+                <a href="{{ page.ext_url }}" title="{{ page.title | escape }}">{{ page.title }}</a>
+                {% else %}
+                {{ page.title }}
+                {% endif %}
+            </h2>
+            {% include post-series-links.html entry=page %}
+        </div>
+    </header>
+    <div class="post-body">
+        {% include post-see.html entry=page %}
+        {% include post-series-toc.html entry=page %}
+        {{ content }}
+        {% if page.reviews %}
+        {% include reviews.html entry=page %}
+        {% endif %}
+    </div>
+    {% include sharing-me.html entry=page %}
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            {% for other in site.related_posts limit:3 offset:1 %}
+            <li><a href="{{ other.url }}">{{ other.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    {% include post-paginator.html entry=page %}
+</article>

@@ -1,0 +1,14 @@
+services:
+  web:
+    image: jekyll/jekyll
+    container_name: davidederosa-web
+    volumes:
+      - .:/srv/jekyll
+    command: jekyll serve --watch --force_polling --verbose -H 0.0.0.0 -P 80
+    environment:
+      VIRTUAL_HOST: davidederosa.wtf
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true

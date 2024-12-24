@@ -1,0 +1,10 @@
+<article class="post post-preview" itemscope itemtype="http://schema.org/Article">
+    <header>
+        {% include post-icon.html entry=include.entry placeholder=true %}
+        <div>
+            <span class="post-date" itemprop="datepublished">{{ include.entry.date | date: "%b %-d, %Y" }}</span>
+            <h3 itemprop="name"><a href="{{ post.url }}" title="Read full story" itemprop="url">{{ post.title }}</a></h3>
+            {% include post-categories.html entry=include.entry %}
+        </div>
+    </header>
+</article>

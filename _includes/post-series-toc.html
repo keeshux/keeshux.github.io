@@ -1,0 +1,16 @@
+{% if include.entry.series and include.entry.series.index == 0 %}
+<header class="post-series-toc">
+    {% if include.entry.series.ongoing %}
+    <h3>Table of contents (ongoing)</h3>
+    {% else %}
+    <h3>Table of contents</h3>
+    {% endif %}
+    <ol>
+        {% for post in site.posts reversed %}
+        {% if post.series.name == include.entry.series.name and post.series.index > 0 %}
+        <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+</header>
+{% endif %}

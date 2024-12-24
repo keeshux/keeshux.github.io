@@ -1,0 +1,31 @@
+# Site settings
+title: Davide De Rosa
+author: Davide De Rosa
+description: I make software. I look around me.
+url: "https://davidederosa.com"
+
+twitter_username: "keeshux"
+twitter_url: "https://twitter.com/keeshux"
+github_url: "https://github.com/keeshux"
+linkedin_url: "https://www.linkedin.com/in/davidederosa"
+logo_url: "/s/keeshux.png"
+gpg_url: "/s/keeshux-gpg.txt"
+email_website: website@davidederosa.com
+post_bottom_line: "Please share this post if you enjoyed it and use the form below for questions and comments!"
+
+# Local settings
+bbp_src_root: https://github.com/keeshux/basic-blockchain-programming/
+bbp_src: https://github.com/keeshux/basic-blockchain-programming/blob/master
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
+paginate_path: /pages/:num
+exclude: [Gemfile, exclude, old, scripts, "*.conf", "*.sh", "*.out", "*.yml"]
+destination: build
+excerpt_separator: <!--more-->
+
+plugins:
+  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-sitemap

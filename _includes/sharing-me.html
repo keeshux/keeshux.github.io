@@ -1,0 +1,14 @@
+{% assign intent_url = include.entry.url | prepend: site.url %}
+{% capture intent_text %}{% if page.series %}“{{ page.series.name }}”, {% endif %}{{page.title}} %}{% endcapture %}
+{% assign intent_text = page.title %}
+{% assign intent_hashtags = page.hashtags | join:',' %}
+{% assign intent_via = site.twitter_username %}
+
+{% capture intent %}https://twitter.com/intent/tweet?url={{ intent_url | url_encode }}&amp;text={{ intent_text | url_encode }}&amp;hashtags={{ intent_hashtags | url_encode }}&amp;via={{ intent_via }}{% endcapture %}
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="{{ intent }}" title="Tweet this post" target="_blank"><i class="fab fa-twitter"></i>Tweet!</a></li>
+        <li><a href="{{ site.twitter_url }}" title="Follow me on Twitter" target="_blank"><i class="fab fa-twitter"></i>Follow</a></li>
+    </ul>
+</aside>

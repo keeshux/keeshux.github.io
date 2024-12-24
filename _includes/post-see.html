@@ -1,0 +1,12 @@
+{% if include.entry.ext_url %}
+<p class="post-see"><a href="{{ include.entry.ext_url }}" title="{{ include.entry.title }}">
+    {% case include.entry.ext_type %}
+    {% when 'web' %}
+    <i class="fas fa-link"></i> See website
+    {% when 'github' %}
+    <i class="fab fa-github"></i> See on GitHub
+    {% when 'itunes' %}
+    <i class="fa fa-music"></i> See on iTunes
+    {% endcase %}
+</a></p>
+{% endif %}

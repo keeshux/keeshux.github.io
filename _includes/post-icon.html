@@ -1,0 +1,11 @@
+{% if include.entry.image_name or include.placeholder %}
+<div class="post-icon">
+    <a href="{{ include.entry.url }}">
+        {% if include.entry.image_name %}
+        <img src="{{ include.entry.image_name }}-150.png" alt="{{ include.entry.title | escape }}" />
+        {% else %}
+        <i class="fab fa-{{ include.entry.placeholder }}"></i>
+        {% endif %}
+    </a>
+</div>
+{% endif %}
