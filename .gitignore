@@ -4,9 +4,9 @@
 *.conf
 .jekyll-metadata
 .jekyll-cache
+_site
 Gemfile.lock
 /docker-compose.yml
-build
 exclude
 old
 resume
