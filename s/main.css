@@ -7,12 +7,12 @@ body {
     position: relative;
     background-color: #fafafa;
     color: #333;
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 #container {
     position: relative;
-    width: 60%;
+    width: 40%;
     min-width: 720px;
     margin: 0em auto;
 }
@@ -341,7 +341,7 @@ code {
 }
 
 #page-footer p {
-    font-size: 0.6em;
+    font-size: 0.8em;
 }
 
 #bitcoin-qr {
