@@ -106,16 +106,8 @@ td {
     margin-left: 2em;
 }
 
-#social {
-    margin-top: 1em;
-}
-
-#social li {
-    display: inline;
-    margin-right: 0.5em;
-}
-
 #social a {
+    margin-left: 0.5em;
 }
 
 .post > header {
