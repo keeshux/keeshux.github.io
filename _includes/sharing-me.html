@@ -4,11 +4,11 @@
 {% assign intent_hashtags = page.hashtags | join:',' %}
 {% assign intent_via = site.twitter_username %}
 
-{% capture intent %}https://twitter.com/intent/tweet?url={{ intent_url | url_encode }}&amp;text={{ intent_text | url_encode }}&amp;hashtags={{ intent_hashtags | url_encode }}&amp;via={{ intent_via }}{% endcapture %}
+{% capture intent %}https://x.com/intent/tweet?url={{ intent_url | url_encode }}&amp;text={{ intent_text | url_encode }}&amp;hashtags={{ intent_hashtags | url_encode }}&amp;via={{ intent_via }}{% endcapture %}
 
 <aside class="sharing" id="sharing-me">
     <ul>
-        <li><a href="{{ intent }}" title="Tweet this post" target="_blank"><i class="fab fa-twitter"></i>Tweet!</a></li>
-        <li><a href="{{ site.twitter_url }}" title="Follow me on Twitter" target="_blank"><i class="fab fa-twitter"></i>Follow</a></li>
+        <li><a href="{{ intent }}" title="Share this post" target="_blank"><i class="fab fa-x-twitter"></i>Share</a></li>
+        <li><a href="{{ site.twitter_url }}" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
     </ul>
 </aside>
