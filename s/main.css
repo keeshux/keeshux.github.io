@@ -334,7 +334,6 @@ textarea,
     font-family: 'Georgia', serif;
 }
 
-#menu,
 h1,
 h2,
 h3,
@@ -358,22 +357,15 @@ a {
     text-decoration: none;
 }
 
-#menu a {
-    color: #333;
-}
-
-#menu .active,
 #container > div a {
     color: #4391bf;
 }
 
 a:hover,
-#menu a:hover,
 #container > div a:hover {
     color: #23719f;
 }
 
-#menu li,
 p a,
 ul a {
     font-weight: bold;
