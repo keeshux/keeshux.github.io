@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-17T22:37:10+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Wallet software</title><link href="https://davidederosa.com/basic-blockchain-programming/wallet-software/" rel="alternate" type="text/html" title="Wallet software" /><published>2015-06-23T00:00:00+02:00</published><updated>2015-06-23T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/wallet-software</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/wallet-software/"><![CDATA[<p>Commonly, Bitcoin users rely on clients called <em>wallets</em> to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are <a href="https://electrum.org">Electrum</a>, <a href="https://hivewallet.com">Hive</a> etc. Here I’ll try to describe the components of a wallet.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-17T23:14:10+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Deploying to the App Store: The cost you didn’t expect</title><link href="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/" rel="alternate" type="text/html" title="Deploying to the App Store: The cost you didn’t expect" /><published>2025-03-03T00:00:00+01:00</published><updated>2025-03-03T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect</id><content type="html" xml:base="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/"><![CDATA[<p>Passepartout has had a <a href="https://github.com/passepartoutvpn/passepartout/actions/runs/13551048532">solid and unique CI/CD workflow</a> for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV.</p>
+
+<p>I dare to say, automated releases are hardly (if <em>ever</em>) seen in open-source *OS apps.</p>
+
+<p><a href="https://docs.fastlane.tools/">fastlane</a>, created by <a href="https://krausefx.com/">Felix Krause</a>, and <a href="https://github.com/features/actions">GitHub Actions</a> helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools.</p>
+
+<p>Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general.</p>
+
+<h3 id="its-just-an-app-right">It’s just an app, right?</h3>
+
+<p>Many people are confident that <em>The Idea</em> is the most valuable aspect of a product.</p>
+
+<p>Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with.</p>
+
+<h3 id="the-app-store-requirements-will-beat-you">The App Store requirements will beat you</h3>
+
+<p>Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on.</p>
+
+<p>Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release.</p>
+
+<p>Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there.</p>
+
+<p>The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this.</p>
+
+<h3 id="the-fear-of-change">The fear of change</h3>
+
+<p>Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might <em>refrain from changing</em>.</p>
+
+<p>Some relatable examples:</p>
+
+<ul>
+  <li>If I change the UI, I will have to change the screenshots for X languages and Y platforms.</li>
+  <li>If I alter some inner logic, I will get a rejection from Apple.</li>
+  <li>If I introduce a regression, I will get bad reviews.</li>
+  <li>Even if I have a hotfix in time, Apple will push my release back for silly reasons.</li>
+</ul>
+
+<p>It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure.</p>
+
+<p><em>Stagnation is the hidden cost of expensive deployment.</em></p>
+
+<h3 id="you-must-learn-to-automate">You MUST learn to automate</h3>
+
+<p>The key to keeping focus on the product is <em>automation</em>. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect.</p>
+
+<ul>
+  <li>If you find yourself doing 3+ times the same task, automate it.</li>
+  <li>If a task doesn’t need constant interaction, automate it.</li>
+  <li>If a task is sensitive to human mistakes, automate it.</li>
+</ul>
+
+<p>Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers.</p>
+
+<h3 id="continuous-integration-is-underused">Continuous integration is underused!</h3>
+
+<p>After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about <em>continuous integration</em>. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot.</p>
+
+<p>In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once.</p>
+
+<p>Stay in touch.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="ci/cd" /><summary type="html"><![CDATA[Passepartout has had a solid and unique CI/CD workflow for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV. I dare to say, automated releases are hardly (if ever) seen in open-source *OS apps. fastlane, created by Felix Krause, and GitHub Actions helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools. Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general. It’s just an app, right? Many people are confident that The Idea is the most valuable aspect of a product. Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with. The App Store requirements will beat you Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on. Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release. Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there. The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this. The fear of change Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might refrain from changing. Some relatable examples: If I change the UI, I will have to change the screenshots for X languages and Y platforms. If I alter some inner logic, I will get a rejection from Apple. If I introduce a regression, I will get bad reviews. Even if I have a hotfix in time, Apple will push my release back for silly reasons. It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure. Stagnation is the hidden cost of expensive deployment. You MUST learn to automate The key to keeping focus on the product is automation. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect. If you find yourself doing 3+ times the same task, automate it. If a task doesn’t need constant interaction, automate it. If a task is sensitive to human mistakes, automate it. Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers. Continuous integration is underused! After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about continuous integration. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot. In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once. Stay in touch.]]></summary></entry><entry><title type="html">Wallet software</title><link href="https://davidederosa.com/basic-blockchain-programming/wallet-software/" rel="alternate" type="text/html" title="Wallet software" /><published>2015-06-23T00:00:00+02:00</published><updated>2015-06-23T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/wallet-software</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/wallet-software/"><![CDATA[<p>Commonly, Bitcoin users rely on clients called <em>wallets</em> to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are <a href="https://electrum.org">Electrum</a>, <a href="https://hivewallet.com">Hive</a> etc. Here I’ll try to describe the components of a wallet.</p>
 
 <h3 id="data-model">Data model</h3>
 
@@ -161,7 +220,206 @@ for (outpoint in utxos) {
 
 <p>And remember, all the code is on my <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub repository</a>.</p>
 
-<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry><entry><title type="html">The first transaction (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" rel="alternate" type="text/html" title="The first transaction (pt. 1)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/"><![CDATA[<p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
+<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry><entry><title type="html">The first transaction (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" rel="alternate" type="text/html" title="The first transaction (pt. 2)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/"><![CDATA[<p>The <a href="/basic-blockchain-programming/the-first-transaction-part-one/">first part</a> covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.</p>
+
+<!--more-->
+
+<h3 id="the-input-script">The input script</h3>
+
+<p>As a result of <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>, we built the signable message for our input. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c">ex-tx-sign.c</a> we’ll reuse the message as a starting point.</p>
+
+<h4 id="producing-the-signature">Producing the signature</h4>
+
+<p>Rather than the message itself, we’ll sign its hash256 digest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
+46 43 ed b3 53 fd a5 23
+8a 9a 3d 44 49 16 76 78
+8e fd d2 5d d6 48 55 ba
+</code></pre></div></div>
+
+<p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+</code></pre></div></div>
+
+<p>This is one DER signature I yielded (yours will differ):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
+ba 6a fb a1 2a 6f 27 de
+76 7d d4 d0 64 17 de f6
+65 bd 10 0b c6 8c 42 84
+5c 75 2a 8f 02 20 5e 86
+f5 e0 54 b2 c6 ca c5 d6
+63 66 4e 35 77 9f b0 34
+38 7c 07 84 8b c7 72 44
+42 ca cf 65 93 24 
+</code></pre></div></div>
+
+<h4 id="flag-and-assembly">Flag and assembly</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+</code></pre></div></div>
+
+<p>we’re finally able to build our P2PKH input script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
+2a ba 6a fb a1 2a 6f 27
+de 76 7d d4 d0 64 17 de
+f6 65 bd 10 0b c6 8c 42
+84 5c 75 2a 8f 02 20 5e
+86 f5 e0 54 b2 c6 ca c5
+d6 63 66 4e 35 77 9f b0
+34 38 7c 07 84 8b c7 72
+44 42 ca cf 65 93 24 01
+
+21 02 82 00 6e 93 98 a6
+98 6e da 61 fe 91 67 4c
+3a 10 8c 39 94 75 bf 1e
+73 8f 19 df c2 db 11 db
+1d 28
+</code></pre></div></div>
+
+<p>Yes, the signing process is possibly the most annoying and error-prone part of our work.</p>
+
+<h3 id="packing-the-transaction">Packing the transaction</h3>
+
+<p>We’re all set to pack the transaction from our inputs and outputs. Let’s look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a>.</p>
+
+<h4 id="inputs-and-outputs">Inputs and outputs</h4>
+
+<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
+
+<p>We use the macro to create our input, whereas the outputs code is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a> as is:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="s">"30440220111a482aba6afba12a6f27de767dd4d06..."</span><span class="p">,</span>
+        <span class="s">"0282006e9398a6986eda61fe91674c3a108c39947..."</span><span class="p">,</span>
+        <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
+
+<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
+        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span>
+<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
+        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
+
+<h4 id="final-structure">Final structure</h4>
+
+<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">rawtx_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
+<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
+01 00 00 00
+
+/* number of inputs (varint) */
+01
+
+/* UTXO txid (hash256, little-endian) */
+f3 a2 7f 48 5f 98 33 c8
+31 8c 49 04 03 30 7f ef
+13 97 12 1b 5d d8 fe 70
+77 72 36 e7 37 1c 4e f3
+
+/* UTXO index (32-bit) */
+00 00 00 00
+
+/* input script (varint + data) */
+6a 47 30 44 02 20 11 1a
+48 2a ba 6a fb a1 2a 6f
+27 de 76 7d d4 d0 64 17
+de f6 65 bd 10 0b c6 8c
+42 84 5c 75 2a 8f 02 20
+5e 86 f5 e0 54 b2 c6 ca
+c5 d6 63 66 4e 35 77 9f
+b0 34 38 7c 07 84 8b c7
+72 44 42 ca cf 65 93 24
+01 21 02 82 00 6e 93 98
+a6 98 6e da 61 fe 91 67
+4c 3a 10 8c 39 94 75 bf
+1e 73 8f 19 df c2 db 11
+db 1d 28 
+
+/* UTXO sequence */
+ff ff ff ff
+
+/* number of outputs (varint) */
+02
+
+/* output value (64-bit) */
+e0 fe 7e 01 00 00 00 00
+
+/* output script (varint + data) */
+19 76 a9 14 18 ba 14 b3
+68 22 95 cb 05 23 0e 31
+fe cb 00 08 92 40 66 08
+88 ac
+
+/* change output value (64-bit) */
+e0 84 b0 03 00 00 00 00
+
+/* change output script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* locktime (32-bit) */
+00 00 00 00
+</code></pre></div></div>
+
+<p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
+2d d9 c8 97 39 5c e5 1f
+dd 35 e6 35 9e dd 28 55
+c6 0f f8 23 d8 d6 57 d1 
+</code></pre></div></div>
+
+<h4 id="publishing-to-the-network">Publishing to the network</h4>
+
+<p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
+
+<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
+
+<p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
+
+<p><img src="/s/f/basic-blockchain-programming/tx-push-error.png" alt="Transaction push error" /></p>
+
+<p>Don’t worry, that’s because I already published it by myself. See how it looks like <a href="https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1">on a block explorer</a>.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
+
+<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry><entry><title type="html">The first transaction (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" rel="alternate" type="text/html" title="The first transaction (pt. 1)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/"><![CDATA[<p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
 
 <!--more-->
 
@@ -414,206 +672,7 @@ d8 64 69 93 41 91 95 11
 
 <p>You learned that the first step in transaction building is obtaining the UTXO set of a keypair. Outputs define the value we need to gather. Transaction output value must not exceed gathered UTXO value. Change outputs solve the indivisibility problem of UTXOs. UTXO scripts appear in the signable message of their corresponding inputs.</p>
 
-<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The core business of the Bitcoin blockchain technology is definitely building transactions. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.]]></summary></entry><entry><title type="html">The first transaction (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" rel="alternate" type="text/html" title="The first transaction (pt. 2)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/"><![CDATA[<p>The <a href="/basic-blockchain-programming/the-first-transaction-part-one/">first part</a> covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.</p>
-
-<!--more-->
-
-<h3 id="the-input-script">The input script</h3>
-
-<p>As a result of <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>, we built the signable message for our input. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c">ex-tx-sign.c</a> we’ll reuse the message as a starting point.</p>
-
-<h4 id="producing-the-signature">Producing the signature</h4>
-
-<p>Rather than the message itself, we’ll sign its hash256 digest:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
-46 43 ed b3 53 fd a5 23
-8a 9a 3d 44 49 16 76 78
-8e fd d2 5d d6 48 55 ba
-</code></pre></div></div>
-
-<p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-</code></pre></div></div>
-
-<p>This is one DER signature I yielded (yours will differ):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
-ba 6a fb a1 2a 6f 27 de
-76 7d d4 d0 64 17 de f6
-65 bd 10 0b c6 8c 42 84
-5c 75 2a 8f 02 20 5e 86
-f5 e0 54 b2 c6 ca c5 d6
-63 66 4e 35 77 9f b0 34
-38 7c 07 84 8b c7 72 44
-42 ca cf 65 93 24 
-</code></pre></div></div>
-
-<h4 id="flag-and-assembly">Flag and assembly</h4>
-
-<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
-82 00 6e 93 98 a6 98 6e
-da 61 fe 91 67 4c 3a 10
-8c 39 94 75 bf 1e 73 8f
-19 df c2 db 11 db 1d 28
-</code></pre></div></div>
-
-<p>we’re finally able to build our P2PKH input script:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
-2a ba 6a fb a1 2a 6f 27
-de 76 7d d4 d0 64 17 de
-f6 65 bd 10 0b c6 8c 42
-84 5c 75 2a 8f 02 20 5e
-86 f5 e0 54 b2 c6 ca c5
-d6 63 66 4e 35 77 9f b0
-34 38 7c 07 84 8b c7 72
-44 42 ca cf 65 93 24 01
-
-21 02 82 00 6e 93 98 a6
-98 6e da 61 fe 91 67 4c
-3a 10 8c 39 94 75 bf 1e
-73 8f 19 df c2 db 11 db
-1d 28
-</code></pre></div></div>
-
-<p>Yes, the signing process is possibly the most annoying and error-prone part of our work.</p>
-
-<h3 id="packing-the-transaction">Packing the transaction</h3>
-
-<p>We’re all set to pack the transaction from our inputs and outputs. Let’s look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a>.</p>
-
-<h4 id="inputs-and-outputs">Inputs and outputs</h4>
-
-<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
-
-<p>We use the macro to create our input, whereas the outputs code is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a> as is:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"30440220111a482aba6afba12a6f27de767dd4d06..."</span><span class="p">,</span>
-        <span class="s">"0282006e9398a6986eda61fe91674c3a108c39947..."</span><span class="p">,</span>
-        <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
-
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
-        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span>
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
-        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
-
-<h4 id="final-structure">Final structure</h4>
-
-<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">rawtx_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
-<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
-
-<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
-01 00 00 00
-
-/* number of inputs (varint) */
-01
-
-/* UTXO txid (hash256, little-endian) */
-f3 a2 7f 48 5f 98 33 c8
-31 8c 49 04 03 30 7f ef
-13 97 12 1b 5d d8 fe 70
-77 72 36 e7 37 1c 4e f3
-
-/* UTXO index (32-bit) */
-00 00 00 00
-
-/* input script (varint + data) */
-6a 47 30 44 02 20 11 1a
-48 2a ba 6a fb a1 2a 6f
-27 de 76 7d d4 d0 64 17
-de f6 65 bd 10 0b c6 8c
-42 84 5c 75 2a 8f 02 20
-5e 86 f5 e0 54 b2 c6 ca
-c5 d6 63 66 4e 35 77 9f
-b0 34 38 7c 07 84 8b c7
-72 44 42 ca cf 65 93 24
-01 21 02 82 00 6e 93 98
-a6 98 6e da 61 fe 91 67
-4c 3a 10 8c 39 94 75 bf
-1e 73 8f 19 df c2 db 11
-db 1d 28 
-
-/* UTXO sequence */
-ff ff ff ff
-
-/* number of outputs (varint) */
-02
-
-/* output value (64-bit) */
-e0 fe 7e 01 00 00 00 00
-
-/* output script (varint + data) */
-19 76 a9 14 18 ba 14 b3
-68 22 95 cb 05 23 0e 31
-fe cb 00 08 92 40 66 08
-88 ac
-
-/* change output value (64-bit) */
-e0 84 b0 03 00 00 00 00
-
-/* change output script (varint + data) */
-19 76 a9 14 6b f1 9e 55
-f9 4d 98 6b 46 40 c1 54
-d8 64 69 93 41 91 95 11
-88 ac
-
-/* locktime (32-bit) */
-00 00 00 00
-</code></pre></div></div>
-
-<p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
-2d d9 c8 97 39 5c e5 1f
-dd 35 e6 35 9e dd 28 55
-c6 0f f8 23 d8 d6 57 d1 
-</code></pre></div></div>
-
-<h4 id="publishing-to-the-network">Publishing to the network</h4>
-
-<p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
-
-<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
-
-<p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
-
-<p><img src="/s/f/basic-blockchain-programming/tx-push-error.png" alt="Transaction push error" /></p>
-
-<p>Don’t worry, that’s because I already published it by myself. See how it looks like <a href="https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1">on a block explorer</a>.</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
-
-<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry><entry><title type="html">Inside transactions</title><link href="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" rel="alternate" type="text/html" title="Inside transactions" /><published>2015-06-01T00:00:00+02:00</published><updated>2015-06-01T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/inside-transactions</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/inside-transactions/"><![CDATA[<p>With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.</p>
+<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The core business of the Bitcoin blockchain technology is definitely building transactions. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.]]></summary></entry><entry><title type="html">Inside transactions</title><link href="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" rel="alternate" type="text/html" title="Inside transactions" /><published>2015-06-01T00:00:00+02:00</published><updated>2015-06-01T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/inside-transactions</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/inside-transactions/"><![CDATA[<p>With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.</p>
 
 <!--more-->
 
@@ -1024,179 +1083,7 @@ OP_CHECKSIG
 
 <p>You learned that only a standard subset of all possible scripts are accepted by the Bitcoin network. P2PKH scripts are the most common standard scripts you’ll find in the blockchain. Input and output scripts together form validation scripts. Miners execute validation scripts to either accept or reject a transaction.</p>
 
-<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
-
-<!--more-->
-
-<h4 id="arithmetic">Arithmetic</h4>
-
-<p>Look at some of the many arithmetic opcodes:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
-      <td><code class="language-plaintext highlighter-rouge">93</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
-      <td><code class="language-plaintext highlighter-rouge">94</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[5]
-[5, 9]
-[14]
-[14, 6]
-[8]
-</code></pre></div></div>
-
-<p>The script returns 8.</p>
-
-<h4 id="comparison">Comparison</h4>
-
-<p>Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
-      <td><code class="language-plaintext highlighter-rouge">87</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[c3 72]
-[c3 72, 03 72]
-[c3 72, 03 72, c0]
-[c3 72, c3 72]
-[1]
-</code></pre></div></div>
-
-<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
-
-<h4 id="stack-manipulation">Stack manipulation</h4>
-
-<p>This is the only opcode you’re going to use for stack manipulation:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
-      <td><code class="language-plaintext highlighter-rouge">76</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[b9 0c a2 fe]
-[b9 0c a2 fe, b9 0c a2 fe]
-[1]
-</code></pre></div></div>
-
-<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
-
-<h4 id="crypto">Crypto</h4>
-
-<p>These opcodes are certainly the most interesting:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
-      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
-
-<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
-
-<p>Both opcodes will be described in the next post.</p>
-
-<h3 id="wheres-the-code">Where’s the code?</h3>
-
-<p>There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.</p>
-
-<p>In the <a href="/basic-blockchain-programming/standard-scripts/">next article</a> we’ll examine the role of keys and addresses in <em>standard scripts</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 1)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/"><![CDATA[<p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
+<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 1)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/"><![CDATA[<p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
 
 <!--more-->
 
@@ -1458,7 +1345,179 @@ OP_CHECKSIG
 
 <p>You learned a little bit about machine code and opcodes. Script is a simple low-level language understood by miners software. Script state is tracked with stack memory.</p>
 
-<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><summary type="html"><![CDATA[Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!]]></summary></entry><entry><title type="html">Scripts in transaction processing</title><link href="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" rel="alternate" type="text/html" title="Scripts in transaction processing" /><published>2015-05-15T00:00:00+02:00</published><updated>2015-05-15T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/"><![CDATA[<p>With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, <em>scripts</em> are the last step in the path. Here I’ll give an overview of their role in transaction processing.</p>
+<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><summary type="html"><![CDATA[Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
+
+<!--more-->
+
+<h4 id="arithmetic">Arithmetic</h4>
+
+<p>Look at some of the many arithmetic opcodes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">93</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
+      <td><code class="language-plaintext highlighter-rouge">94</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[5]
+[5, 9]
+[14]
+[14, 6]
+[8]
+</code></pre></div></div>
+
+<p>The script returns 8.</p>
+
+<h4 id="comparison">Comparison</h4>
+
+<p>Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">87</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[c3 72]
+[c3 72, 03 72]
+[c3 72, 03 72, c0]
+[c3 72, c3 72]
+[1]
+</code></pre></div></div>
+
+<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
+
+<h4 id="stack-manipulation">Stack manipulation</h4>
+
+<p>This is the only opcode you’re going to use for stack manipulation:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">76</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[b9 0c a2 fe]
+[b9 0c a2 fe, b9 0c a2 fe]
+[1]
+</code></pre></div></div>
+
+<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
+
+<h4 id="crypto">Crypto</h4>
+
+<p>These opcodes are certainly the most interesting:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
+
+<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
+
+<p>Both opcodes will be described in the next post.</p>
+
+<h3 id="wheres-the-code">Where’s the code?</h3>
+
+<p>There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.</p>
+
+<p>In the <a href="/basic-blockchain-programming/standard-scripts/">next article</a> we’ll examine the role of keys and addresses in <em>standard scripts</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.]]></summary></entry><entry><title type="html">Scripts in transaction processing</title><link href="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" rel="alternate" type="text/html" title="Scripts in transaction processing" /><published>2015-05-15T00:00:00+02:00</published><updated>2015-05-15T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/"><![CDATA[<p>With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, <em>scripts</em> are the last step in the path. Here I’ll give an overview of their role in transaction processing.</p>
 
 <!--more-->
 
@@ -1788,278 +1847,4 @@ OP_CHECKSIG
 
 <p>You learned that there are 3 different Bitcoin networks. Real money flows on Mainnet, while test money resides on Testnet3. Regtest is for testing local, custom blockchains. All the long strings shared for bitcoin transfers are encoded Base58.</p>
 
-<p>In the <a href="/basic-blockchain-programming/network-interoperability-part-two/">next article</a> I’ll complete the big picture with keys serialization and <em>addresses</em>, the typical transaction endpoints. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="base58" /><category term="base58check" /><category term="networking" /><summary type="html"><![CDATA[Often, the average bitcoiner is not aware that multiple blockchains exist. Most people transparently connect to the main network, because wallet software by default operates in the realm of real money. In fact, you’re going to discover 3 different Bitcoin networks with their own peculiarities.]]></summary></entry><entry><title type="html">Network interoperability (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/" rel="alternate" type="text/html" title="Network interoperability (pt. 2)" /><published>2015-05-14T00:00:00+02:00</published><updated>2015-05-14T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/"><![CDATA[<p>Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential Bitcoin wallet.</p>
-
-<!--more-->
-
-<h3 id="private-keys">Private keys</h3>
-
-<p>So far, you’ve read a lot of crypto code to generate ECDSA keypairs and signatures. At the end of the series, you’ll see the role of private keys in transaction signatures. Meanwhile, you just need to know how to serialize private keys in a format that wallet software will understand.</p>
-
-<p>By now you should be familiar with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">sample private key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-</code></pre></div></div>
-
-<p>Our next goal is converting this private key to WIF.</p>
-
-<h4 id="wallet-import-format-wif">Wallet Import Format (WIF)</h4>
-
-<p>The <em>Wallet Import Format</em> (WIF) is the first example of Base58Check encoding. Given the following table:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>version</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mainnet</td>
-      <td><code class="language-plaintext highlighter-rouge">80</code></td>
-    </tr>
-    <tr>
-      <td>Testnet3</td>
-      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>we get the WIF representation of a private key this way:</p>
-
-<ol>
-  <li>Prepend <code class="language-plaintext highlighter-rouge">80</code> for Mainnet or <code class="language-plaintext highlighter-rouge">ef</code> for Testnet3.</li>
-  <li>Append <code class="language-plaintext highlighter-rouge">01</code> if the key will correspond to a compressed public key.</li>
-  <li>Encode to Base58Check.</li>
-</ol>
-
-<p>See our sample key encoded to WIF:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (Testnet3 version) */
-
-ef
-16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-
-/* 2 (yes to compressed public keys) */
-
-ef
-16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-01
-
-/* 3.1 (hash256 of step 2) */
-
-35 06 7f 25 1e 07 d0 2b
-59 ca f4 cc 77 36 20 7d
-73 0d 21 88 f9 62 8f 47
-a9 2a 1a 92 7d 33 7b 2a 
-
-/* 3.2 (4-bytes checksum) */
-
-35 06 7f 25
-
-/* 3.3 (append checksum to step 2) */
-
-ef
-16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-01
-35 06 7f 25
-
-/* 3.4 (encode Base58) */
-
-cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
-</code></pre></div></div>
-
-<p>Look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-wif.c">ex-wif.c</a> for the conversion done in code.</p>
-
-<p>The final output is a valid WIF key for the Testnet3 network. Conversely, the ECDSA key is parsed back from WIF by decoding Base58 and taking the 32 bytes after the version byte. Beware of step 2, we must know in advance if we plan to use compressed public keys, because the conversion form affects the address we’ll generate from the private key (read next paragraph).</p>
-
-<p>WIF private keys take:</p>
-
-<ul>
-  <li>A 1-byte version.</li>
-  <li>A 32-bytes ECDSA private key.</li>
-  <li>An optional <code class="language-plaintext highlighter-rouge">01</code>.</li>
-  <li>A 4-bytes checksum.</li>
-</ul>
-
-<p>and therefore measure 38 bytes at most.</p>
-
-<h3 id="addresses">Addresses</h3>
-
-<p>In case you ever sent or received bitcoins, you should recognize one of the transaction parameters at the very least: <em>addresses</em>. You know, those very long strings you share to receive coins from someone, usually in the form of a QR code.</p>
-
-<p>To understand how addresses “receive” money, you’ll first have to hack into Bitcoin scripts. However, it’s good to know from the start that most Bitcoin addresses are computed from the public key of our ECDSA keypair. Precisely, a <em>P2PKH</em> address (pay-to-public-key-hash) is defined as hash160(public_key), that is a short form for RIPEMD-160(SHA-256(public_key)).</p>
-
-<p>The other address type is <em>P2SH</em> (pay-to-script-hash) and mainly relates to multisignature, which I won’t address in this series.</p>
-
-<h4 id="encoding">Encoding</h4>
-
-<p>Given our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">sample public key</a> (in compressed form):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
-82 00 6e 93 98 a6 98 6e
-da 61 fe 91 67 4c 3a 10
-8c 39 94 75 bf 1e 73 8f
-19 df c2 db 11 db 1d 28
-</code></pre></div></div>
-
-<p>and the following table:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>version</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mainnet</td>
-      <td><code class="language-plaintext highlighter-rouge">00</code></td>
-    </tr>
-    <tr>
-      <td>Testnet3</td>
-      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>we generate a P2PKH address this way:</p>
-
-<ol>
-  <li>Perform hash160 on the public key.</li>
-  <li>Prepend <code class="language-plaintext highlighter-rouge">00</code> for Mainnet or <code class="language-plaintext highlighter-rouge">6f</code> for Testnet3.</li>
-  <li>Encode to Base58Check.</li>
-</ol>
-
-<p>Indeed, another example of Base58Check encoding. See the address generated from our public key:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (hash160 of public key) */
-
-6b f1 9e 55 f9 4d 98 6b
-46 40 c1 54 d8 64 69 93
-41 91 95 11
-
-/* 2 (Testnet3 version) */
-
-6f
-6b f1 9e 55 f9 4d 98 6b
-46 40 c1 54 d8 64 69 93
-41 91 95 11
-
-/* 3.1 (hash256 of step 2) */
-
-41 7c 62 6a 31 b5 9b 6e
-1a 0b 7f 30 36 e6 d3 49
-26 61 20 cf cc e6 9b 46
-69 ac a8 7f ff a9 e1 21 
-
-/* 3.2 (4-bytes checksum) */
-
-41 7c 62 6a
-
-/* 3.3 (append checksum to step 2) */
-
-6f
-6b f1 9e 55 f9 4d 98 6b
-46 40 c1 54 d8 64 69 93
-41 91 95 11
-41 7c 62 6a
-
-/* 3.4 (encode Base58) */
-
-mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
-</code></pre></div></div>
-
-<p>Look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-address.c">ex-address.c</a> for the generation done in code.</p>
-
-<p>P2PKH addresses take:</p>
-
-<ul>
-  <li>A 1-byte version.</li>
-  <li>A 20-bytes hash160 of the public key.</li>
-  <li>A 4-bytes checksum.</li>
-</ul>
-
-<p>and therefore measure 25 bytes.</p>
-
-<h4 id="a-note-on-conversion-form">A note on conversion form</h4>
-
-<p>In the paragraph about WIF, I said that <code class="language-plaintext highlighter-rouge">01</code> must be appended to the private key in case we’ll use the corresponding public key in compressed form. Now that you know how to generate a P2PKH address, you should figure that compressed and uncompressed public keys yield different hash160 digests and therefore different addresses. A private key has in fact 2 corresponding public keys and addresses, and you’ll soon realize that this may have undesirable consequences in transaction validation.</p>
-
-<h3 id="magic-version-prefixes">Magic version prefixes</h3>
-
-<p>A nice side-effect of the version byte is that Bitcoin Base58-encoded strings always begin with special letters:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>version</th>
-      <th>prefix</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mainnet keys</td>
-      <td><code class="language-plaintext highlighter-rouge">80</code></td>
-      <td><code class="language-plaintext highlighter-rouge">5</code>,<code class="language-plaintext highlighter-rouge">K</code>,<code class="language-plaintext highlighter-rouge">L</code></td>
-    </tr>
-    <tr>
-      <td>Testnet3 keys</td>
-      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
-      <td><code class="language-plaintext highlighter-rouge">9</code>,<code class="language-plaintext highlighter-rouge">c</code></td>
-    </tr>
-    <tr>
-      <td>Mainnet addresses</td>
-      <td><code class="language-plaintext highlighter-rouge">00</code></td>
-      <td><code class="language-plaintext highlighter-rouge">1</code></td>
-    </tr>
-    <tr>
-      <td>Testnet3 addresses</td>
-      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
-      <td><code class="language-plaintext highlighter-rouge">m</code>,<code class="language-plaintext highlighter-rouge">n</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>The prefix helps us identify immediately the meaning of a Base58 string. Apart from being convenient, this is a totally intentional Bitcoin feature.</p>
-
-<h3 id="the-essential-wallet">The essential wallet</h3>
-
-<p>A lot of work huh? At last we have a wallet-friendly keypair for Testnet3:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WIF: cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
-Address: mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
-</code></pre></div></div>
-
-<p>Displayed as QR codes:</p>
-
-<p><img src="/s/f/basic-blockchain-programming/network-qr-wif.svg" alt="WIF" /> <img src="/s/f/basic-blockchain-programming/network-qr-address.svg" alt="Address" /></p>
-
-<p>Such a pair is the foundation of a Bitcoin wallet. We share the public address to receive coins on it, then we sign transactions with the private WIF to spend the received coins.</p>
-
-<p>If you have a <a href="https://play.google.com/store/apps/details?id=de.schildbach.wallet_test">testnet wallet</a> and import the WIF private key, the associated address should appear as well. At the time of writing, I loaded the address with <a href="https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK">some coins</a> available for spending. In case you want more test coins, use a faucet like <a href="http://tpfaucet.appspot.com/">TP’s TestNet Faucet</a>. That’s all you need to start fiddling with the blockchain!</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned how to convert ECDSA private keys to Wallet-Import-Format (WIF) and generate P2PKH addresses from the corresponding public key. The most essential wallet consists of a private WIF key and its associated public address.</p>
-
-<p>In the <a href="/basic-blockchain-programming/scripts-in-transaction-processing/">next article</a> I’ll introduce <em>scripts</em>, the key part of transaction processing. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="base58" /><category term="base58check" /><category term="wif" /><category term="addresses" /><category term="p2pkh" /><category term="p2sh" /><category term="hashing" /><summary type="html"><![CDATA[Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential Bitcoin wallet.]]></summary></entry></feed>
+<p>In the <a href="/basic-blockchain-programming/network-interoperability-part-two/">next article</a> I’ll complete the big picture with keys serialization and <em>addresses</em>, the typical transaction endpoints. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="base58" /><category term="base58check" /><category term="networking" /><summary type="html"><![CDATA[Often, the average bitcoiner is not aware that multiple blockchains exist. Most people transparently connect to the main network, because wallet software by default operates in the realm of real money. In fact, you’re going to discover 3 different Bitcoin networks with their own peculiarities.]]></summary></entry></feed>
