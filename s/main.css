@@ -225,6 +225,8 @@ code {
     display: block;
     padding: 0.5em;
     white-space: inherit;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .post-related {
