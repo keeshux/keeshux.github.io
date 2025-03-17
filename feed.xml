@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-17T23:19:14+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Deploying to the App Store: The cost you didn’t expect</title><link href="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/" rel="alternate" type="text/html" title="Deploying to the App Store: The cost you didn’t expect" /><published>2025-03-03T00:00:00+01:00</published><updated>2025-03-03T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect</id><content type="html" xml:base="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/"><![CDATA[<p>Passepartout has had a <a href="https://github.com/passepartoutvpn/passepartout/actions/runs/13551048532">solid and unique CI/CD workflow</a> for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-17T23:22:43+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Deploying to the App Store: The cost you didn’t expect</title><link href="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/" rel="alternate" type="text/html" title="Deploying to the App Store: The cost you didn’t expect" /><published>2025-03-03T00:00:00+01:00</published><updated>2025-03-03T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect</id><content type="html" xml:base="https://davidederosa.com/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/"><![CDATA[<p>Passepartout has had a <a href="https://github.com/passepartoutvpn/passepartout/actions/runs/13551048532">solid and unique CI/CD workflow</a> for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV.</p>
 
 <p>I dare to say, automated releases are hardly (if <em>ever</em>) seen in open-source *OS apps.</p>
 
@@ -57,7 +57,113 @@
 
 <p>In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once.</p>
 
-<p>Stay in touch.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="ci/cd" /><summary type="html"><![CDATA[Passepartout has had a solid and unique CI/CD workflow for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV. I dare to say, automated releases are hardly (if ever) seen in open-source *OS apps. fastlane, created by Felix Krause, and GitHub Actions helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools. Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general. It’s just an app, right? Many people are confident that The Idea is the most valuable aspect of a product. Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with. The App Store requirements will beat you Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on. Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release. Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there. The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this. The fear of change Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might refrain from changing. Some relatable examples: If I change the UI, I will have to change the screenshots for X languages and Y platforms. If I alter some inner logic, I will get a rejection from Apple. If I introduce a regression, I will get bad reviews. Even if I have a hotfix in time, Apple will push my release back for silly reasons. It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure. Stagnation is the hidden cost of expensive deployment. You MUST learn to automate The key to keeping focus on the product is automation. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect. If you find yourself doing 3+ times the same task, automate it. If a task doesn’t need constant interaction, automate it. If a task is sensitive to human mistakes, automate it. Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers. Continuous integration is underused! After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about continuous integration. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot. In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once. Stay in touch.]]></summary></entry><entry><title type="html">Wallet software</title><link href="https://davidederosa.com/basic-blockchain-programming/wallet-software/" rel="alternate" type="text/html" title="Wallet software" /><published>2015-06-23T00:00:00+02:00</published><updated>2015-06-23T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/wallet-software</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/wallet-software/"><![CDATA[<p>Commonly, Bitcoin users rely on clients called <em>wallets</em> to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are <a href="https://electrum.org">Electrum</a>, <a href="https://hivewallet.com">Hive</a> etc. Here I’ll try to describe the components of a wallet.</p>
+<p>Stay in touch.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="ci/cd" /><summary type="html"><![CDATA[Passepartout has had a solid and unique CI/CD workflow for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV. I dare to say, automated releases are hardly (if ever) seen in open-source *OS apps. fastlane, created by Felix Krause, and GitHub Actions helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools. Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general. It’s just an app, right? Many people are confident that The Idea is the most valuable aspect of a product. Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with. The App Store requirements will beat you Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on. Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release. Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there. The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this. The fear of change Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might refrain from changing. Some relatable examples: If I change the UI, I will have to change the screenshots for X languages and Y platforms. If I alter some inner logic, I will get a rejection from Apple. If I introduce a regression, I will get bad reviews. Even if I have a hotfix in time, Apple will push my release back for silly reasons. It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure. Stagnation is the hidden cost of expensive deployment. You MUST learn to automate The key to keeping focus on the product is automation. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect. If you find yourself doing 3+ times the same task, automate it. If a task doesn’t need constant interaction, automate it. If a task is sensitive to human mistakes, automate it. Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers. Continuous integration is underused! After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about continuous integration. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot. In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once. Stay in touch.]]></summary></entry><entry><title type="html">The path to an obscure crash</title><link href="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/" rel="alternate" type="text/html" title="The path to an obscure crash" /><published>2025-03-02T00:00:00+01:00</published><updated>2025-03-02T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/the-path-to-an-obscure-crash</id><content type="html" xml:base="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/"><![CDATA[<p>One month after its first, painful release, Passepartout v3 is close to being stable.</p>
+
+<p>However, a couple of regressions were still haunting me.</p>
+
+<p>Here I want to describe the absurd journey into one of them, that started with a report <a href="https://github.com/passepartoutvpn/passepartout/issues/1204">from GitHub</a>, and <a href="https://www.reddit.com/r/passepartout/comments/1j0lbqa/not_open_in_sonoma_any_idea/">one from Reddit</a>. Both users were reporting that the Mac app was crashing on launch.</p>
+
+<p>The reports led me to think that the regression was caused by the macOS version, or the CPU architecture, as both users were using an Intel-based machine.</p>
+
+<h3 id="the-xcode-organizer">The Xcode Organizer</h3>
+
+<p>I had several (unhelpful) crashes in the Xcode Organizer confirming the issue:</p>
+
+<div class="h-scrolling">
+    <img alt="Xcode Organizer" src="/s/posts/2025-03-03-01.png" />
+</div>
+
+<p>Looking further into some crashes, I could spot a few SIGILL (Illegal Hardware Instruction) that reinforced the idea of a platform-related issue. Add to that, one of the threads had intense Core Data + CloudKit activity ongoing. It must be Core Data, I thought, given that Passepartout performs its sync precisely when the app launches.</p>
+
+<p><em>Doubt #1: how can the app launch at all if the arch is unsupported?</em></p>
+
+<p><em>Doubt #2: is the Core Data stack trace relevant? Is it the thread that is actually crashing?</em></p>
+
+<h3 id="never-read-crash-reports-only-once">Never read crash reports only once</h3>
+
+<p>Passepartout is a privacy-oriented app. There is no external framework e.g. Firebase to help with crash resolution, so Xcode is the only technical resource at disposal. Plus the patient support from the affected users.</p>
+
+<p>Eventually, Core Data was a distraction. Every report was crashing on “Thread 0”, i.e. the main thread. There were also crashes from macOS 15 and ARM64. Fewer, but non-zero.</p>
+
+<p>This stack trace shed some light in that the injected AppDelegate could be the culprit. But where? And why?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Thread 0 Crashed:
+0   Passepartout                    0x00000001029bb154 0x102764000 + 2453844
+1   Passepartout                    0x00000001029baf6c 0x102764000 + 2453356
+2   Passepartout                    0x00000001029bb83c 0x102764000 + 2455612
+3   Passepartout                    0x00000001029ba6ac 0x102764000 + 2451116
+4   Passepartout                    0x00000001029b66d4 0x102764000 + 2434772
+5   Passepartout                    0x000000010276d0d4 0x102764000 + 37076
+6   Passepartout                    0x000000010276c868 0x102764000 + 34920
+7   libdispatch.dylib               0x000000018ab68658 _dispatch_client_callout + 20 (object.m:576)
+8   libdispatch.dylib               0x000000018ab69ea0 _dispatch_once_callout + 32 (once.c:52)
+9   Passepartout                    0x000000010276b2ac 0x102764000 + 29356
+10  Passepartout                    0x000000010276b2f0 0x102764000 + 29424
+11  Passepartout                    0x000000010276b3c0 0x102764000 + 29632
+12  SwiftUI                         0x00000001b977a934 FallbackDelegateBox.delegate.getter + 68 (FallbackDelegateBox.swift:36)
+13  SwiftUI                         0x00000001b9e8cea8 specialized NSApplicationDelegateAdaptor.wrappedValue.getter + 156 (FallbackDelegates_Mac.swift:93)
+...
+</code></pre></div></div>
+
+<h3 id="reproducing-the-crash-pt-1">Reproducing the crash (pt. 1)</h3>
+
+<p>Assuming that the AppDelegate was doing something wrong, there was even a much bigger issue: I could not reproduce the crash on my machine. I realized, though, that a friend of mine had an Intel MacBook with macOS 14, so I asked for his help.</p>
+
+<p>He gave me access via AnyDesk to push ad hoc builds to the machine. The latest app version crashed consistently. Off to a good start. At that point, I spent a few hours trying to exclude potentially offending parts from the launch code, sadly to no avail. Consider that any change in the code implied archiving and sending a build via AnyDesk to test it. It was exhausting, and the afternoon led nowhere.</p>
+
+<h3 id="reproducing-the-crash-pt-2">Reproducing the crash (pt. 2)</h3>
+
+<p>I decide to give a shot to virtualization. Most crashes came from macOS 14, and not necessarily from Intel machines, so this could work. These were the steps:</p>
+
+<ul>
+  <li>Get <a href="https://mac.getutm.app/">UTM</a> to run a VM on Mac. <em>Highly recommended!</em></li>
+  <li>Download a restore image for Sonoma (~14GB)</li>
+  <li>Regenerate the provisioning profile with the VM UDID</li>
+  <li>Send the development build via a shared folder to the VM</li>
+</ul>
+
+<p>The app crashes. Hooray!</p>
+
+<h3 id="git-to-the-rescue">Git to the rescue</h3>
+
+<p>Time to locate where the regression was introduced. I rebuilt the app for each commit that sounded relevant, and after 10-20 builds, I found out that the crash was introduced in <a href="https://github.com/passepartoutvpn/passepartout/pull/1200">this pull request</a> about the light/dark mode picker in the app preferences. WTF?!</p>
+
+<p>It turns out, the widely used <a href="https://developer.apple.com/documentation/appkit/nsapp"><code class="language-plaintext highlighter-rouge">NSApp</code> singleton</a> is an <strong>implicitly unwrapped optional</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@MainActor
+var NSApp: NSApplication!
+</code></pre></div></div>
+
+<p>and it was therefore used unsafely in this bit of the PR:</p>
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2Fv3.1.1%2FPackages%2FApp%2FSources%2FUILibrary%2FBusiness%2FAppearanceManager.swift%23L66-73&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
+
+<h3 id="a-race-condition-about-nsapp">A race condition about NSApp</h3>
+
+<p>It’s finally revealed that, very early in a Mac app lifecycle, <code class="language-plaintext highlighter-rouge">NSApp</code> may be nil. This was more often the case on macOS 14 than 15, but still a hideous race condition.</p>
+
+<p>Here goes the simplified stack call:</p>
+
+<ul>
+  <li>main</li>
+  <li>AppDelegate.init</li>
+  <li>AppearanceManager.init</li>
+  <li>AppearanceManager.systemAppearance.didSet</li>
+  <li>AppearanceManager.apply()</li>
+  <li>NSApp.appearance = …</li>
+</ul>
+
+<p>In the last call, <code class="language-plaintext highlighter-rouge">NSApp</code> may be nil and implicitly unwrapped, leading to the crash.</p>
+
+<h3 id="lessons-learned">Lessons learned</h3>
+
+<p>This was one of those bugs that make you question everything—platform differences, architecture quirks, even Core Data conspiracies—before revealing a simple yet insidious root cause: a race condition with <code class="language-plaintext highlighter-rouge">NSApp</code>.</p>
+
+<p>The takeaway? Even well-documented singletons aren’t always safe to assume as non-nil. And when debugging obscure crashes, patience and a systematic approach (plus a good VM setup) can make all the difference.</p>
+
+<p>Passepartout v3.1.5 <a href="https://github.com/passepartoutvpn/passepartout/pull/1224">will handle this case properly</a>, ensuring that <code class="language-plaintext highlighter-rouge">NSApp</code> is accessed only when it’s actually available. Hopefully, that’s one less obscure crash lurking in the shadows.</p>
+
+<p>To Apple and Swift: isn’t it about time to discourage/deprecate the use of implicitly unwrapped optionals?</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="swift" /><summary type="html"><![CDATA[One month after its first, painful release, Passepartout v3 is close to being stable. However, a couple of regressions were still haunting me. Here I want to describe the absurd journey into one of them, that started with a report from GitHub, and one from Reddit. Both users were reporting that the Mac app was crashing on launch. The reports led me to think that the regression was caused by the macOS version, or the CPU architecture, as both users were using an Intel-based machine. The Xcode Organizer I had several (unhelpful) crashes in the Xcode Organizer confirming the issue: Looking further into some crashes, I could spot a few SIGILL (Illegal Hardware Instruction) that reinforced the idea of a platform-related issue. Add to that, one of the threads had intense Core Data + CloudKit activity ongoing. It must be Core Data, I thought, given that Passepartout performs its sync precisely when the app launches. Doubt #1: how can the app launch at all if the arch is unsupported? Doubt #2: is the Core Data stack trace relevant? Is it the thread that is actually crashing? Never read crash reports only once Passepartout is a privacy-oriented app. There is no external framework e.g. Firebase to help with crash resolution, so Xcode is the only technical resource at disposal. Plus the patient support from the affected users. Eventually, Core Data was a distraction. Every report was crashing on “Thread 0”, i.e. the main thread. There were also crashes from macOS 15 and ARM64. Fewer, but non-zero. This stack trace shed some light in that the injected AppDelegate could be the culprit. But where? And why? Thread 0 Crashed: 0 Passepartout 0x00000001029bb154 0x102764000 + 2453844 1 Passepartout 0x00000001029baf6c 0x102764000 + 2453356 2 Passepartout 0x00000001029bb83c 0x102764000 + 2455612 3 Passepartout 0x00000001029ba6ac 0x102764000 + 2451116 4 Passepartout 0x00000001029b66d4 0x102764000 + 2434772 5 Passepartout 0x000000010276d0d4 0x102764000 + 37076 6 Passepartout 0x000000010276c868 0x102764000 + 34920 7 libdispatch.dylib 0x000000018ab68658 _dispatch_client_callout + 20 (object.m:576) 8 libdispatch.dylib 0x000000018ab69ea0 _dispatch_once_callout + 32 (once.c:52) 9 Passepartout 0x000000010276b2ac 0x102764000 + 29356 10 Passepartout 0x000000010276b2f0 0x102764000 + 29424 11 Passepartout 0x000000010276b3c0 0x102764000 + 29632 12 SwiftUI 0x00000001b977a934 FallbackDelegateBox.delegate.getter + 68 (FallbackDelegateBox.swift:36) 13 SwiftUI 0x00000001b9e8cea8 specialized NSApplicationDelegateAdaptor.wrappedValue.getter + 156 (FallbackDelegates_Mac.swift:93) ... Reproducing the crash (pt. 1) Assuming that the AppDelegate was doing something wrong, there was even a much bigger issue: I could not reproduce the crash on my machine. I realized, though, that a friend of mine had an Intel MacBook with macOS 14, so I asked for his help. He gave me access via AnyDesk to push ad hoc builds to the machine. The latest app version crashed consistently. Off to a good start. At that point, I spent a few hours trying to exclude potentially offending parts from the launch code, sadly to no avail. Consider that any change in the code implied archiving and sending a build via AnyDesk to test it. It was exhausting, and the afternoon led nowhere. Reproducing the crash (pt. 2) I decide to give a shot to virtualization. Most crashes came from macOS 14, and not necessarily from Intel machines, so this could work. These were the steps: Get UTM to run a VM on Mac. Highly recommended! Download a restore image for Sonoma (~14GB) Regenerate the provisioning profile with the VM UDID Send the development build via a shared folder to the VM The app crashes. Hooray! Git to the rescue Time to locate where the regression was introduced. I rebuilt the app for each commit that sounded relevant, and after 10-20 builds, I found out that the crash was introduced in this pull request about the light/dark mode picker in the app preferences. WTF?! It turns out, the widely used NSApp singleton is an implicitly unwrapped optional: @MainActor var NSApp: NSApplication! and it was therefore used unsafely in this bit of the PR: A race condition about NSApp It’s finally revealed that, very early in a Mac app lifecycle, NSApp may be nil. This was more often the case on macOS 14 than 15, but still a hideous race condition. Here goes the simplified stack call: main AppDelegate.init AppearanceManager.init AppearanceManager.systemAppearance.didSet AppearanceManager.apply() NSApp.appearance = … In the last call, NSApp may be nil and implicitly unwrapped, leading to the crash. Lessons learned This was one of those bugs that make you question everything—platform differences, architecture quirks, even Core Data conspiracies—before revealing a simple yet insidious root cause: a race condition with NSApp. The takeaway? Even well-documented singletons aren’t always safe to assume as non-nil. And when debugging obscure crashes, patience and a systematic approach (plus a good VM setup) can make all the difference. Passepartout v3.1.5 will handle this case properly, ensuring that NSApp is accessed only when it’s actually available. Hopefully, that’s one less obscure crash lurking in the shadows. To Apple and Swift: isn’t it about time to discourage/deprecate the use of implicitly unwrapped optionals?]]></summary></entry><entry><title type="html">Wallet software</title><link href="https://davidederosa.com/basic-blockchain-programming/wallet-software/" rel="alternate" type="text/html" title="Wallet software" /><published>2015-06-23T00:00:00+02:00</published><updated>2015-06-23T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/wallet-software</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/wallet-software/"><![CDATA[<p>Commonly, Bitcoin users rely on clients called <em>wallets</em> to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are <a href="https://electrum.org">Electrum</a>, <a href="https://hivewallet.com">Hive</a> etc. Here I’ll try to describe the components of a wallet.</p>
 
 <h3 id="data-model">Data model</h3>
 
@@ -1083,7 +1189,179 @@ OP_CHECKSIG
 
 <p>You learned that only a standard subset of all possible scripts are accepted by the Bitcoin network. P2PKH scripts are the most common standard scripts you’ll find in the blockchain. Input and output scripts together form validation scripts. Miners execute validation scripts to either accept or reject a transaction.</p>
 
-<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 1)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/"><![CDATA[<p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
+<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
+
+<!--more-->
+
+<h4 id="arithmetic">Arithmetic</h4>
+
+<p>Look at some of the many arithmetic opcodes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">93</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
+      <td><code class="language-plaintext highlighter-rouge">94</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[5]
+[5, 9]
+[14]
+[14, 6]
+[8]
+</code></pre></div></div>
+
+<p>The script returns 8.</p>
+
+<h4 id="comparison">Comparison</h4>
+
+<p>Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">87</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[c3 72]
+[c3 72, 03 72]
+[c3 72, 03 72, c0]
+[c3 72, c3 72]
+[1]
+</code></pre></div></div>
+
+<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
+
+<h4 id="stack-manipulation">Stack manipulation</h4>
+
+<p>This is the only opcode you’re going to use for stack manipulation:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">76</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[b9 0c a2 fe]
+[b9 0c a2 fe, b9 0c a2 fe]
+[1]
+</code></pre></div></div>
+
+<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
+
+<h4 id="crypto">Crypto</h4>
+
+<p>These opcodes are certainly the most interesting:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
+
+<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
+
+<p>Both opcodes will be described in the next post.</p>
+
+<h3 id="wheres-the-code">Where’s the code?</h3>
+
+<p>There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.</p>
+
+<p>In the <a href="/basic-blockchain-programming/standard-scripts/">next article</a> we’ll examine the role of keys and addresses in <em>standard scripts</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 1)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/"><![CDATA[<p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
 
 <!--more-->
 
@@ -1345,179 +1623,7 @@ OP_CHECKSIG
 
 <p>You learned a little bit about machine code and opcodes. Script is a simple low-level language understood by miners software. Script state is tracked with stack memory.</p>
 
-<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><summary type="html"><![CDATA[Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
-
-<!--more-->
-
-<h4 id="arithmetic">Arithmetic</h4>
-
-<p>Look at some of the many arithmetic opcodes:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
-      <td><code class="language-plaintext highlighter-rouge">93</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
-      <td><code class="language-plaintext highlighter-rouge">94</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[5]
-[5, 9]
-[14]
-[14, 6]
-[8]
-</code></pre></div></div>
-
-<p>The script returns 8.</p>
-
-<h4 id="comparison">Comparison</h4>
-
-<p>Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
-      <td><code class="language-plaintext highlighter-rouge">87</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[c3 72]
-[c3 72, 03 72]
-[c3 72, 03 72, c0]
-[c3 72, c3 72]
-[1]
-</code></pre></div></div>
-
-<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
-
-<h4 id="stack-manipulation">Stack manipulation</h4>
-
-<p>This is the only opcode you’re going to use for stack manipulation:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
-      <td><code class="language-plaintext highlighter-rouge">76</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[b9 0c a2 fe]
-[b9 0c a2 fe, b9 0c a2 fe]
-[1]
-</code></pre></div></div>
-
-<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
-
-<h4 id="crypto">Crypto</h4>
-
-<p>These opcodes are certainly the most interesting:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
-      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
-
-<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
-
-<p>Both opcodes will be described in the next post.</p>
-
-<h3 id="wheres-the-code">Where’s the code?</h3>
-
-<p>There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.</p>
-
-<p>In the <a href="/basic-blockchain-programming/standard-scripts/">next article</a> we’ll examine the role of keys and addresses in <em>standard scripts</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[In the first part I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.]]></summary></entry><entry><title type="html">Scripts in transaction processing</title><link href="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" rel="alternate" type="text/html" title="Scripts in transaction processing" /><published>2015-05-15T00:00:00+02:00</published><updated>2015-05-15T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/"><![CDATA[<p>With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, <em>scripts</em> are the last step in the path. Here I’ll give an overview of their role in transaction processing.</p>
+<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><summary type="html"><![CDATA[Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!]]></summary></entry><entry><title type="html">Scripts in transaction processing</title><link href="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" rel="alternate" type="text/html" title="Scripts in transaction processing" /><published>2015-05-15T00:00:00+02:00</published><updated>2015-05-15T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/"><![CDATA[<p>With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, <em>scripts</em> are the last step in the path. Here I’ll give an overview of their role in transaction processing.</p>
 
 <!--more-->
 
@@ -1595,256 +1701,4 @@ OP_CHECKSIG
 
 <p>You learned that a transaction moves bitcoins from output(s) to output(s). When spent, a former output becomes an input to the new transaction. Transaction outputs must not be spent twice. The UTXO set computes the balance of a wallet (or the entire Bitcoin network). Scripts describe the proper way to redeem a transaction output.</p>
 
-<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">next article</a> you’ll get to know <em>Script</em>, the Bitcoin scripting language. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="utxo" /><category term="outpoint" /><category term="script" /><summary type="html"><![CDATA[With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, scripts are the last step in the path. Here I’ll give an overview of their role in transaction processing.]]></summary></entry><entry><title type="html">Network interoperability (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-one/" rel="alternate" type="text/html" title="Network interoperability (pt. 1)" /><published>2015-05-14T00:00:00+02:00</published><updated>2015-05-14T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-one/"><![CDATA[<p>Often, the average bitcoiner is not aware that multiple blockchains exist. Most people transparently connect to the main network, because wallet software by default operates in the realm of real money. In fact, you’re going to discover 3 different Bitcoin networks with their own peculiarities.</p>
-
-<!--more-->
-
-<h3 id="parallel-universes">Parallel universes</h3>
-
-<p>As an user, I expect you to know that Bitcoin is backed by a vast peer-to-peer network. To be more precise, there are 2 public subnetworks:</p>
-
-<ul>
-  <li><em>Mainnet</em></li>
-  <li><em>Testnet3</em></li>
-</ul>
-
-<p>with the “3” suffix meaning the 3rd generation of Testnet. Under normal operation wallet clients connect to Mainnet, the only network where bitcoins have concrete value in real life. Testnet name is self-explanatory, it’s the best choice for testing and software development since Testnet coins are worthless.</p>
-
-<p>The third network is sort a virtual network and is called <em>Regtest</em>. The name stands for “regression test” and it’s a specific mode of Bitcoin Core in which local blocks are mined immediately. Regtest is therefore substantially different from Mainnet and Testnet3, where miners must comply with a certain set of consensus rules. Quick blocks make Regtest particularly interesting: it makes possible creating custom blockchains with negligible processing power.</p>
-
-<h4 id="identifying-networks">Identifying networks</h4>
-
-<p>Mainnet and Testnet3 mainly differ in the default TCP port for p2p access and the prefix of transmitted packets (little-endian):</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>port</th>
-      <th>packet prefix</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mainnet</td>
-      <td>8333</td>
-      <td><code class="language-plaintext highlighter-rouge">f9 be b4 d9</code></td>
-    </tr>
-    <tr>
-      <td>Testnet3</td>
-      <td>18333</td>
-      <td><code class="language-plaintext highlighter-rouge">0b 11 09 07</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Additionally, Testnet3 validation rules are much more relaxed thus making room for experimental transactions.</p>
-
-<p>Let alone the genesis block, blockchains are completely network agnostic. That is, blocks and transactions embed no information about the network they live in. There’s no way to tell the network that broadcast a transaction from the transaction data alone. Incidentally, a transaction can be published as-is to both Mainnet and Testnet3.</p>
-
-<p>To avoid ambiguity, user shared entities (namely private keys and <em>addresses</em>) were made network-dependent by adding magic prefixes. Later we’ll learn what these prefixes are and how they affect the way keys and addresses are displayed.</p>
-
-<h3 id="the-base58-encoding">The Base58 encoding</h3>
-
-<p>There are entities that even the average Bitcoin user is bound to deal with: keys and addresses. In an attempt to make them shorter and slightly more human-readable than hexes, Bitcoin introduces the <em>Base58</em> encoding. Base58 is a stripped down version of <a href="http://en.wikipedia.org/wiki/Base64">Base64</a>, a widely known scheme to display binary data in ASCII text. Here’s how Base58 differs:</p>
-
-<ul>
-  <li>Base58 only has alphanumeric symbols, no <code class="language-plaintext highlighter-rouge">+</code> and <code class="language-plaintext highlighter-rouge">/</code>.</li>
-  <li>Base58 excludes <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">O</code>, <code class="language-plaintext highlighter-rouge">I</code>, <code class="language-plaintext highlighter-rouge">l</code> for visual ambiguity.</li>
-  <li>Base58 strings are fully selectable with a double-click.</li>
-  <li>Base58 symbol values follow the ASCII ordering.</li>
-</ul>
-
-<p>The complete Base58 alphabet:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Value</th>
-      <th>Ch</th>
-      <th>Value</th>
-      <th>Ch</th>
-      <th>Value</th>
-      <th>Ch</th>
-      <th>Value</th>
-      <th>Ch</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>1</td>
-      <td>15</td>
-      <td>G</td>
-      <td>30</td>
-      <td>X</td>
-      <td>45</td>
-      <td>n</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>16</td>
-      <td>H</td>
-      <td>31</td>
-      <td>Y</td>
-      <td>46</td>
-      <td>o</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>3</td>
-      <td>17</td>
-      <td>J</td>
-      <td>32</td>
-      <td>Z</td>
-      <td>47</td>
-      <td>p</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>4</td>
-      <td>18</td>
-      <td>K</td>
-      <td>33</td>
-      <td>a</td>
-      <td>48</td>
-      <td>q</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>5</td>
-      <td>19</td>
-      <td>L</td>
-      <td>34</td>
-      <td>b</td>
-      <td>49</td>
-      <td>r</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>6</td>
-      <td>20</td>
-      <td>M</td>
-      <td>35</td>
-      <td>c</td>
-      <td>50</td>
-      <td>s</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>7</td>
-      <td>21</td>
-      <td>N</td>
-      <td>36</td>
-      <td>d</td>
-      <td>51</td>
-      <td>t</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>8</td>
-      <td>22</td>
-      <td>P</td>
-      <td>37</td>
-      <td>e</td>
-      <td>52</td>
-      <td>u</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>9</td>
-      <td>23</td>
-      <td>Q</td>
-      <td>38</td>
-      <td>f</td>
-      <td>53</td>
-      <td>v</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>A</td>
-      <td>24</td>
-      <td>R</td>
-      <td>39</td>
-      <td>g</td>
-      <td>54</td>
-      <td>w</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>B</td>
-      <td>25</td>
-      <td>S</td>
-      <td>40</td>
-      <td>h</td>
-      <td>55</td>
-      <td>x</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>C</td>
-      <td>26</td>
-      <td>T</td>
-      <td>41</td>
-      <td>i</td>
-      <td>56</td>
-      <td>y</td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>D</td>
-      <td>27</td>
-      <td>U</td>
-      <td>42</td>
-      <td>j</td>
-      <td>57</td>
-      <td>z</td>
-    </tr>
-    <tr>
-      <td>13</td>
-      <td>E</td>
-      <td>28</td>
-      <td>V</td>
-      <td>43</td>
-      <td>k</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>14</td>
-      <td>F</td>
-      <td>29</td>
-      <td>W</td>
-      <td>44</td>
-      <td>m</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<p>With such a mapping, the Base58 encoding is just a number base conversion. The only tricky part comes from big numbers, as seen in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/base58.h">base58.h</a>. Beware of endianness, contrary to the majority of blockchain objects Base58 strings are encoded big-endian.</p>
-
-<h4 id="base58check">Base58Check</h4>
-
-<p>Since Base58 strings are long and unfriendly, a checksum suffix is typically appended to avoid typos. The checksum consists of the first 4 bytes of hash256(payload). The (payload + checksum) format is called <em>Base58Check</em>. Steps:</p>
-
-<ol>
-  <li>Perform hash256 on the payload bytes.</li>
-  <li>The first 4 bytes of the hash256 digest are the checksum.</li>
-  <li>Append the checksum to the payload.</li>
-  <li>Encode the result to Base58.</li>
-</ol>
-
-<p>Base58Check examples will be treated in the second part.</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned that there are 3 different Bitcoin networks. Real money flows on Mainnet, while test money resides on Testnet3. Regtest is for testing local, custom blockchains. All the long strings shared for bitcoin transfers are encoded Base58.</p>
-
-<p>In the <a href="/basic-blockchain-programming/network-interoperability-part-two/">next article</a> I’ll complete the big picture with keys serialization and <em>addresses</em>, the typical transaction endpoints. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="base58" /><category term="base58check" /><category term="networking" /><summary type="html"><![CDATA[Often, the average bitcoiner is not aware that multiple blockchains exist. Most people transparently connect to the main network, because wallet software by default operates in the realm of real money. In fact, you’re going to discover 3 different Bitcoin networks with their own peculiarities.]]></summary></entry></feed>
+<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">next article</a> you’ll get to know <em>Script</em>, the Bitcoin scripting language. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="utxo" /><category term="outpoint" /><category term="script" /><summary type="html"><![CDATA[With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, scripts are the last step in the path. Here I’ll give an overview of their role in transaction processing.]]></summary></entry></feed>
