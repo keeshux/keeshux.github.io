@@ -1,0 +1,474 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Network interoperability (pt. 2)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Network interoperability (pt. 2)" />
+<meta property="og:title" content="Network interoperability (pt. 2)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Network interoperability (pt. 2)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-two/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing" />
+
+
+<link rel="next" href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/network-interoperability-part-two/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Network interoperability (pt. 2)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 14, 2015</span>
+            <h2 itemprop="name">
+                
+                Network interoperability (pt. 2)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Here we are, finally ready to bring ECDSA keys to the real blockchain world. This post will describe the blockchain objects we send and receive bitcoins with, namely keys and addresses. Eventually, you’ll be able to generate the most essential Bitcoin wallet.</p>
+
+<!--more-->
+
+<h3 id="private-keys">Private keys</h3>
+
+<p>So far, you’ve read a lot of crypto code to generate ECDSA keypairs and signatures. At the end of the series, you’ll see the role of private keys in transaction signatures. Meanwhile, you just need to know how to serialize private keys in a format that wallet software will understand.</p>
+
+<p>By now you should be familiar with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">sample private key</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+</code></pre></div></div>
+
+<p>Our next goal is converting this private key to WIF.</p>
+
+<h4 id="wallet-import-format-wif">Wallet Import Format (WIF)</h4>
+
+<p>The <em>Wallet Import Format</em> (WIF) is the first example of Base58Check encoding. Given the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mainnet</td>
+      <td><code class="language-plaintext highlighter-rouge">80</code></td>
+    </tr>
+    <tr>
+      <td>Testnet3</td>
+      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>we get the WIF representation of a private key this way:</p>
+
+<ol>
+  <li>Prepend <code class="language-plaintext highlighter-rouge">80</code> for Mainnet or <code class="language-plaintext highlighter-rouge">ef</code> for Testnet3.</li>
+  <li>Append <code class="language-plaintext highlighter-rouge">01</code> if the key will correspond to a compressed public key.</li>
+  <li>Encode to Base58Check.</li>
+</ol>
+
+<p>See our sample key encoded to WIF:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (Testnet3 version) */
+
+ef
+16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+
+/* 2 (yes to compressed public keys) */
+
+ef
+16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+01
+
+/* 3.1 (hash256 of step 2) */
+
+35 06 7f 25 1e 07 d0 2b
+59 ca f4 cc 77 36 20 7d
+73 0d 21 88 f9 62 8f 47
+a9 2a 1a 92 7d 33 7b 2a 
+
+/* 3.2 (4-bytes checksum) */
+
+35 06 7f 25
+
+/* 3.3 (append checksum to step 2) */
+
+ef
+16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+01
+35 06 7f 25
+
+/* 3.4 (encode Base58) */
+
+cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
+</code></pre></div></div>
+
+<p>Look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-wif.c">ex-wif.c</a> for the conversion done in code.</p>
+
+<p>The final output is a valid WIF key for the Testnet3 network. Conversely, the ECDSA key is parsed back from WIF by decoding Base58 and taking the 32 bytes after the version byte. Beware of step 2, we must know in advance if we plan to use compressed public keys, because the conversion form affects the address we’ll generate from the private key (read next paragraph).</p>
+
+<p>WIF private keys take:</p>
+
+<ul>
+  <li>A 1-byte version.</li>
+  <li>A 32-bytes ECDSA private key.</li>
+  <li>An optional <code class="language-plaintext highlighter-rouge">01</code>.</li>
+  <li>A 4-bytes checksum.</li>
+</ul>
+
+<p>and therefore measure 38 bytes at most.</p>
+
+<h3 id="addresses">Addresses</h3>
+
+<p>In case you ever sent or received bitcoins, you should recognize one of the transaction parameters at the very least: <em>addresses</em>. You know, those very long strings you share to receive coins from someone, usually in the form of a QR code.</p>
+
+<p>To understand how addresses “receive” money, you’ll first have to hack into Bitcoin scripts. However, it’s good to know from the start that most Bitcoin addresses are computed from the public key of our ECDSA keypair. Precisely, a <em>P2PKH</em> address (pay-to-public-key-hash) is defined as hash160(public_key), that is a short form for RIPEMD-160(SHA-256(public_key)).</p>
+
+<p>The other address type is <em>P2SH</em> (pay-to-script-hash) and mainly relates to multisignature, which I won’t address in this series.</p>
+
+<h4 id="encoding">Encoding</h4>
+
+<p>Given our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">sample public key</a> (in compressed form):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+</code></pre></div></div>
+
+<p>and the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mainnet</td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
+    </tr>
+    <tr>
+      <td>Testnet3</td>
+      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>we generate a P2PKH address this way:</p>
+
+<ol>
+  <li>Perform hash160 on the public key.</li>
+  <li>Prepend <code class="language-plaintext highlighter-rouge">00</code> for Mainnet or <code class="language-plaintext highlighter-rouge">6f</code> for Testnet3.</li>
+  <li>Encode to Base58Check.</li>
+</ol>
+
+<p>Indeed, another example of Base58Check encoding. See the address generated from our public key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* 1 (hash160 of public key) */
+
+6b f1 9e 55 f9 4d 98 6b
+46 40 c1 54 d8 64 69 93
+41 91 95 11
+
+/* 2 (Testnet3 version) */
+
+6f
+6b f1 9e 55 f9 4d 98 6b
+46 40 c1 54 d8 64 69 93
+41 91 95 11
+
+/* 3.1 (hash256 of step 2) */
+
+41 7c 62 6a 31 b5 9b 6e
+1a 0b 7f 30 36 e6 d3 49
+26 61 20 cf cc e6 9b 46
+69 ac a8 7f ff a9 e1 21 
+
+/* 3.2 (4-bytes checksum) */
+
+41 7c 62 6a
+
+/* 3.3 (append checksum to step 2) */
+
+6f
+6b f1 9e 55 f9 4d 98 6b
+46 40 c1 54 d8 64 69 93
+41 91 95 11
+41 7c 62 6a
+
+/* 3.4 (encode Base58) */
+
+mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+</code></pre></div></div>
+
+<p>Look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-address.c">ex-address.c</a> for the generation done in code.</p>
+
+<p>P2PKH addresses take:</p>
+
+<ul>
+  <li>A 1-byte version.</li>
+  <li>A 20-bytes hash160 of the public key.</li>
+  <li>A 4-bytes checksum.</li>
+</ul>
+
+<p>and therefore measure 25 bytes.</p>
+
+<h4 id="a-note-on-conversion-form">A note on conversion form</h4>
+
+<p>In the paragraph about WIF, I said that <code class="language-plaintext highlighter-rouge">01</code> must be appended to the private key in case we’ll use the corresponding public key in compressed form. Now that you know how to generate a P2PKH address, you should figure that compressed and uncompressed public keys yield different hash160 digests and therefore different addresses. A private key has in fact 2 corresponding public keys and addresses, and you’ll soon realize that this may have undesirable consequences in transaction validation.</p>
+
+<h3 id="magic-version-prefixes">Magic version prefixes</h3>
+
+<p>A nice side-effect of the version byte is that Bitcoin Base58-encoded strings always begin with special letters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>version</th>
+      <th>prefix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mainnet keys</td>
+      <td><code class="language-plaintext highlighter-rouge">80</code></td>
+      <td><code class="language-plaintext highlighter-rouge">5</code>,<code class="language-plaintext highlighter-rouge">K</code>,<code class="language-plaintext highlighter-rouge">L</code></td>
+    </tr>
+    <tr>
+      <td>Testnet3 keys</td>
+      <td><code class="language-plaintext highlighter-rouge">ef</code></td>
+      <td><code class="language-plaintext highlighter-rouge">9</code>,<code class="language-plaintext highlighter-rouge">c</code></td>
+    </tr>
+    <tr>
+      <td>Mainnet addresses</td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td>Testnet3 addresses</td>
+      <td><code class="language-plaintext highlighter-rouge">6f</code></td>
+      <td><code class="language-plaintext highlighter-rouge">m</code>,<code class="language-plaintext highlighter-rouge">n</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The prefix helps us identify immediately the meaning of a Base58 string. Apart from being convenient, this is a totally intentional Bitcoin feature.</p>
+
+<h3 id="the-essential-wallet">The essential wallet</h3>
+
+<p>A lot of work huh? At last we have a wallet-friendly keypair for Testnet3:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WIF: cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76
+Address: mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+</code></pre></div></div>
+
+<p>Displayed as QR codes:</p>
+
+<p><img src="/s/f/basic-blockchain-programming/network-qr-wif.svg" alt="WIF" /> <img src="/s/f/basic-blockchain-programming/network-qr-address.svg" alt="Address" /></p>
+
+<p>Such a pair is the foundation of a Bitcoin wallet. We share the public address to receive coins on it, then we sign transactions with the private WIF to spend the received coins.</p>
+
+<p>If you have a <a href="https://play.google.com/store/apps/details?id=de.schildbach.wallet_test">testnet wallet</a> and import the WIF private key, the associated address should appear as well. At the time of writing, I loaded the address with <a href="https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK">some coins</a> available for spending. In case you want more test coins, use a faucet like <a href="http://tpfaucet.appspot.com/">TP’s TestNet Faucet</a>. That’s all you need to start fiddling with the blockchain!</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to convert ECDSA private keys to Wallet-Import-Format (WIF) and generate P2PKH addresses from the corresponding public key. The most essential wallet consists of a private WIF key and its associated public address.</p>
+
+<p>In the <a href="/basic-blockchain-programming/scripts-in-transaction-processing/">next article</a> I’ll introduce <em>scripts</em>, the key part of transaction processing. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

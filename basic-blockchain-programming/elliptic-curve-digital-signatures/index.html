@@ -1,0 +1,360 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Elliptic-curve digital signatures</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Elliptic-curve digital signatures" />
+<meta property="og:title" content="Elliptic-curve digital signatures" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Elliptic-curve digital signatures" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-digital-signatures/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Elliptic-curve digital signatures" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 13, 2015</span>
+            <h2 itemprop="name">
+                
+                Elliptic-curve digital signatures
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Now that you’re able to generate EC keypairs, the next step is using them to sign and verify messages. By message I mean any data –from text to binary– that needs to be authenticated. Specifically, Bitcoin clients produce signatures to authenticate their transactions, whereas miners verify such signatures to authorize and broadcast valid transactions.</p>
+
+<!--more-->
+
+<p>This post is going to deal with generic messages. Later on, we’ll learn what kind of messages are involved in the Bitcoin transaction signing process.</p>
+
+<h3 id="ecdsa-signatures">ECDSA signatures</h3>
+
+<p>Not surprisingly, the EC signature algorithm is <a href="http://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm">ECDSA</a> (Elliptic-Curve Digital Signature Algorithm). In ECDSA, all parties involved must agree on a hash function <em>H</em>, because we’re going to sign <em>H</em>(message) rather than the message itself. It’s worth noting that only the signing party S has access to the private key, while the verifying party V holds the corresponding public key to verify S signatures. I’ll reuse the same <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">private key</a> and <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">public key</a> from the <a href="/basic-blockchain-programming/elliptic-curve-keys/">previous post</a>.</p>
+
+<p>The following examples operate on SHA-256 digests, but keep in mind that Bitcoin’s designated <em>H</em> function is hash256, also known as double SHA-256 (read the <a href="/basic-blockchain-programming/bytes-and-hashes/">article on hashes</a>).</p>
+
+<h4 id="sign">Sign</h4>
+
+<p>The first step is putting our message into a file, say <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-message.txt">ex-message.txt</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is a very confidential message
+</code></pre></div></div>
+
+<p>whose SHA-256 digest is (don’t forget the trailing <code class="language-plaintext highlighter-rouge">\n</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>45 54 81 3e 91 f3 d5 be
+79 0c 7c 60 8f 80 b2 b0
+0f 3e a7 75 12 d4 90 39
+e9 e3 dc 45 f8 9e 2f 01
+</code></pre></div></div>
+
+<p>After that, we sign the SHA-256 digest of the message with the private key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -sign ec-priv.pem ex-message.txt &gt;ex-signature.der
+</code></pre></div></div>
+
+<p>The <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-signature.der">ex-signature.der</a> file is the message signature in <em>DER</em> format. OpenSSL uses the <a href="http://en.wikipedia.org/wiki/X.690">DER encoding</a> for any binary output (keys, certificates, signatures etc.), but I’ll skip the underlying details. You don’t need to know the semantic of an ECDSA signature, just remember it’s a simple pair of big numbers \((r, s)\).</p>
+
+<p>You’ll probably notice that the signature changes each time you run the program, that is, the default signing process is not <em>deterministic</em>. This can be an issue when serializing blockchain transactions, because signatures are part of the transaction bytes and you probably remember that <a href="/basic-blockchain-programming/bytes-and-hashes/">transaction bytes hash to the txid</a>. As a consequence, the txid would change each time you sign a transaction. This behaviour is namely a source of <a href="http://www.coindesk.com/bitcoin-bug-guide-transaction-malleability/">transaction malleability</a>.</p>
+
+<p>To display a hex-encoded signature, just add the <code class="language-plaintext highlighter-rouge">-hex</code> flag:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -hex -sign ec-priv.pem ex-message.txt
+</code></pre></div></div>
+
+<p>For a repeatable output, though, you’d better hexdump the DER file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hexdump ex-signature.der
+</code></pre></div></div>
+
+<h4 id="verify">Verify</h4>
+
+<p>Whenever an authenticated message is published to the network, the readers expect to find a signature attached. Both files are the input to the verification routine, provided that we received the author’s public key in advance:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl dgst -sha256 -verify ec-pub.pem -signature ex-signature.der ex-message.txt
+</code></pre></div></div>
+
+<p>If the signature is verified, we’re able to state that the message is authentic.</p>
+
+<h3 id="code-translation">Code translation</h3>
+
+<p>The code below does what we did from the command line in the previous section.</p>
+
+<h4 id="sign-1">Sign</h4>
+
+<p>OpenSSL makes the signing operation trivial, look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-ecdsa-sign.c">ex-ecdsa-sign.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">priv_bytes</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+<span class="k">const</span> <span class="kt">char</span> <span class="n">message</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"This is a very confidential message</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+<span class="n">EC_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">digest</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="n">ECDSA_SIG</span> <span class="o">*</span><span class="n">signature</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="o">*</span><span class="n">der</span><span class="p">,</span> <span class="o">*</span><span class="n">der_copy</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="n">der_len</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">bbp_ec_new_keypair</span><span class="p">(</span><span class="n">priv_bytes</span><span class="p">);</span>
+<span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
+<span class="n">signature</span> <span class="o">=</span> <span class="n">ECDSA_do_sign</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">digest</span><span class="p">),</span> <span class="n">key</span><span class="p">);</span></code></pre></figure>
+
+<p>where <code class="language-plaintext highlighter-rouge">ECDSA_SIG</code> is a simple structure holding the \((r, s)\) pair described in the previous paragraph:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="p">{</span>
+    <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">r</span><span class="p">;</span>
+    <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ECDSA_SIG</span><span class="p">;</span></code></pre></figure>
+
+<p>My test output (yours will differ):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r: 2B2B529BDBDC93E78AF7E00228B179918B032D76902F74EF454426F7D06CD0F9
+s: 62DDC76451CD04CB567CA5C5E047E8AC41D3D4CF7CB92434D55CB486CCCF6AF2
+</code></pre></div></div>
+
+<p>With the <code class="language-plaintext highlighter-rouge">i2d_ECDSA_SIG</code> function we also get the DER-encoded signature:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">der_len</span> <span class="o">=</span> <span class="n">ECDSA_size</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="n">der</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">der_len</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">));</span>
+<span class="n">der_copy</span> <span class="o">=</span> <span class="n">der</span><span class="p">;</span>
+<span class="n">i2d_ECDSA_SIG</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">der_copy</span><span class="p">);</span></code></pre></figure>
+
+<p>that in my test is tidily rendered like this (can you spot <code class="language-plaintext highlighter-rouge">r</code> and <code class="language-plaintext highlighter-rouge">s</code> inside?):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
+02 20
+2b 2b 52 9b db dc 93 e7
+8a f7 e0 02 28 b1 79 91
+8b 03 2d 76 90 2f 74 ef
+45 44 26 f7 d0 6c d0 f9
+02 20
+62 dd c7 64 51 cd 04 cb
+56 7c a5 c5 e0 47 e8 ac
+41 d3 d4 cf 7c b9 24 34
+d5 5c b4 86 cc cf 6a f2
+</code></pre></div></div>
+
+<h4 id="verify-1">Verify</h4>
+
+<p>Verifying the signature is easy too, here’s <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-ecdsa-verify.c">ex-ecdsa-verify.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">pub_bytes</span><span class="p">[</span><span class="mi">33</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+<span class="kt">uint8_t</span> <span class="n">der_bytes</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span> <span class="p">};</span>
+<span class="k">const</span> <span class="kt">char</span> <span class="n">message</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"This is a very confidential message</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+<span class="n">EC_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">der_bytes_copy</span><span class="p">;</span>
+<span class="n">ECDSA_SIG</span> <span class="o">*</span><span class="n">signature</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">digest</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">verified</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">bbp_ec_new_pubkey</span><span class="p">(</span><span class="n">pub_bytes</span><span class="p">);</span>
+<span class="n">der_bytes_copy</span> <span class="o">=</span> <span class="n">der_bytes</span><span class="p">;</span>
+<span class="n">signature</span> <span class="o">=</span> <span class="n">d2i_ECDSA_SIG</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">der_bytes_copy</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">der_bytes</span><span class="p">));</span></code></pre></figure>
+
+<p>Since we don’t own the private key, we’ll have to decode <code class="language-plaintext highlighter-rouge">pub_bytes</code> into a compressed public key with the following helper from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec.h">ec.h</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">EC_KEY</span> <span class="o">*</span><span class="nf">bbp_ec_new_pubkey</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub_bytes</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">pub_len</span><span class="p">);</span></code></pre></figure>
+
+<p>On the other hand, <code class="language-plaintext highlighter-rouge">der_bytes</code> is the DER-encoded signature returned by the signing program. We decode the DER signature into a convenient <code class="language-plaintext highlighter-rouge">ECDSA_SIG</code> structure and then do the verification against the same SHA-256 message digest:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span>
+<span class="n">verified</span> <span class="o">=</span> <span class="n">ECDSA_do_verify</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">digest</span><span class="p">),</span> <span class="n">signature</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">ECDSA_do_verify</code> function returns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">1</code> if the signature is valid.</li>
+  <li><code class="language-plaintext highlighter-rouge">0</code> if the signature is not valid.</li>
+  <li><code class="language-plaintext highlighter-rouge">-1</code> for unexpected errors.</li>
+</ul>
+
+<p>Note: the signature decoding can be skipped by using <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>, which takes a DER-encoded signature directly.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to sign a message with a private key and how to verify a message signature with a public key.</p>
+
+<p>This is the last post about generic crypto, phew! In the <a href="/basic-blockchain-programming/network-interoperability-part-one/">next article</a> I’ll present the Bitcoin network. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

@@ -1,0 +1,329 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Serialization (pt. 1)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Serialization (pt. 1)" />
+<meta property="og:title" content="Serialization (pt. 1)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Serialization (pt. 1)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/serialization-part-one/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Serialization (pt. 1)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 1, 2015</span>
+            <h2 itemprop="name">
+                
+                Serialization (pt. 1)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what <code class="language-plaintext highlighter-rouge">int</code> and <code class="language-plaintext highlighter-rouge">char</code> mean before defining a custom <code class="language-plaintext highlighter-rouge">struct</code>.</p>
+
+<!--more-->
+
+<p>Remember, little-endian is the default byte order. Code examples may include <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/common.h">common.h</a> for general purpose routines and <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/endian.h">endian.h</a> for naïve endian conversions. Hash functions are defined in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/hash.h">hash.h</a> with help from OpenSSL. From now on I expect you don’t get in trouble with pointer arithmetics.</p>
+
+<h3 id="integers">Integers</h3>
+
+<p>First of all, there’s no use for negative integers in the blockchain. Integers are always unsigned, they can hold 8-bit, 16-bit, 32-bit or 64-bit values. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-integers.c">ex-integers.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">n8</span> <span class="o">=</span> <span class="mh">0x01</span><span class="p">;</span>
+<span class="kt">uint16_t</span> <span class="n">n16</span> <span class="o">=</span> <span class="mh">0x4523</span><span class="p">;</span>
+<span class="kt">uint32_t</span> <span class="n">n32</span> <span class="o">=</span> <span class="mh">0xcdab8967</span><span class="p">;</span>
+<span class="kt">uint64_t</span> <span class="n">n64</span> <span class="o">=</span> <span class="mh">0xdebc9a78563412ef</span><span class="p">;</span></code></pre></figure>
+
+<p>we serialize “n8 + n16 + n32 + n64” into (1 + 2 + 4 + 8) = 15 bytes. When storing single bytes we don’t care about endianness, but we must in all other cases. That’s why little-endian order has to be enforced for multibyte values:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">ser</span><span class="p">[</span><span class="mi">15</span><span class="p">];</span>
+
+<span class="o">*</span><span class="n">ser</span> <span class="o">=</span> <span class="n">n8</span><span class="p">;</span>
+<span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint16</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n16</span><span class="p">);</span>
+<span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n32</span><span class="p">);</span>
+<span class="o">*</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint64</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n64</span><span class="p">);</span></code></pre></figure>
+
+<p>If the machine is little-endian, the numbers are stored without additional manipulation. If not, their bytes are reversed.</p>
+
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (15 bytes):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01
+23 45
+67 89 ab cd
+ef 12 34 56 78 9a bc de
+</code></pre></div></div>
+
+<h3 id="fixed-length-data">Fixed-length data</h3>
+
+<p>By fixed-length data I mean data whose length is known in advance and therefore doesn’t need to be attached. In actual code, <code class="language-plaintext highlighter-rouge">memcpy</code> is all we need to serialize binary data.</p>
+
+<h4 id="null-padded-strings">Null-padded strings</h4>
+
+<p>Fixed-length strings are encoded in UTF-8 and padded with <code class="language-plaintext highlighter-rouge">\0</code> characters up to the desired length. This is the case of the Bitcoin p2p protocol, where messages are identified by human-readable names like <code class="language-plaintext highlighter-rouge">version</code>, <code class="language-plaintext highlighter-rouge">tx</code>, <code class="language-plaintext highlighter-rouge">getblocks</code> etc. with a maximum length of 12 characters. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-fixed-strings.c">ex-fixed-strings.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint32_t</span> <span class="n">n32</span> <span class="o">=</span> <span class="mh">0x68f7a38b</span><span class="p">;</span>
+<span class="kt">char</span> <span class="n">str</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"FooBar"</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="n">str_len</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kt">uint16_t</span> <span class="n">n16</span> <span class="o">=</span> <span class="mh">0xee12</span><span class="p">;</span></code></pre></figure>
+
+<p>we serialize “n32 + str + n16” into (4 + 10 + 2) = 16 bytes. Safely assume that ASCII strings encode to raw bytes for free. The actual string length is required to compute the padding:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">size_t</span> <span class="n">str_real_len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+<span class="kt">size_t</span> <span class="n">str_pad_len</span> <span class="o">=</span> <span class="n">str_len</span> <span class="o">-</span> <span class="n">str_real_len</span><span class="p">;</span></code></pre></figure>
+
+<p>Final packing:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">ser</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+
+<span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n32</span><span class="p">);</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">str_real_len</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">str_pad_len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">str_real_len</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">,</span> <span class="n">str_pad_len</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">str_len</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint16</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">n16</span><span class="p">);</span></code></pre></figure>
+
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (16 bytes):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8b a3 f7 68
+46 6f 6f 42 61 72 00 00 00 00
+12 ee
+</code></pre></div></div>
+
+<h4 id="hashes">Hashes</h4>
+
+<p>Hashes are another typical example of fixed-length data. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-hashes.c">ex-hashes.c</a> (requires OpenSSL):</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">char</span> <span class="n">message</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"Hello Bitcoin!"</span><span class="p">;</span>
+<span class="kt">uint16_t</span> <span class="n">prefix</span> <span class="o">=</span> <span class="mh">0xd17f</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">suffix</span> <span class="o">=</span> <span class="mh">0x8c</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">digest</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span></code></pre></figure>
+
+<p>we serialize “prefix + hash256(message) + suffix” into (2 + 32 + 1) = 35 bytes. Below we first calculate the SHA-256 digest of the message:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">));</span></code></pre></figure>
+
+<p>The SHA-256 algorithm yields a 256-bit digest, so we allocate an array of 32 bytes in advance. <code class="language-plaintext highlighter-rouge">SHA256_DIGEST_LENGTH</code> would be equivalent here, but I want to be as explicit as possible. The SHA-256 digest for the “Hello Bitcoin!” string is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>51 8a d5 a3 75 fa 52 f8
+4b 2b 3d f7 93 3a d6 85
+eb 62 cf 69 86 9a 96 73
+15 61 f9 4d 10 82 6b 5c
+</code></pre></div></div>
+
+<p>By hashing again:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span></code></pre></figure>
+
+<p>we get the hash256 digest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>90 98 6e a4 e2 8b 84 7c
+c7 f9 be ba 87 ea 81 b2
+21 ca 6e af 98 28 a8 b0
+4c 29 0c 21 d8 91 bc da
+</code></pre></div></div>
+
+<p>with <code class="language-plaintext highlighter-rouge">90</code> being the MSB because SHA-256 works big-endian. Final packing:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">ser</span><span class="p">[</span><span class="mi">35</span><span class="p">];</span>
+
+<span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">ser</span><span class="p">)</span> <span class="o">=</span> <span class="n">bbp_eint16</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">prefix</span><span class="p">);</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+<span class="o">*</span><span class="p">(</span><span class="n">ser</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span> <span class="o">=</span> <span class="n">suffix</span><span class="p">;</span></code></pre></figure>
+
+<p>The resulting <code class="language-plaintext highlighter-rouge">ser</code> array (35 bytes):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7f d1
+90 98 6e a4 e2 8b 84 7c
+c7 f9 be ba 87 ea 81 b2
+21 ca 6e af 98 28 a8 b0
+4c 29 0c 21 d8 91 bc da
+8c
+</code></pre></div></div>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to serialize fixed-length data for the blockchain.</p>
+
+<p>In the <a href="/basic-blockchain-programming/serialization-part-two/">second part</a> we’ll deal with variable-length data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

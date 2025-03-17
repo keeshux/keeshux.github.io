@@ -1,0 +1,279 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Bytes and hashes</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Bytes and hashes" />
+<meta property="og:title" content="Bytes and hashes" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/bytes-and-hashes/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Bytes and hashes" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bytes-and-hashes/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/bytes-and-hashes/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Bytes and hashes" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Apr 25, 2015</span>
+            <h2 itemprop="name">
+                
+                Bytes and hashes
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Hashing algorithms take a front seat in the Bitcoin ecosystem, you’re going to find them everywhere in the blockchain so I believe it’s the best subject to start with.</p>
+
+<!--more-->
+
+<p>Before we take off, keep in mind that almost all blockchain data structures are serialized in a <a href="http://en.wikipedia.org/wiki/Endianness#Little-endian">little-endian</a> fashion, whereas few objects (like network addresses) retain the <a href="http://en.wikipedia.org/wiki/Endianness#Big-endian">big-endian</a> byte order. If not otherwise stated I assume we’re talking and working on little-endian machines. Take your time and try not to get confused or weird things may happen as soon as you join the peer network.</p>
+
+<h3 id="bitcoin-hash-functions">Bitcoin hash functions</h3>
+
+<p>As far as we’re concerned, a <a href="http://en.wikipedia.org/wiki/Hash_function">hash function</a> translates an arbitrary amount of bytes into a fixed one. Forget about non-reversibility and other stuff because the fixed length is the property we want to stick with for now. Among others, Bitcoin relies on hashes for several key purposes:</p>
+
+<ul>
+  <li>Identifiers</li>
+  <li>Addresses</li>
+  <li>Transaction signatures</li>
+  <li><a href="http://en.wikipedia.org/wiki/Checksum">Checksums</a> and other validations</li>
+</ul>
+
+<p>Bitcoin is very interesting in that it has adopted well-established, sometimes basic concepts of computer science yet to create something mind-blowingly innovative. Hashes are no exception, because Satoshi used combinations of <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-2</a> and <a href="http://en.wikipedia.org/wiki/RIPEMD">RIPEMD</a> instead of defining his own cryptographic functions.</p>
+
+<p>Specifically, he introduced two compound hash functions:</p>
+
+<ul>
+  <li><em>hash256</em>(d) = SHA-256(SHA-256(d))</li>
+  <li><em>hash160</em>(d) = RIPEMD-160(SHA-256(d))</li>
+</ul>
+
+<p>where SHA-256 is a 256-bit variant of SHA-2, RIPEMD-160 is a 160-bit variant of RIPEMD and <em>d</em> is a generic array of bytes. No wonder the hash256 and hash160 functions return 256-bit (32 bytes) and 160-bit (20 bytes) arrays respectively.</p>
+
+<p>Was the choice of double-hashing personal or security related? Sorry for not being a cryptogeek, but based on <a href="https://bitcointalk.org/index.php?topic=45456.0">some discussions</a> my best guess is you’d better take this for granted.</p>
+
+<h3 id="hash256-for-identifiers">Hash256 for identifiers</h3>
+
+<p>If you’re a bit familiar with any wallet or block explorer on the web you’ve stumbled upon hash256 at least once, because this is the kind of hash the blockchain uses to identify its core entities: <em>blocks</em> and <em>transactions</em>.</p>
+
+<p>Consider the link to <a href="https://blockstream.info/block/00000000000000000ffd0d82302d4225aaa0ccfa29dc329f9e966b8fc83cbea5">this block</a> or <a href="https://blockstream.info/tx/46287164db45a78a9196257da45b62881e394a3d11fb403943bbbf8ec4aaf9ee">this transaction</a> in the blockchain, skip the parts you don’t understand and focus on the last component of both URLs which you’ll also spot at some point in the web page. Those long strings are primary keys in the blockchain database, you access a unique block (transaction) with that identifier and you’re guaranteed that no other block (transaction) will ever have the same identifier. Perhaps you also noticed that another property block and transaction ids share is their length, that is 64 characters.</p>
+
+<p>Back to the geeky stuff for a minute. There’s one more thing to these strings: they’re made of hexadecimal digits (0-9 a-f). As a programmer a bell immediately rings in your head when you deal with hexes, doesn’t it? Each hex pair represent a single byte of data and by doing the math you’ll find out that a string of 64 hex digits is an array of 32 bytes, just like hash256. In fact, both identifiers result from a hash256 computation:</p>
+
+<ul>
+  <li><em>block_id</em> = hash256(block.header)</li>
+  <li><em>transaction_id</em> = hash256(transaction)</li>
+</ul>
+
+<p>We’ll dig into blocks and transactions later, but this is one application of hash256 it’s worth noting from the very beginning. Other uses of hash256 will be explained later on.</p>
+
+<h3 id="hash160-for-addresses">Hash160 for addresses</h3>
+
+<p>If hash256 is the king of Bitcoin hashes, no doubt hash160 is the queen. I know there only are two but it’s nice to set some order of importance –I hope you don’t blame me for sexism here. Nevertheless, even if hash256 spreads all across the blockchain, hash160 reigns over a single strategic land you’ve surely heard of: <em>addresses</em>!</p>
+
+<p>Don’t rush into addresses like many other tutorials do, they won’t make any sense until you have a fair grasp of transactions. Just be patient, we’ll cover them in detail.</p>
+
+<h3 id="hashes-on-the-wire">Hashes on the wire</h3>
+
+<p>Block and transaction hashes follow the little-endian rule and that’s why your first attempts at publishing a raw transaction may be puzzling when you poll back the web explorers. For example, take the 64-chars hash of the above transaction (sometimes called <em>txid</em>) as seen on blockchain.info and split it into 32 groups of 2 hex digits (one byte each):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>46 28 71 64 db 45 a7 8a
+91 96 25 7d a4 5b 62 88
+1e 39 4a 3d 11 fb 40 39
+43 bb bf 8e c4 aa f9 ee
+</code></pre></div></div>
+
+<p>Say we want to handle this in our code, its best fit is an array:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">txid</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="p">...,</span> <span class="mh">0xee</span> <span class="p">};</span></code></pre></figure>
+
+<p>Now consider the nature of the txid, a big multibyte integer (256-bit) stored in an array due to the lack of a fitting primitive type. Our rough guess expects <code class="language-plaintext highlighter-rouge">46</code> to be the MSB (most significant byte) for being the leftmost in the string, yet we stored it at the lowest index. If we were on an Intel machine the <code class="language-plaintext highlighter-rouge">46</code> would be the LSB (least significant byte) instead. Weak.</p>
+
+<p>Here’s a less intuitive encoding:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">txid</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0xee</span><span class="p">,</span> <span class="p">...,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x46</span> <span class="p">};</span></code></pre></figure>
+
+<p>See how <code class="language-plaintext highlighter-rouge">46</code> is now the MSB of the array for a little-endian machine that stores more significant bytes at higher memory locations? Fine, this finally makes sense.</p>
+
+<p>Remember this when dealing with raw Bitcoin traffic, because a direct consequence is that we see “reversed hashes” on the wire.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned that the Bitcoin blockchain is mostly a little-endian monster and it’s our responsibility to submit binary data other peers will recognize. Blocks and transactions have equally formed primary keys that are basically a hash of their own bytes (or part of them). Bitcoin hash functions are normally built on top of other well-established hash functions.</p>
+
+<p>In the <a href="/basic-blockchain-programming/serialization-part-one/">next article</a> we’ll analyze <em>serialization</em> and gear up for some real code. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

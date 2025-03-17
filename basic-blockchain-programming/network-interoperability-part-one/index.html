@@ -1,0 +1,452 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Network interoperability (pt. 1)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Network interoperability (pt. 1)" />
+<meta property="og:title" content="Network interoperability (pt. 1)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-one/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Network interoperability (pt. 1)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/network-interoperability-part-one/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/network-interoperability-part-one/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Network interoperability (pt. 1)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 14, 2015</span>
+            <h2 itemprop="name">
+                
+                Network interoperability (pt. 1)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Often, the average bitcoiner is not aware that multiple blockchains exist. Most people transparently connect to the main network, because wallet software by default operates in the realm of real money. In fact, you’re going to discover 3 different Bitcoin networks with their own peculiarities.</p>
+
+<!--more-->
+
+<h3 id="parallel-universes">Parallel universes</h3>
+
+<p>As an user, I expect you to know that Bitcoin is backed by a vast peer-to-peer network. To be more precise, there are 2 public subnetworks:</p>
+
+<ul>
+  <li><em>Mainnet</em></li>
+  <li><em>Testnet3</em></li>
+</ul>
+
+<p>with the “3” suffix meaning the 3rd generation of Testnet. Under normal operation wallet clients connect to Mainnet, the only network where bitcoins have concrete value in real life. Testnet name is self-explanatory, it’s the best choice for testing and software development since Testnet coins are worthless.</p>
+
+<p>The third network is sort a virtual network and is called <em>Regtest</em>. The name stands for “regression test” and it’s a specific mode of Bitcoin Core in which local blocks are mined immediately. Regtest is therefore substantially different from Mainnet and Testnet3, where miners must comply with a certain set of consensus rules. Quick blocks make Regtest particularly interesting: it makes possible creating custom blockchains with negligible processing power.</p>
+
+<h4 id="identifying-networks">Identifying networks</h4>
+
+<p>Mainnet and Testnet3 mainly differ in the default TCP port for p2p access and the prefix of transmitted packets (little-endian):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>port</th>
+      <th>packet prefix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mainnet</td>
+      <td>8333</td>
+      <td><code class="language-plaintext highlighter-rouge">f9 be b4 d9</code></td>
+    </tr>
+    <tr>
+      <td>Testnet3</td>
+      <td>18333</td>
+      <td><code class="language-plaintext highlighter-rouge">0b 11 09 07</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Additionally, Testnet3 validation rules are much more relaxed thus making room for experimental transactions.</p>
+
+<p>Let alone the genesis block, blockchains are completely network agnostic. That is, blocks and transactions embed no information about the network they live in. There’s no way to tell the network that broadcast a transaction from the transaction data alone. Incidentally, a transaction can be published as-is to both Mainnet and Testnet3.</p>
+
+<p>To avoid ambiguity, user shared entities (namely private keys and <em>addresses</em>) were made network-dependent by adding magic prefixes. Later we’ll learn what these prefixes are and how they affect the way keys and addresses are displayed.</p>
+
+<h3 id="the-base58-encoding">The Base58 encoding</h3>
+
+<p>There are entities that even the average Bitcoin user is bound to deal with: keys and addresses. In an attempt to make them shorter and slightly more human-readable than hexes, Bitcoin introduces the <em>Base58</em> encoding. Base58 is a stripped down version of <a href="http://en.wikipedia.org/wiki/Base64">Base64</a>, a widely known scheme to display binary data in ASCII text. Here’s how Base58 differs:</p>
+
+<ul>
+  <li>Base58 only has alphanumeric symbols, no <code class="language-plaintext highlighter-rouge">+</code> and <code class="language-plaintext highlighter-rouge">/</code>.</li>
+  <li>Base58 excludes <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">O</code>, <code class="language-plaintext highlighter-rouge">I</code>, <code class="language-plaintext highlighter-rouge">l</code> for visual ambiguity.</li>
+  <li>Base58 strings are fully selectable with a double-click.</li>
+  <li>Base58 symbol values follow the ASCII ordering.</li>
+</ul>
+
+<p>The complete Base58 alphabet:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Ch</th>
+      <th>Value</th>
+      <th>Ch</th>
+      <th>Value</th>
+      <th>Ch</th>
+      <th>Value</th>
+      <th>Ch</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>15</td>
+      <td>G</td>
+      <td>30</td>
+      <td>X</td>
+      <td>45</td>
+      <td>n</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>16</td>
+      <td>H</td>
+      <td>31</td>
+      <td>Y</td>
+      <td>46</td>
+      <td>o</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+      <td>17</td>
+      <td>J</td>
+      <td>32</td>
+      <td>Z</td>
+      <td>47</td>
+      <td>p</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>4</td>
+      <td>18</td>
+      <td>K</td>
+      <td>33</td>
+      <td>a</td>
+      <td>48</td>
+      <td>q</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>5</td>
+      <td>19</td>
+      <td>L</td>
+      <td>34</td>
+      <td>b</td>
+      <td>49</td>
+      <td>r</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>6</td>
+      <td>20</td>
+      <td>M</td>
+      <td>35</td>
+      <td>c</td>
+      <td>50</td>
+      <td>s</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>7</td>
+      <td>21</td>
+      <td>N</td>
+      <td>36</td>
+      <td>d</td>
+      <td>51</td>
+      <td>t</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>8</td>
+      <td>22</td>
+      <td>P</td>
+      <td>37</td>
+      <td>e</td>
+      <td>52</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>9</td>
+      <td>23</td>
+      <td>Q</td>
+      <td>38</td>
+      <td>f</td>
+      <td>53</td>
+      <td>v</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>A</td>
+      <td>24</td>
+      <td>R</td>
+      <td>39</td>
+      <td>g</td>
+      <td>54</td>
+      <td>w</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>B</td>
+      <td>25</td>
+      <td>S</td>
+      <td>40</td>
+      <td>h</td>
+      <td>55</td>
+      <td>x</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>C</td>
+      <td>26</td>
+      <td>T</td>
+      <td>41</td>
+      <td>i</td>
+      <td>56</td>
+      <td>y</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>D</td>
+      <td>27</td>
+      <td>U</td>
+      <td>42</td>
+      <td>j</td>
+      <td>57</td>
+      <td>z</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>E</td>
+      <td>28</td>
+      <td>V</td>
+      <td>43</td>
+      <td>k</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>F</td>
+      <td>29</td>
+      <td>W</td>
+      <td>44</td>
+      <td>m</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>With such a mapping, the Base58 encoding is just a number base conversion. The only tricky part comes from big numbers, as seen in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/base58.h">base58.h</a>. Beware of endianness, contrary to the majority of blockchain objects Base58 strings are encoded big-endian.</p>
+
+<h4 id="base58check">Base58Check</h4>
+
+<p>Since Base58 strings are long and unfriendly, a checksum suffix is typically appended to avoid typos. The checksum consists of the first 4 bytes of hash256(payload). The (payload + checksum) format is called <em>Base58Check</em>. Steps:</p>
+
+<ol>
+  <li>Perform hash256 on the payload bytes.</li>
+  <li>The first 4 bytes of the hash256 digest are the checksum.</li>
+  <li>Append the checksum to the payload.</li>
+  <li>Encode the result to Base58.</li>
+</ol>
+
+<p>Base58Check examples will be treated in the second part.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned that there are 3 different Bitcoin networks. Real money flows on Mainnet, while test money resides on Testnet3. Regtest is for testing local, custom blockchains. All the long strings shared for bitcoin transfers are encoded Base58.</p>
+
+<p>In the <a href="/basic-blockchain-programming/network-interoperability-part-two/">next article</a> I’ll complete the big picture with keys serialization and <em>addresses</em>, the typical transaction endpoints. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

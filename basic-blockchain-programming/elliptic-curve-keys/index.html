@@ -1,0 +1,462 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Elliptic-curve keys</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Elliptic-curve keys" />
+<meta property="og:title" content="Elliptic-curve keys" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-keys/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Elliptic-curve keys" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/elliptic-curve-keys/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures" />
+
+
+<link rel="next" href="/basic-blockchain-programming/keys-as-property/" title="Keys as property" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/elliptic-curve-keys/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Elliptic-curve keys" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 12, 2015</span>
+            <h2 itemprop="name">
+                
+                Elliptic-curve keys
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/keys-as-property/" title="Keys as property">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>In the <a href="/basic-blockchain-programming/keys-as-property/">previous post</a> I gave you an overview of public-key cryptography and its relation with the blockchain. You’re about to familiarize with real crypto functions to generate Bitcoin keypairs.</p>
+
+<p>In the hope of making the topic as clear as possible, the article might seem a little verbose. By the way, your patience will be rewarded as the course will be downhill from here.</p>
+
+<!--more-->
+
+<h3 id="an-overview-of-bitcoin-keys">An overview of Bitcoin keys</h3>
+
+<p>Some facts about Bitcoin EC cryptography:</p>
+
+<ul>
+  <li>Private keys are 32 bytes long.</li>
+  <li>Public keys are 64 bytes (uncompressed form) or 32 bytes (compressed form) long plus a 1-byte prefix.</li>
+  <li>The elliptic curve <em>C</em> is the <a href="http://www.secg.org/sec2-v2.pdf">secp256k1</a> curve.</li>
+  <li>EC crypto is based on <a href="http://en.wikipedia.org/wiki/Modular_arithmetic">modular arithmetic</a>.</li>
+</ul>
+
+<p>In this overwhelming context, our only input is the private key. The public key is uniquely derived from the private key, be it uncompressed or compressed. First, we’ll use <a href="https://www.openssl.org/">OpenSSL</a> to generate a sample keypair from the command line. Next, we’ll do the same via C code.</p>
+
+<p>TO MAC USERS: I strongly encourage you to test this code on a homebrew release of OpenSSL. OS X 10.10 ships with the long gone 0.9.8 version and some commands may not work as expected!</p>
+
+<p>For your information, Bitcoin Core developers are slowly moving away from OpenSSL towards <a href="https://github.com/bitcoin/secp256k1">their own implementation of secp256k1 crypto</a>.</p>
+
+<h4 id="private-key">Private key</h4>
+
+<p>A private key is a 32-byte number chosen at random, and you know that 32 bytes make for a very big number, as big as \(2^{256}\). Such a number is therefore ridiculously hard to guess, assuming it’s generated with a very high degree of randomness.</p>
+
+<p>Getting a new, random key is straightforward:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ecparam -name secp256k1 -genkey -out ec-priv.pem
+</code></pre></div></div>
+
+<p>The output file <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ec-priv.pem</a> includes the curve name (secp256k1) and the private key, both encoded base64 with other additional stuff. The file can be quickly decoded to text so that you can see the raw hexes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -text -noout
+</code></pre></div></div>
+
+<p>Here’s what my keypair looks like (your output will differ):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+Private-Key: (256 bit)
+priv:
+    16:26:07:83:e4:0b:16:73:16:73:62:2a:c8:a5:b0:
+    45:fc:3e:a4:af:70:f7:27:f3:f9:e9:2b:dd:3a:1d:
+    dc:42
+pub: 
+    04:82:00:6e:93:98:a6:98:6e:da:61:fe:91:67:4c:
+    3a:10:8c:39:94:75:bf:1e:73:8f:19:df:c2:db:11:
+    db:1d:28:13:0c:6b:3b:28:ae:f9:a9:c7:e7:14:3d:
+    ac:6c:f1:2c:09:b8:44:4d:b6:16:79:ab:b1:d8:6f:
+    85:c0:38:a5:8c
+ASN1 OID: secp256k1
+</code></pre></div></div>
+
+<p>where the private key is better displayed as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+</code></pre></div></div>
+
+<p>The key reflects our identity, so we want to keep it secret and safe. I mean, had this not been a sample private key, I wouldn’t share it with anybody. We’ll sign our messages with it so that the world can trust we actually wrote them. If someone steals our private key, he’ll be able to fake our identity. In Bitcoin, he’ll be able to take our money. Watch out!</p>
+
+<h4 id="public-key">Public key</h4>
+
+<p>By default, a public key is made of two 32-byte numbers, the so-called <em>uncompressed</em> form. The numbers represent the \((x, y)\) coordinates of a point on the secp256k1 elliptic curve, which has the following formula:</p>
+
+\[y^2 = x^3 + 7\]
+
+<p>The point location is determined by the private key, while it’s unfeasible to infer the private key from the point coordinates. After all, this is what makes EC cryptography secure. Due to its dependent nature, \(y\) can be implied from \(x\) and the curve formula. In fact, the <em>compressed</em> form saves space by omitting the \(y\) value.</p>
+
+<p>From the private key, it’s possible to take out the public part and store it to an external file I called <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ec-pub.pem</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-priv.pem -pubout -out ec-pub.pem
+</code></pre></div></div>
+
+<p>If we now decode the public key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout
+</code></pre></div></div>
+
+<p>the text description will obviously not include the private key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+Private-Key: (256 bit)
+pub: 
+    04:82:00:6e:93:98:a6:98:6e:da:61:fe:91:67:4c:
+    3a:10:8c:39:94:75:bf:1e:73:8f:19:df:c2:db:11:
+    db:1d:28:13:0c:6b:3b:28:ae:f9:a9:c7:e7:14:3d:
+    ac:6c:f1:2c:09:b8:44:4d:b6:16:79:ab:b1:d8:6f:
+    85:c0:38:a5:8c
+ASN1 OID: secp256k1
+</code></pre></div></div>
+
+<p>A more readable version:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04
+
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+
+13 0c 6b 3b 28 ae f9 a9
+c7 e7 14 3d ac 6c f1 2c
+09 b8 44 4d b6 16 79 ab
+b1 d8 6f 85 c0 38 a5 8c
+</code></pre></div></div>
+
+<p>The uncompressed conversion form takes 65 bytes:</p>
+
+<ul>
+  <li>The constant <code class="language-plaintext highlighter-rouge">04</code> prefix.</li>
+  <li>The 32-byte \(x\) coordinate.</li>
+  <li>The 32-byte \(y\) coordinate.</li>
+</ul>
+
+<p>It’s easy to convert an uncompressed public key to the compressed form, we just omit the \(y\) and change the prefix according to its value. The first byte becomes <code class="language-plaintext highlighter-rouge">02</code> for even values of \(y\) and <code class="language-plaintext highlighter-rouge">03</code> for odd values. My \(y\) ends with <code class="language-plaintext highlighter-rouge">8c</code>, so the new prefix is <code class="language-plaintext highlighter-rouge">02</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+</code></pre></div></div>
+
+<p>The same is accomplished with:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl ec -in ec-pub.pem -pubin -text -noout -conv_form compressed
+</code></pre></div></div>
+
+<p>that yields:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read EC key
+Private-Key: (256 bit)
+pub: 
+    02:82:00:6e:93:98:a6:98:6e:da:61:fe:91:67:4c:
+    3a:10:8c:39:94:75:bf:1e:73:8f:19:df:c2:db:11:
+    db:1d:28
+ASN1 OID: secp256k1
+</code></pre></div></div>
+
+<p>In conclusion, the compressed conversion form takes 33 bytes:</p>
+
+<ul>
+  <li>The constant <code class="language-plaintext highlighter-rouge">02</code> or <code class="language-plaintext highlighter-rouge">03</code> prefix.</li>
+  <li>The 32-byte \(x\) coordinate.</li>
+</ul>
+
+<h3 id="generating-a-keypair-from-code">Generating a keypair from code</h3>
+
+<p>The keypair generation task is cumbersome, yet not difficult with the aid of the OpenSSL library. I wrote a helper function in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec.h">ec.h</a> declared as follows:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">EC_KEY</span> <span class="o">*</span><span class="nf">bbp_ec_new_keypair</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">priv_bytes</span><span class="p">);</span></code></pre></figure>
+
+<p>Let’s analyze part of its code together. Several OpenSSL data structures are involved:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">BN_CTX</code>, <code class="language-plaintext highlighter-rouge">BIGNUM</code></li>
+  <li><code class="language-plaintext highlighter-rouge">EC_KEY</code></li>
+  <li><code class="language-plaintext highlighter-rouge">EC_GROUP</code>, <code class="language-plaintext highlighter-rouge">EC_POINT</code></li>
+</ul>
+
+<p>The first two <code class="language-plaintext highlighter-rouge">struct</code>s belong to the arbitrary-precision arithmetic area of OpenSSL, because we need to deal with very big numbers. All the other types relate to EC crypto. <code class="language-plaintext highlighter-rouge">EC_KEY</code> can be a full keypair (private + public) or just a public key, whereas <code class="language-plaintext highlighter-rouge">EC_GROUP</code> and <code class="language-plaintext highlighter-rouge">EC_POINT</code> help us calculate the public key from a private key.</p>
+
+<p>Most importantly, we create an <code class="language-plaintext highlighter-rouge">EC_KEY</code> structure to hold the keypair:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">key</span> <span class="o">=</span> <span class="n">EC_KEY_new_by_curve_name</span><span class="p">(</span><span class="n">NID_secp256k1</span><span class="p">);</span></code></pre></figure>
+
+<p>Loading the private key is easy, but requires an intermediate step. Before feeding the input <code class="language-plaintext highlighter-rouge">priv_bytes</code> to the keypair, we need to translate it to a <code class="language-plaintext highlighter-rouge">BIGNUM</code>, here named <code class="language-plaintext highlighter-rouge">priv</code>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">BN_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span>
+<span class="n">BN_bin2bn</span><span class="p">(</span><span class="n">priv_bytes</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span>
+<span class="n">EC_KEY_set_private_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">priv</span><span class="p">);</span></code></pre></figure>
+
+<p>For complex big numbers operations, OpenSSL needs a context, that’s why a <code class="language-plaintext highlighter-rouge">BN_CTX</code> is also created. The public key derivation needs a deeper understanding of EC math, which is not the aim of this series. Basically, we locate a fixed point \(G\) on the curve (the <em>generator</em>, <code class="language-plaintext highlighter-rouge">group</code> in the code) and multiply it by the scalar private key \(n\), a virtually irreversible operation in modular arithmetic. The resulting \(P = n * G\) is a second point, the public key <code class="language-plaintext highlighter-rouge">pub</code>. Eventually, the public key is loaded into the keypair:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">ctx</span> <span class="o">=</span> <span class="n">BN_CTX_new</span><span class="p">();</span>
+<span class="n">BN_CTX_start</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+
+<span class="n">group</span> <span class="o">=</span> <span class="n">EC_KEY_get0_group</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="n">pub</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+<span class="n">EC_POINT_mul</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">pub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">priv</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ctx</span><span class="p">);</span>
+<span class="n">EC_KEY_set_public_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">pub</span><span class="p">);</span></code></pre></figure>
+
+<p>WARNING: the code is simplified and doesn’t check for library errors.</p>
+
+<h3 id="example">Example</h3>
+
+<p>It’s finally time to test our keypair in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-ec-keypair.c">ex-ec-keypair.c</a>. We expect the code to output the same results we got from <code class="language-plaintext highlighter-rouge">openssl</code> on the command line, given that <code class="language-plaintext highlighter-rouge">priv_bytes</code> holds our sample private key:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">priv_bytes</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span>
+   <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0xc8</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0x45</span><span class="p">,</span>
+   <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0x3e</span><span class="p">,</span> <span class="mh">0xa4</span><span class="p">,</span> <span class="mh">0xaf</span><span class="p">,</span> <span class="mh">0x70</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span>
+   <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0x1d</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="mh">0x42</span>
+<span class="p">};</span>
+
+<span class="n">EC_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">priv</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">priv_bn</span><span class="p">;</span>
+
+<span class="n">point_conversion_form_t</span> <span class="n">conv_forms</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="n">POINT_CONVERSION_UNCOMPRESSED</span><span class="p">,</span>
+   <span class="n">POINT_CONVERSION_COMPRESSED</span>
+<span class="p">};</span>
+<span class="p">...</span>
+
+<span class="cm">/* 1 */</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">bbp_ec_new_keypair</span><span class="p">(</span><span class="n">priv_bytes</span><span class="p">);</span>
+<span class="p">...</span>
+
+<span class="cm">/* 2 */</span>
+
+<span class="n">priv_bn</span> <span class="o">=</span> <span class="n">EC_KEY_get0_private_key</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="n">BN_bn2bin</span><span class="p">(</span><span class="n">priv_bn</span><span class="p">,</span> <span class="n">priv</span><span class="p">);</span>
+<span class="p">...</span>
+
+<span class="cm">/* 3 */</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">conv_forms</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">point_conversion_form_t</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">pub_len</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">pub_copy</span><span class="p">;</span>
+
+    <span class="n">EC_KEY_set_conv_form</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">conv_forms</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+    <span class="n">pub_len</span> <span class="o">=</span> <span class="n">i2o_ECPublicKey</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">pub_len</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">));</span>
+
+    <span class="cm">/* pub_copy is needed because i2o_ECPublicKey alters the input pointer */</span>
+    <span class="n">pub_copy</span> <span class="o">=</span> <span class="n">pub</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i2o_ECPublicKey</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pub_copy</span><span class="p">)</span> <span class="o">!=</span> <span class="n">pub_len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+<span class="p">...</span></code></pre></figure>
+
+<p>The test proceeds this way:</p>
+
+<ol>
+  <li>Initializes an <code class="language-plaintext highlighter-rouge">EC_KEY</code> keypair with <code class="language-plaintext highlighter-rouge">priv_bytes</code>.</li>
+  <li>Puts the private key back into <code class="language-plaintext highlighter-rouge">priv</code> through a <code class="language-plaintext highlighter-rouge">BIGNUM</code>.</li>
+  <li>Puts the derived public key into <code class="language-plaintext highlighter-rouge">pub</code> in all conversion forms.</li>
+</ol>
+
+<p>The third step is the most complicated. The conversion form is set first, which in turn affects the length of the public key (33 or 65). The actual length is obtained with a <code class="language-plaintext highlighter-rouge">NULL</code>-argument call to <code class="language-plaintext highlighter-rouge">i2o_ECPublicKey</code>, so that <code class="language-plaintext highlighter-rouge">pub</code> is allocated enough bytes to hold the output. <code class="language-plaintext highlighter-rouge">i2o_ECPublicKey</code> finally converts the public key from the internal representation to octects, hence the <code class="language-plaintext highlighter-rouge">i2o</code> prefix (octet = byte). The encoded bytes are written to <code class="language-plaintext highlighter-rouge">pub</code> through <code class="language-plaintext highlighter-rouge">pub_copy</code>.</p>
+
+<p>Try running the program and compare it with the output of the <code class="language-plaintext highlighter-rouge">openssl</code> command line tool.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to generate a new EC keypair. With some custom code, you also learned how to create a keypair from raw bytes.</p>
+
+<p>In the <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/">next article</a> you’ll use EC keypairs to produce and verify <em>digital signatures</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/keys-as-property/" title="Keys as property"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

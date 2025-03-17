@@ -1,0 +1,372 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>The Bitcoin Script language (pt. 2)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="The Bitcoin Script language (pt. 2)" />
+<meta property="og:title" content="The Bitcoin Script language (pt. 2)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="The Bitcoin Script language (pt. 2)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts" />
+
+
+<link rel="next" href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="The Bitcoin Script language (pt. 2)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 25, 2015</span>
+            <h2 itemprop="name">
+                
+                The Bitcoin Script language (pt. 2)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
+
+<!--more-->
+
+<h4 id="arithmetic">Arithmetic</h4>
+
+<p>Look at some of the many arithmetic opcodes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_ADD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">93</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_SUB</code></td>
+      <td><code class="language-plaintext highlighter-rouge">94</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Both are totally stack-based operations, meaning that they take no explicit argument. <code class="language-plaintext highlighter-rouge">OP_ADD</code> (<code class="language-plaintext highlighter-rouge">OP_SUB</code>) pops the top two items of the stack and adds (substracts) them. The result of the operation is then pushed on top again.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>55 59 93 56 94
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_5 OP_9 OP_ADD OP_6 OP_SUB
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[5]
+[5, 9]
+[14]
+[14, 6]
+[8]
+</code></pre></div></div>
+
+<p>The script returns 8.</p>
+
+<h4 id="comparison">Comparison</h4>
+
+<p>Again, scripts are used for transaction validation, and comparisons are a primary need for a validator:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_EQUAL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">87</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_EQUAL</code> pops and compares the top two items on the stack, then pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if they’re equal or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02 c3 72 02 03 72 01 c0 93 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c3 72] [03 72] [c0] OP_ADD OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[c3 72]
+[c3 72, 03 72]
+[c3 72, 03 72, c0]
+[c3 72, c3 72]
+[1]
+</code></pre></div></div>
+
+<p>It’s worth noting that the script eventually “succeeds”, because it returns <code class="language-plaintext highlighter-rouge">OP_TRUE</code>.</p>
+
+<h4 id="stack-manipulation">Stack manipulation</h4>
+
+<p>This is the only opcode you’re going to use for stack manipulation:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_DUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">76</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_DUP</code> takes no arguments, it just duplicates the top stack item.</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>04 b9 0c a2 fe 76 87
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[b9 0c a2 fe] OP_DUP OP_EQUAL
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[b9 0c a2 fe]
+[b9 0c a2 fe, b9 0c a2 fe]
+[1]
+</code></pre></div></div>
+
+<p>Obviously, the script succeeds, since <code class="language-plaintext highlighter-rouge">OP_EQUAL</code> would never fail after <code class="language-plaintext highlighter-rouge">OP_DUP</code>!</p>
+
+<h4 id="crypto">Crypto</h4>
+
+<p>These opcodes are certainly the most interesting:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_HASH160</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a9</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">OP_HASH160</code> pops the top stack item, performs hash160 on it and then pushes the result back. Basically, this opcode computes the Bitcoin P2PKH address from an ECDSA public key.</p>
+
+<p><code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> pops the top two stack items, the first being an ECDSA public key and the second being a DER-encoded ECDSA signature. After that, it pushes <code class="language-plaintext highlighter-rouge">OP_TRUE</code> if the signature is valid for that public key or <code class="language-plaintext highlighter-rouge">OP_FALSE</code> otherwise. It’s the Script version of OpenSSL’s <code class="language-plaintext highlighter-rouge">ECDSA_verify</code>.</p>
+
+<p>Both opcodes will be described in the next post.</p>
+
+<h3 id="wheres-the-code">Where’s the code?</h3>
+
+<p>There are no code examples in this chapter. In the end a script is an array of data where your only contribution is mapping opcodes names to raw bytes. We could have developed a tiny Script interpreter, but it’s way beyond our goals. Typical Bitcoin clients don’t run scripts as it’s a mining task, so our concern is just writing well-formed scripts that miners would accept.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned some more Script opcodes, including crypto functions essential to ECDSA verifications.</p>
+
+<p>In the <a href="/basic-blockchain-programming/standard-scripts/">next article</a> we’ll examine the role of keys and addresses in <em>standard scripts</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

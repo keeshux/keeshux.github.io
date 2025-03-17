@@ -1,0 +1,430 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Standard scripts</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Standard scripts" />
+<meta property="og:title" content="Standard scripts" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/standard-scripts/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Standard scripts" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/standard-scripts/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions" />
+
+
+<link rel="next" href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/standard-scripts/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Standard scripts" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 29, 2015</span>
+            <h2 itemprop="name">
+                
+                Standard scripts
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>I told you what a script is, but not exactly what it’s needed for. By the way, in the article about <a href="/basic-blockchain-programming/scripts-in-transaction-processing/">transaction processing</a> I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.</p>
+
+<!--more-->
+
+<h3 id="the-validation-script">The validation script</h3>
+
+<p>So far, we learned that a script is a piece of code that executes and yields a result. When building a transaction from an unspent transaction output (UTXO), there are two scripts we’re particularly interested in:</p>
+
+<ul>
+  <li>The unspent output script, call it <em>OS</em>.</li>
+  <li>The spending input script, call it <em>IS</em>.</li>
+</ul>
+
+<p>The problem is producing such an <em>IS</em> that the concatenated script <em>VS</em> = <em>IS</em> + <em>OS</em> (the <em>validation script</em>), after being executed, returns a non-zero value. With this in mind, the validation script decides if the transaction input has right to spend the previous unspent output. It may sound difficult to understand, but it’s not.</p>
+
+<p>Consider the input script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP
+</code></pre></div></div>
+
+<p>and the previous output script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_ADD OP_12 OP_EQUAL
+</code></pre></div></div>
+
+<p>Now join them to have the following validation script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_6 OP_DUP OP_ADD OP_12 OP_EQUAL
+</code></pre></div></div>
+
+<p>and see how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[6]
+[6, 6]
+[12]
+[12, 12]
+[1]
+</code></pre></div></div>
+
+<p>Fine, the validation script ends with 1 (<code class="language-plaintext highlighter-rouge">OP_TRUE</code>) on the stack, so the input script can spend the previous output script.</p>
+
+<h4 id="weaknesses">Weaknesses</h4>
+
+<p>In fact, many other input scripts comply, like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_8
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_1 OP_15 OP_ADD OP_7 OP_SUB OP_3
+</code></pre></div></div>
+
+<p>See how anybody with some basic math knowledge could easily steal the output coins. Conversely, look at this very simple output script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_FALSE
+</code></pre></div></div>
+
+<p>No matter the input script, the validation script will never succeed. Any bitcoin sent to this output will be lost forever.</p>
+
+<p>In fact, all the above scripts are dangerous and would be rejected by Mainnet for not being <em>standard</em>. Miners don’t accept transactions with non-standard scripts because in many situations they may result in money loss, directly or indirectly.</p>
+
+<h3 id="standard-scripts">Standard scripts</h3>
+
+<p>Virtually any kind of script can be included in a transaction. Still, only standard scripts will be accepted by Mainnet miners for security reasons. The “standard” term comes from the <code class="language-plaintext highlighter-rouge">IsStandard</code> check, a piece of code from Bitcoin Core ensuring that a script matches one of several well-known categories.</p>
+
+<p>As of Bitcoin Core 0.10, these are considered standard scripts:</p>
+
+<ol>
+  <li>P2PKH (pay-to-public-key-hash)</li>
+  <li>P2SH (pay-to-script-hash)</li>
+  <li>P2PK (pay-to-public-key)</li>
+  <li>Multisignature</li>
+  <li><code class="language-plaintext highlighter-rouge">OP_RETURN</code> metadata</li>
+</ol>
+
+<p>In this course we’ll only treat the first ones. For your information, Testnet miners skip the <code class="language-plaintext highlighter-rouge">IsStandard</code> check completely, thus making the Testnet network suitable for trying experimental scripts.</p>
+
+<h3 id="p2pkh-scripts">P2PKH scripts</h3>
+
+<p>The most common standard scripts in the blockchain are named after <a href="/basic-blockchain-programming/network-interoperability-part-two/">P2PKH addresses</a> (pay-to-public-key-hash). By having a destination P2PKH Bitcoin address, we can write an output script that will send coins to it. By having the private key from which the destination address was generated, we can write an input script that will later spend such coins.</p>
+
+<h4 id="output-script">Output script</h4>
+
+<p>A P2PKH output script contains a Base58Check-decoded destination address, that is the hash160 of an ECDSA public key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+</code></pre></div></div>
+
+<p>Take our sample compressed public key:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+</code></pre></div></div>
+
+<p>and its hash160 digest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6b f1 9e 55 f9 4d 98 6b
+46 40 c1 54 d8 64 69 93
+41 91 95 11
+</code></pre></div></div>
+
+<p>that after Testnet versioning and Base58Check encoding is displayed as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+</code></pre></div></div>
+
+<p>The output script that sends money to this address is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>76 (OP_DUP)
+a9 (OP_HASH160)
+
+14 6b f1 9e 55 f9 4d 98
+6b 46 40 c1 54 d8 64 69
+93 41 91 95 11
+
+88 (OP_EQUALVERIFY)
+ac (OP_CHECKSIG)
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">14</code> is an implicit push opcode indicating there are 20 bytes coming next, namely the hash160 digest. The output script alone is meaningless without knowing the corresponding input script, so keep reading.</p>
+
+<h4 id="input-script">Input script</h4>
+
+<p>A P2PKH input script contains a DER-encoded ECDSA signature and a raw public key, either uncompressed or compressed. In such an input script, there are no opcodes other than pushes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+[public_key]
+</code></pre></div></div>
+
+<p>For example, take the 70-bytes signature from the <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/">ECDSA chapter</a> and append the <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> constant (<code class="language-plaintext highlighter-rouge">01</code>) to it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44
+02 20
+2b 2b 52 9b db dc 93 e7
+8a f7 e0 02 28 b1 79 91
+8b 03 2d 76 90 2f 74 ef
+45 44 26 f7 d0 6c d0 f9
+02 20
+62 dd c7 64 51 cd 04 cb
+56 7c a5 c5 e0 47 e8 ac
+41 d3 d4 cf 7c b9 24 34
+d5 5c b4 86 cc cf 6a f2
+01
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> suffix is an advanced topic related to <a href="https://en.bitcoin.it/wiki/Contracts">contracts</a>. In this series we’ll stick with <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> because we’ll always sign all transaction inputs.</p>
+
+<p>If you now take the public key from the previous paragraph, you have a typical input script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 2b 2b 52
+9b db dc 93 e7 8a f7 e0
+02 28 b1 79 91 8b 03 2d
+76 90 2f 74 ef 45 44 26
+f7 d0 6c d0 f9 02 20 62
+dd c7 64 51 cd 04 cb 56
+7c a5 c5 e0 47 e8 ac 41
+d3 d4 cf 7c b9 24 34 d5
+5c b4 86 cc cf 6a f2 01
+
+21 02 82 00 6e 93 98 a6
+98 6e da 61 fe 91 67 4c
+3a 10 8c 39 94 75 bf 1e
+73 8f 19 df c2 db 11 db
+1d 28
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">47</code> and <code class="language-plaintext highlighter-rouge">21</code> are the hex lengths of the pushed signature and public key respectively.</p>
+
+<h4 id="validation">Validation</h4>
+
+<p>If we want to spend the money we received on our sample address, we must provide a specific input script so that the composite validation script succeeds. If the input is “authentic”, the following script will return non-zero:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+[public_key]
+OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+</code></pre></div></div>
+
+<p>A step by step description in case the input script is valid:</p>
+
+<ol>
+  <li>The input signature is pushed.</li>
+  <li>The input public key is pushed.</li>
+  <li>The top item (public key) is duplicated on the stack.</li>
+  <li>The top item (public key) is hashed with hash160.</li>
+  <li>The output hash160 is pushed.</li>
+  <li>Input and output hash160 are popped then checked for equality.</li>
+  <li>The input signature is verified against the public key.</li>
+  <li><code class="language-plaintext highlighter-rouge">OP_TRUE</code> is pushed as a result of successful signature verification.</li>
+</ol>
+
+<p>Let’s see what happens on the stack:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[signature]
+[signature, public_key]
+[signature, public_key, public_key]
+[signature, public_key, hash160(public_key)]
+[signature, public_key, hash160(public_key), hash160(public_key)]
+[signature, public_key]
+[1]
+</code></pre></div></div>
+
+<p>The final stack holds <code class="language-plaintext highlighter-rouge">OP_TRUE</code>, so the transaction input is legit. Along the road, two constraints were satisfied:</p>
+
+<ol>
+  <li>The public key in the input script must hash to the Bitcoin address in the output script (step 6).</li>
+  <li>The signature must be valid for the public key (step 7).</li>
+</ol>
+
+<p>You may think that the input script alone is enough for signature verification, and you’d be wrong. I didn’t mention the third parameter of the verification process: the message! This is left for the next posts about transactions and, for your information, it’s going to be a tricky subject.</p>
+
+<p>By the way, can you also see how important is to know if a private key is associated to an uncompressed or compressed public key? In case of “compression mismatch” between public keys and addresses, the first constraint would break. As a consequence, you cannot spend bitcoins sent to a compressed address with an input script containing an uncompressed public key, and vice versa.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned that only a standard subset of all possible scripts are accepted by the Bitcoin network. P2PKH scripts are the most common standard scripts you’ll find in the blockchain. Input and output scripts together form validation scripts. Miners execute validation scripts to either accept or reject a transaction.</p>
+
+<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

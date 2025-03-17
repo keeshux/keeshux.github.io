@@ -1,0 +1,453 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>The first transaction (pt. 1)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="The first transaction (pt. 1)" />
+<meta property="og:title" content="The first transaction (pt. 1)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="The first transaction (pt. 1)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/the-first-transaction-part-one/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="The first transaction (pt. 1)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Jun 3, 2015</span>
+            <h2 itemprop="name">
+                
+                The first transaction (pt. 1)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
+
+<!--more-->
+
+<h3 id="how-to-build-a-p2pkh-transaction">How to build a P2PKH transaction</h3>
+
+<p>In order to build a transaction, an ECDSA keypair alone is not enough. We need the blockchain history of the keypair at our disposal, or better said, the transactions sending value to the address associated with our keypair. Then, we’ll use the ECDSA private key to produce signatures for such transaction outputs, so that they become inputs to our transaction.</p>
+
+<p>Given:</p>
+
+<ul>
+  <li>An ECDSA keypair <em>K</em>.</li>
+  <li>A third-party P2PKH output address <em>A</em>.</li>
+  <li>The amount <em>S</em> to transfer in satoshis.</li>
+</ul>
+
+<p>we want to send <em>S</em> satoshis to address <em>A</em> via our keypair <em>K</em>. Here’s the overall procedure:</p>
+
+<ol>
+  <li>Scan the blockchain for the relevant UTXOs to <em>K</em>.</li>
+  <li>Build a transaction output from <em>S</em> and <em>A</em>.</li>
+  <li>Gather enough input value from the UTXOs to reach <em>S</em>.</li>
+  <li>For each input, generate the subject of its signature.</li>
+  <li>Generate ECDSA signatures for each input subject.</li>
+  <li>Pack the transaction.</li>
+</ol>
+
+<p>Let’s start from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>.</p>
+
+<h4 id="the-utxo-set">The UTXO set</h4>
+
+<p>At the very beginning of an ECDSA keypair history, the derived P2PKH address has no transaction outputs associated with it and therefore has no bitcoin value for the blockchain. When someone later publishes a transaction that sends bitcoins to our address, the keypair suddenly becomes a valuable asset. Consider our now famous Testnet address:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
+</code></pre></div></div>
+
+<p>and its <a href="https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK">blockchain history</a>. Among all transactions, <a href="https://api.biteasy.com/testnet/v1/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK/unspent-outputs">three outputs</a> are still unspent at the time of writing:</p>
+
+<ol>
+  <li><a href="https://blockstream.info/testnet/tx/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"><code class="language-plaintext highlighter-rouge">f34e1c37e736...a2f3</code></a></li>
+  <li><a href="https://blockstream.info/testnet/tx/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6"><code class="language-plaintext highlighter-rouge">65216856608d...20c6</code></a></li>
+  <li><a href="https://blockstream.info/testnet/tx/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934"><code class="language-plaintext highlighter-rouge">6b580bada66e...3934</code></a></li>
+</ol>
+
+<p>totalling a 0.951 BTC output value (= 95100000 satoshis). Specifically, these are the outputs sending money to our address:</p>
+
+<ul>
+  <li>The first output of tx 1 (0.87 BTC).</li>
+  <li>The first output of tx 2 (0.001 BTC).</li>
+  <li>The second output of tx 3 (0.08 BTC).</li>
+</ul>
+
+<p>If you now translate the words into data structures:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;f34e1c37e736...a2f3, 0&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;65216856608d...20c6, 0&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;6b580bada66e...3934, 1&gt;</code></li>
+</ul>
+
+<p>you have the UTXO outpoints for our keypair/wallet. Besides making up the balance of the wallet, the importance of the UTXO set lies in that it contains the outpoints we can reuse to build our own transactions. After spending an UTXO in a transaction input, it’s removed from the set because an UTXO is always spent in its entirety.</p>
+
+<p>For what it’s worth, scanning UTXOs would require a lot of networking code, so building a wallet history from web explorers is a quick alternative. This will cost you some privacy though, as you generally don’t want to share your addresses with untrusted services.</p>
+
+<h4 id="the-destination-output">The destination output</h4>
+
+<p>You should know by now how to build a P2PKH transaction output. Say we want to send 0.251 BTC (25100000 satoshis, little-endian):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e0 fe 7e 01 00 00 00 00
+</code></pre></div></div>
+
+<p>to this address:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mhmhRnN58ki9zbRJ63mpNGQXoYvdMXZsXt
+</code></pre></div></div>
+
+<p>that decodes to the following hash160 digest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>18 ba 14 b3 68 22 95 cb
+05 23 0e 31 fe cb 00 08
+92 40 66 08
+</code></pre></div></div>
+
+<p>Here’s the first output of our transaction:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* value (0.251 BTC) */
+e0 fe 7e 01 00 00 00 00
+
+/* script length */
+19
+
+/* P2PKH script */
+76 a9 14 18 ba 14 b3 68
+22 95 cb 05 23 0e 31 fe
+cb 00 08 92 40 66 08 88
+ac
+</code></pre></div></div>
+
+<p>I wrote a convenient C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for building P2PKH outputs from a value and a hash160:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txout_t</span> <span class="o">*</span><span class="n">txout</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">uint64_t</span> <span class="n">value</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hash160</span><span class="p">);</span></code></pre></figure>
+
+<p>Basically, the hash160 bytes are enclosed in the <code class="language-plaintext highlighter-rouge">OP_DUP OP_HASH160</code> and <code class="language-plaintext highlighter-rouge">OP_EQUALVERIFY OP_CHECKSIG</code> opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
+        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span></code></pre></figure>
+
+<h4 id="gathering-the-inputs">Gathering the inputs</h4>
+
+<p>Our UTXO set is worth &lt;0.87, 0.001, 0.08&gt; BTC respectively, so the first one:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;f34e1c37e736...a2f3, 0&gt;
+</code></pre></div></div>
+
+<p>is just enough for a 0.251 BTC output. In fact our input value exceeds the output value by 0.619 BTC, which are silently returned to the transaction miner as a fee. We know an UTXO cannot be spent partially, and since the fee is somewhat relevant to us, we add a second output for <em>change</em>.</p>
+
+<p>Our final transaction will have one input and two outputs, the second being a change output that returns the exceeding input value to our own address. Here’s the second output of our transaction:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* value (0.619 BTC) */
+e0 84 b0 03 00 00 00 00
+
+/* script length */
+19
+
+/* P2PKH script */
+76 a9 14 6b f1 9e 55 f9
+4d 98 6b 46 40 c1 54 d8
+64 69 93 41 91 95 11 88
+ac
+</code></pre></div></div>
+
+<p>On the other hand, it’s quite obvious that output value cannot possibly exceed input value. Non-coinbase transactions never create bitcoin value. This is our second output in code:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
+        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
+
+<h4 id="building-the-signature-subject">Building the signature subject</h4>
+
+<p>This is tricky if not even controversial, because the subject of transaction signatures is not the transaction itself. When studying ECDSA signatures, you learned that the signing process takes three steps:</p>
+
+<ol>
+  <li>Generate an ECDSA keypair.</li>
+  <li>Create a message.</li>
+  <li>Sign the message with the private key to produce a signature.</li>
+</ol>
+
+<p>The problem here is that a Bitcoin transaction cannot be signed the usual way, since signatures are actually part of the transaction, namely the input scripts. The approach has to be different. In fact, we’ll produce a different signature for each transaction input, which in turn will embed it in its P2PKH script.</p>
+
+<p>In practice, for each input <em>I</em>, the message to be signed is a slightly modified version of the transaction where:</p>
+
+<ol>
+  <li>The <em>I</em> script is set to the output script of the UTXO it refers to.</li>
+  <li>Input scripts other than <em>I</em> are truncated to zero-length.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag is appended.</li>
+</ol>
+
+<p>For a single input transaction we won’t need to truncate any other input script:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">prev_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">87000000</span><span class="p">,</span>
+        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span>
+<span class="n">bbp_txin_create_signable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins_sign</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prev_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span></code></pre></figure>
+
+<p>We have the outputs and the signable inputs, so we go ahead and construct the message:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins_sign</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">msg_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">msg_len</span><span class="p">);</span>
+<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span></code></pre></figure>
+
+<p>The external functions all come from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>:</p>
+
+<ul>
+  <li>From the previous post, you know that the <code class="language-plaintext highlighter-rouge">bbp_tx_size</code> and <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> functions take care of sizing and serializing a transaction structure to raw bytes.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">bbp_outpoint_fill</code> function fills a <code class="language-plaintext highlighter-rouge">bbp_outpoint_t</code> structure from an UTXO. The UTXO reference consist of a previous transaction txid and the output index within the transaction.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">bbp_txin_create_signable</code> function creates a fake input for our message by copying the corresponding UTXO script.</li>
+</ul>
+
+<p>Since we’ll sign all transaction inputs, we set the <code class="language-plaintext highlighter-rouge">flag</code> parameter to <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> (<code class="language-plaintext highlighter-rouge">01</code>). Beware that it’s here padded to 32-bit for no apparent reason.</p>
+
+<h4 id="the-final-message">The final message</h4>
+
+<p>Here’s the subject of our input signature:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
+01 00 00 00
+
+/* number of inputs (varint) */
+01
+
+/* input UTXO txid (hash256, little-endian) */
+f3 a2 7f 48 5f 98 33 c8
+31 8c 49 04 03 30 7f ef
+13 97 12 1b 5d d8 fe 70
+77 72 36 e7 37 1c 4e f3
+
+/* input UTXO index (32-bit) */
+00 00 00 00
+
+/* input UTXO script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* input sequence */
+ff ff ff ff
+
+/* number of outputs (varint) */
+02
+
+/* output value (64-bit) */
+e0 fe 7e 01 00 00 00 00
+
+/* output script (varint + data) */
+19 76 a9 14 18 ba 14 b3
+68 22 95 cb 05 23 0e 31
+fe cb 00 08 92 40 66 08
+88 ac
+
+/* change output value (64-bit) */
+e0 84 b0 03 00 00 00 00
+
+/* change output script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* locktime (32-bit) */
+00 00 00 00
+
+/* SIGHASH (32-bit) */
+01 00 00 00
+</code></pre></div></div>
+
+<p>Compare the above bytes to the <code class="language-plaintext highlighter-rouge">msg</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>. This is also the message against which the <code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> opcode validates an input signature.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned that the first step in transaction building is obtaining the UTXO set of a keypair. Outputs define the value we need to gather. Transaction output value must not exceed gathered UTXO value. Change outputs solve the indivisibility problem of UTXOs. UTXO scripts appear in the signable message of their corresponding inputs.</p>
+
+<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+            <li><a href="/basic-blockchain-programming/standard-scripts/">Standard scripts</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

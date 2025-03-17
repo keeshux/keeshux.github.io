@@ -1,0 +1,462 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>The Bitcoin Script language (pt. 1)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="The Bitcoin Script language (pt. 1)" />
+<meta property="og:title" content="The Bitcoin Script language (pt. 1)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="The Bitcoin Script language (pt. 1)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="The Bitcoin Script language (pt. 1)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 25, 2015</span>
+            <h2 itemprop="name">
+                
+                The Bitcoin Script language (pt. 1)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
+
+<!--more-->
+
+<h3 id="meet-machine-code">Meet machine code</h3>
+
+<p>A script is a computer program, and as a programmer you certainly know what a program is. A program takes an input, executes for some time, then returns an output. Programming languages are our tool to write programs that computers will understand, because most languages come with <em>compilers</em> that map human-friendly code to CPU operations, also known as <em>opcodes</em>.</p>
+
+<h4 id="opcodes">Opcodes</h4>
+
+<p>Opcodes include memory manipulation, math, loops, function calls and everything you find in procedural programming languages like C. They make up the spoken language of a CPU, the so-called <em>machine code</em>. Since bytes are computers’ preferred idiom, no wonder opcodes are bytes as well. As a result, machine code is a string of bytes representing operations to be executed on a CPU.</p>
+
+<p>Consider this piece of code in a high-level programming language like C:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">x</span> <span class="o">=</span> <span class="mh">0x23</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">+=</span> <span class="mh">0x4b</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">*=</span> <span class="mh">0x1e</span><span class="p">;</span></code></pre></figure>
+
+<p>Now suppose you want to compile and run this code on a hypothetical little-endian CPU with a single cell of 16-bit memory (a <em>register</em>) and the following set of opcodes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+      <th>V</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SET(V)</td>
+      <td><code class="language-plaintext highlighter-rouge">ab</code> V</td>
+      <td>16-bit</td>
+    </tr>
+    <tr>
+      <td>ADD(V)</td>
+      <td><code class="language-plaintext highlighter-rouge">ac</code> V</td>
+      <td>16-bit</td>
+    </tr>
+    <tr>
+      <td>MUL(V)</td>
+      <td><code class="language-plaintext highlighter-rouge">ad</code> V</td>
+      <td>16-bit</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The opcodes explained:</p>
+
+<ul>
+  <li>SET loads the register with the value V.</li>
+  <li>ADD adds V to the register.</li>
+  <li>MUL multiplies the register by V.</li>
+</ul>
+
+<p>A compiler for such a CPU would generate these 9 bytes of machine code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ab 23 00 ac 4b 00 ad 1e 00
+</code></pre></div></div>
+
+<p>Here’s how it’s interpreted:</p>
+
+<ol>
+  <li>Load the register with the value <code class="language-plaintext highlighter-rouge">23</code>.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">4b</code> to the register, that is now <code class="language-plaintext highlighter-rouge">23 + 4b = 6e</code>.</li>
+  <li>Multiply the register by <code class="language-plaintext highlighter-rouge">1e</code>, yielding <code class="language-plaintext highlighter-rouge">6e * 1e = ce4</code>.</li>
+</ol>
+
+<p>The register holds the final result, that is <code class="language-plaintext highlighter-rouge">ce4</code>.</p>
+
+<h4 id="stack-memory">Stack memory</h4>
+
+<p>Most of the time, we need to track complex program states with <em>variables</em>. In C, depending on whether a variable is allocated statically or with <code class="language-plaintext highlighter-rouge">malloc</code>, it’s stored in a differently arranged memory. While <code class="language-plaintext highlighter-rouge">malloc</code>-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called <em>stack</em>. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.</p>
+
+<p>Consider this dummy function:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="cm">/* 1 */</span>
+
+    <span class="cm">/* 2 */</span>
+    <span class="kt">uint8_t</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">0x12</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">0xa4</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="mh">0x2a5e7</span><span class="p">;</span>
+
+    <span class="cm">/* 3 */</span>
+    <span class="kt">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">d</span><span class="p">;</span>
+
+    <span class="cm">/* 4 */</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The stack is initially empty (1):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+</code></pre></div></div>
+
+<p>Then, three variables are pushed (2):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12]
+[12, a4 00]
+[12, a4 00, e7 a5 02 00]
+</code></pre></div></div>
+
+<p>A fourth variable is assigned the sum of the others and pushed onto the stack (3):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00, 9d a6 02 00]
+</code></pre></div></div>
+
+<p>The tip of the stack is the return value and is sent back to the function caller by other means. Each temporary stack variable is popped at the end of the block (4), because the push/pop operations must be balanced so that the stack always goes back to its initial state:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00]
+[12, a4 00]
+[12]
+[]
+</code></pre></div></div>
+
+<h3 id="the-script-machine-code">The Script machine code</h3>
+
+<p>Likewise, Bitcoin Core has its own “virtual processor” to interpret the <em>Script</em> machine code. Script features a rich set of opcodes, yet very limited compared to full-fledged CPUs like Intel’s, to name one. Some key facts about Script:</p>
+
+<ol>
+  <li>Script does not loop.</li>
+  <li>Script always terminates.</li>
+  <li>Script memory access is stack-based.</li>
+</ol>
+
+<p>In fact, point 1 implies 2. Point 3 means there’s no such thing like named variables in Script, you just do your calculations on a stack. Typically, the stack items you push become the operands of subsequent opcodes. At the end of the script, the top stack item is the return value.</p>
+
+<p>Before presenting real world scripts, let’s first enumerate some opcodes. For a full set please check out the official <a href="https://en.bitcoin.it/wiki/Script">wiki page</a>.</p>
+
+<h4 id="constants">Constants</h4>
+
+<p>The following opcodes push the numbers 0-16 onto the stack:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_0</code></td>
+      <td><code class="language-plaintext highlighter-rouge">00</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_1</code>-<code class="language-plaintext highlighter-rouge">OP_16</code></td>
+      <td><code class="language-plaintext highlighter-rouge">51</code>-<code class="language-plaintext highlighter-rouge">60</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>By convention, <code class="language-plaintext highlighter-rouge">OP_0</code> and <code class="language-plaintext highlighter-rouge">OP_1</code> also express the boolean <code class="language-plaintext highlighter-rouge">OP_FALSE</code> (zero) and <code class="language-plaintext highlighter-rouge">OP_TRUE</code> (non-zero).</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>54 57 00 60
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_7 OP_0 OP_16
+</code></pre></div></div>
+
+<p>Here’s how the stack evolves:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[4]
+[4, 7]
+[4, 7, 0]
+[4, 7, 0, 16]
+</code></pre></div></div>
+
+<p>The return value is the top item, so the script returns 16. Quite pointless, I know, but it’s a start.</p>
+
+<h4 id="push-data">Push data</h4>
+
+<p>Several opcodes are provided to push custom data. They differ in the size of the operands:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+      <th>L (length)</th>
+      <th>D (data)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4c</code> L D</td>
+      <td>8-bit</td>
+      <td>L bytes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4d</code> L D</td>
+      <td>16-bit</td>
+      <td>L bytes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA4</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4e</code> L D</td>
+      <td>32-bit</td>
+      <td>L bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For example, if your data length can be stored as a 8-bit number, then <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> is your best choice. Look at this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4c 14 11 06 03 55 04 8a
+0c 70 3e 63 2e 31 26 30
+24 06 6c 95 20 30
+</code></pre></div></div>
+
+<p>The first byte is clearly a <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> opcode, followed by a 1-byte length of <code class="language-plaintext highlighter-rouge">14</code> that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[11 06 03 55 04 8a 0c 70
+ 3e 63 2e 31 26 30 24 06
+ 6c 95 20 30]
+</code></pre></div></div>
+
+<p>Indeed –like with <a href="/basic-blockchain-programming/serialization-part-two/">varints</a>–, there’s a special encoding for very short data. If an opcode lies between <code class="language-plaintext highlighter-rouge">01</code> and <code class="language-plaintext highlighter-rouge">4b</code> (included), it’s a push data operation where the opcode itself is the length in bytes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>opcode</th>
+      <th>encoding</th>
+      <th>L (length)</th>
+      <th>D (data)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>L</td>
+      <td>L D</td>
+      <td><code class="language-plaintext highlighter-rouge">01</code>-<code class="language-plaintext highlighter-rouge">4b</code></td>
+      <td>L bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For example, in the string:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>07 8f 49 b2 e2 ec 7c 44
+</code></pre></div></div>
+
+<p>the opcode <code class="language-plaintext highlighter-rouge">07</code> means that 7 bytes of data are to be pushed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[8f 49 b2 e2 ec 7c 44]
+</code></pre></div></div>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned a little bit about machine code and opcodes. Script is a simple low-level language understood by miners software. Script state is tracked with stack memory.</p>
+
+<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

@@ -1,0 +1,278 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Scripts in transaction processing</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Scripts in transaction processing" />
+<meta property="og:title" content="Scripts in transaction processing" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Scripts in transaction processing" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/scripts-in-transaction-processing/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/scripts-in-transaction-processing/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Scripts in transaction processing" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 15, 2015</span>
+            <h2 itemprop="name">
+                
+                Scripts in transaction processing
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>With some cryptography fundamentals and serialization practice under your belt, you should be more comfortable as we approach Bitcoin transactions. Well, <em>scripts</em> are the last step in the path. Here I’ll give an overview of their role in transaction processing.</p>
+
+<!--more-->
+
+<h3 id="how-bitcoins-move">How bitcoins move</h3>
+
+<p>It’s a common belief that bitcoins move from an address to another. In fact, they move through transaction <em>outputs</em>, whereas mining is the only special case in which bitcoins are created out of thin air. Outputs are the real endpoints holding money in the blockchain. However, when reused to send the money they hold to someone else, outputs become <em>inputs</em> to other transactions.</p>
+
+<h4 id="the-transaction-tree">The transaction tree</h4>
+
+<p>Look at the picture below (courtesy of bitcoin.org) and notice how previous transaction outputs convert to spendable transaction inputs. This forms a deep tree of value transfers where each node represents a transaction. Whenever a transaction output is spent, the spending transaction becomes a child node.</p>
+
+<p><img src="/s/f/basic-blockchain-programming/scripts-transaction-propagation.svg" alt="Transaction propagation" /></p>
+
+<p>Consider all these 7 transactions to be the only ones relevant to our wallet. Observe the path to TX 3 and assume 10k satoshis (0.0001 BTC) as the standard fee, here’s a textual explanation:</p>
+
+<ol>
+  <li>Someone sends 100k to an output we “own”.</li>
+  <li>The output becomes the spendable input of TX 0.</li>
+  <li>TX 0 distributes the previous output to new outputs of 40k and 50k.</li>
+  <li>The remaining value 100k - (40k + 50k) = 10k is the fee.</li>
+  <li>TX 1 reuses &lt;TX 0, output0&gt;, the one holding 40k.</li>
+  <li>TX 1 sends 30k to an output plus a 10k fee.</li>
+  <li>TX 3 reuses &lt;TX 1, output0&gt; to send 20k to output0 plus a 10k fee.</li>
+</ol>
+
+<p>You know, in such a tree there must be a leaf at some point on the right. TX 3 is one of them, the other being TX 6, and both are marked with the <em>UTXO</em> acronym (Unspent Transaction Output). In our scenario, the leaves of the tree are:</p>
+
+<ul>
+  <li>&lt;TX 3, output0&gt; = 20k</li>
+  <li>&lt;TX 6, output0&gt; = 10k</li>
+</ul>
+
+<p>They make up the wallet UTXO set and total 30k satoshis (0.0003 BTC), which happens to be the balance of the wallet. For your information, &lt;txid, output&gt; pairs are called <em>outpoints</em>.</p>
+
+<p>If we extend the UTXO set to all blockchain transactions instead of constraining to a private wallet, we’re able to track all the spendable bitcoins in the world. This is a convenient index to maintain for miners, because it’s their way to find out if any transaction input is trying to double-spend a previously spent transaction output. In other words, transaction inputs must point to outputs in the global UTXO set in order to be spendable.</p>
+
+<h3 id="introducing-scripts">Introducing scripts</h3>
+
+<p>There must be a mechanism to ensure that we’re only allowed to spend certain transaction outputs, normally the ones associated with our wallet. Bitcoin solves this “authentication” problem in a fairly complex manner, yet extremely extensible and future-oriented: <em>Script</em>. Script is a programming language in all respects, with its only major limitation being the absence of loops. A script runs, terminates and eventually yields a boolean result.</p>
+
+<p>I’ll teach you the basics of the Script language in the following articles. For now, just bear in mind that blockchain transactions embed scripts for spending validation. Let’s peek inside the whole thing.</p>
+
+<h4 id="transaction-validation">Transaction validation</h4>
+
+<p>In the previous section, I spent some words on inputs and outputs. Now’s the time to clarify what informations they pass along.</p>
+
+<p>Let alone some minor details, a transaction output contains:</p>
+
+<ul>
+  <li>The amount of bitcoins to transfer.</li>
+  <li>A script (the <em>output script</em>).</li>
+</ul>
+
+<p>while a transaction input contains:</p>
+
+<ul>
+  <li>An outpoint reference to the previous transaction output.</li>
+  <li>A script (the <em>input script</em>).</li>
+</ul>
+
+<p>In order to validate a transaction, all transaction inputs must validate. Follows the input validation process:</p>
+
+<ol>
+  <li>Go find the transaction referenced by the outpoint.</li>
+  <li>Find the output through its index in the transaction.</li>
+  <li>Take the output script.</li>
+  <li>Append the output script to the input script.</li>
+  <li>Execute the joined script on the Script interpreter.</li>
+  <li>If the script succeeds, then the transaction is valid.</li>
+</ol>
+
+<p>That’s the idea. It’ll be a concrete process as soon as we examine Script and the transaction data structures.</p>
+
+<h4 id="next-block-in-chain">Next block in chain?</h4>
+
+<p>You learned that a transaction moves bitcoins from output(s) to output(s). When spent, a former output becomes an input to the new transaction. Transaction outputs must not be spent twice. The UTXO set computes the balance of a wallet (or the entire Bitcoin network). Scripts describe the proper way to redeem a transaction output.</p>
+
+<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">next article</a> you’ll get to know <em>Script</em>, the Bitcoin scripting language. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

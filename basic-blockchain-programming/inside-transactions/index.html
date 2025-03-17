@@ -1,0 +1,381 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Inside transactions</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Inside transactions" />
+<meta property="og:title" content="Inside transactions" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Inside transactions" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/the-first-transaction-part-one/" title="The first transaction (pt. 1)" />
+
+
+<link rel="next" href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/inside-transactions/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Inside transactions" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Jun 1, 2015</span>
+            <h2 itemprop="name">
+                
+                Inside transactions
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/the-first-transaction-part-one/" title="The first transaction (pt. 1)">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.</p>
+
+<!--more-->
+
+<p>Unfortunately, transactions and scripts are sort of a chicken and egg situation. Whatever subject you start from, you’ll definitely need a basic grasp of the other one to get things going. I chose to leave transactions last because I liked a bottom-up approach to this series, but I had to take some concepts for granted –like inputs and outputs– that are going to be clear in this final part.</p>
+
+<h3 id="transaction-data-structures">Transaction data structures</h3>
+
+<p>This is what a transaction embeds:</p>
+
+<ul>
+  <li>Some constant values.</li>
+  <li>An array of one or more inputs.</li>
+  <li>An array of one or more outputs.</li>
+</ul>
+
+<p>Before writing raw transactions, I’m going to describe the data structures defined in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>. Needless to say, all number fields will be serialized little-endian.</p>
+
+<h4 id="output">Output</h4>
+
+<p>Transaction outputs are the blockchain entities actually holding bitcoin value:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">uint64_t</span> <span class="n">value</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">script_len</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">script</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">bbp_txout_t</span><span class="p">;</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">value</code> field is the transferred bitcoin amount in satoshis, and the <code class="language-plaintext highlighter-rouge">script_len</code> (varint) plus <code class="language-plaintext highlighter-rouge">script</code> (byte array) fields are a vardata holding the output script code. The script contains the instructions to later redeem the output value. Within a transaction, each output has an index that is its offset in the outputs array.</p>
+
+<h4 id="outpoint">Outpoint</h4>
+
+<p>Any Bitcoin transaction that is not coinbase (read next section), must refer to one or more previously mined transactions, because what transactions do is moving coins from some outputs to others. Well, an <em>outpoint</em> is a fixed structure that expresses a pointer to an existing transaction output:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">txid</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+    <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">bbp_outpoint_t</span><span class="p">;</span></code></pre></figure>
+
+<p>Unsurprisingly, the <code class="language-plaintext highlighter-rouge">txid</code> field is the hash256 identifier of the referred transaction (little-endian), while <code class="language-plaintext highlighter-rouge">index</code> is the 0-based offset of the output in the transaction outputs array.</p>
+
+<h4 id="input">Input</h4>
+
+<p>A transaction input is an entity able to redeem value from a previously unspent output, also known as UTXO:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">bbp_outpoint_t</span> <span class="n">outpoint</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">script_len</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">script</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">sequence</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">bbp_txin_t</span><span class="p">;</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">outpoint</code> field is the pointer to the UTXO we want to spend. The <code class="language-plaintext highlighter-rouge">script_len</code> (varint) plus <code class="language-plaintext highlighter-rouge">script</code> (byte array) fields are a vardata holding the input script that, prepended to the UTXO script, is expected to succeed. The <code class="language-plaintext highlighter-rouge">sequence</code> field is left for advanced operations, most of the time you’ll just set it to <code class="language-plaintext highlighter-rouge">ffffffff</code>.</p>
+
+<h4 id="transaction">Transaction</h4>
+
+<p>Now that all subcomponents were described, here’s the layout of a blockchain transaction:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">inputs_len</span><span class="p">;</span>
+    <span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">inputs</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">outputs_len</span><span class="p">;</span>
+    <span class="n">bbp_txout_t</span> <span class="o">*</span><span class="n">outputs</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">locktime</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">bbp_tx_t</span><span class="p">;</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">version</code> of a transaction is established by network consensus and is currently constant <code class="language-plaintext highlighter-rouge">1</code>. I won’t cover <code class="language-plaintext highlighter-rouge">locktime</code> for now, just set it to zero. When serialized, the inputs and outputs arrays are prefixed with a varint announcing their count.</p>
+
+<h3 id="serialization">Serialization</h3>
+
+<p>To make things clearer, I want to show you how to serialize a transaction in code. The <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> function is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_tx_serialize</span><span class="p">(</span><span class="k">const</span> <span class="n">bbp_tx_t</span> <span class="o">*</span><span class="n">tx</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">raw</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">varlen</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">raw</span><span class="p">;</span>
+
+    <span class="cm">/* version */</span>
+    <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">version</span><span class="p">);</span>
+    <span class="n">ptr</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">);</span>
+
+    <span class="cm">/* inputs count */</span>
+    <span class="n">bbp_varint_set</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">inputs_len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+    <span class="n">ptr</span> <span class="o">+=</span> <span class="n">varlen</span><span class="p">;</span>
+
+    <span class="cm">/* inputs */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">inputs_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tx</span><span class="o">-&gt;</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+        <span class="cm">/* outpoint */</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">outpoint</span><span class="p">.</span><span class="n">txid</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="mi">32</span><span class="p">;</span>
+        <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">outpoint</span><span class="p">.</span><span class="n">index</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">);</span>
+
+        <span class="cm">/* script */</span>
+        <span class="n">bbp_varint_set</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="n">varlen</span><span class="p">;</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">script</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">;</span>
+
+        <span class="cm">/* sequence */</span>
+        <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">txin</span><span class="o">-&gt;</span><span class="n">sequence</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* outputs count */</span>
+    <span class="n">bbp_varint_set</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">outputs_len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+    <span class="n">ptr</span> <span class="o">+=</span> <span class="n">varlen</span><span class="p">;</span>
+
+    <span class="cm">/* outputs */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">outputs_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">bbp_txout_t</span> <span class="o">*</span><span class="n">txout</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tx</span><span class="o">-&gt;</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+        <span class="cm">/* value */</span>
+        <span class="o">*</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint64</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">txout</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">);</span>
+
+        <span class="cm">/* script */</span>
+        <span class="n">bbp_varint_set</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">txout</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="n">varlen</span><span class="p">;</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">txout</span><span class="o">-&gt;</span><span class="n">script</span><span class="p">,</span> <span class="n">txout</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">);</span>
+        <span class="n">ptr</span> <span class="o">+=</span> <span class="n">txout</span><span class="o">-&gt;</span><span class="n">script_len</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* locktime */</span>
+    <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">tx</span><span class="o">-&gt;</span><span class="n">locktime</span><span class="p">);</span>
+    <span class="n">ptr</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="cm">/* sighash */</span>
+        <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="n">flag</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Ignore the <code class="language-plaintext highlighter-rouge">flag</code> parameter and assume it’s <code class="language-plaintext highlighter-rouge">0</code> to skip the last <code class="language-plaintext highlighter-rouge">if</code> block. The code is pretty simple and I think it doesn’t need further explanations. If you’re in trouble, you might consider reading again the articles on <a href="/basic-blockchain-programming/serialization-part-one/">blockchain serialization</a>.</p>
+
+<p>One last thing. The <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> function expects a properly allocated byte array, so you must use <code class="language-plaintext highlighter-rouge">bbp_tx_size</code> to get the exact amount of bytes required to serialize the <code class="language-plaintext highlighter-rouge">tx</code> transaction, for example:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_tx_t</span> <span class="n">tx</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="o">*</span><span class="n">raw</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="n">len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
+
+<h3 id="coinbase-transactions">Coinbase transactions</h3>
+
+<p><em>Coinbase</em> transactions (which inspired the <a href="https://www.coinbase.com/">Coinbase</a> company name) are the only transactions without real inputs. They’re sort of genesis transactions, because they create bitcoins from nowhere and are not connected to any previous transaction. Each block in the blockchain has one and one only coinbase transaction that rewards the block miner with the famous ever-halving amount of bitcoins (currently 25 BTC).</p>
+
+<p>Here’s an example <a href="https://blockstream.info/tx/e7472be34d36b9068e54466b4ef1d06456f65aa33aa78a4725278b6d37ebcb60">coinbase transaction</a> from Mainnet. It has a single output that sends a 25 BTC reward plus some fee to the following address:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY
+</code></pre></div></div>
+
+<p>by using a standard P2PKH output script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+OP_HASH160
+
+[c8 25 a1 ec f2 a6 83 0c
+ 44 01 62 0c 3a 16 f1 99
+ 50 57 c2 ab]
+
+OP_EQUALVERIFY
+OP_CHECKSIG
+</code></pre></div></div>
+
+<p>The push data element is exactly the above address properly Base58Check-decoded. Likewise, the transaction has only one input. Since a coinbase transaction creates bitcoins, its input doesn’t point to any previous UTXO. Typically, coinbase input scripts are placeholders for block metadata, like the block height in the blockchain, the name of the mining software, generic binary data etc.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned the fundamental transaction data structures. Most transactions draw coins from previous outputs, while coinbase transactions generate coins from nowhere.</p>
+
+<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-one/">next article</a> you’ll learn to build your first blockchain transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/standard-scripts/">Standard scripts</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/the-first-transaction-part-one/" title="The first transaction (pt. 1)">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

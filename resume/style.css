@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.1em;
+    border-bottom: dotted 1px #888;
+    margin-bottom: 0.4em;
+}
+
+strong, .timeline {
+    font-size: 1em;
+}
+
+a {
+    color: #000;
+    /*text-decoration: none;*/
+}
+
+#contacts {
+    width: 27em;
+    margin-left: 1.2em;
+    padding: 1.2em 0em;
+}
+
+#contacts li {
+    position: relative;
+    display: inline-block;
+    width: 49%;
+    padding: 0.3em 0em;
+}
+
+#contacts .fa {
+    position: absolute;
+    left: -1.2em;
+}
+
+section {
+    line-height: 1.8em;
+    margin: 0.8em 0em;
+}
+
+.blocks tr > td:first-child {
+    width: 9em;
+}
+
+.blocks td {
+    vertical-align: baseline;
+}
+
+.list ul {
+    padding-bottom: 0.6em;
+    list-style: none;
+}
+
+.list ul, .description p {
+    margin-left: 3em;
+}

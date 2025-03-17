@@ -1,0 +1,359 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Wallet software</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Wallet software" />
+<meta property="og:title" content="Wallet software" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/wallet-software/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Wallet software" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/wallet-software/" />
+
+
+
+<link rel="next" href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/wallet-software/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Wallet software" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Jun 23, 2015</span>
+            <h2 itemprop="name">
+                
+                Wallet software
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)">&lt; prev</a>
+    
+    |
+    
+    next &gt;
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Commonly, Bitcoin users rely on clients called <em>wallets</em> to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are <a href="https://electrum.org">Electrum</a>, <a href="https://hivewallet.com">Hive</a> etc. Here I’ll try to describe the components of a wallet.</p>
+
+<h3 id="data-model">Data model</h3>
+
+<p>These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like <em>change addresses</em> or encryption are convenient features yet not mandatory for a fully working implementation.</p>
+
+<h4 id="keypairs">Keypairs</h4>
+
+<p>In the last paragraphs about the <a href="/basic-blockchain-programming/network-interoperability-part-two/">Bitcoin network</a>, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of:</p>
+
+<ul>
+  <li>The WIF-encoded private key.</li>
+  <li>The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address.</li>
+</ul>
+
+<p>Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins.</p>
+
+<h4 id="blockchain">Blockchain</h4>
+
+<p>The blockchain component determines if a wallet is <em>thin</em> or <em>heavyweight</em>. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones.</p>
+
+<p>“Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download <em>relevant</em> transactions, that is transactions in which the user appears as a sender or a receiver.</p>
+
+<p>Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that:</p>
+
+<ol>
+  <li>The user is a receiver when his address appears in a transaction output script.</li>
+  <li>The user is a sender when his public key appears in a transaction input script.</li>
+</ol>
+
+<p>Let’s see why. Consider the typical P2PKH output script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_DUP
+OP_HASH160
+[hash160(public_key)]
+OP_EQUALVERIFY
+OP_CHECKSIG
+</code></pre></div></div>
+
+<p>the typical P2PKH input script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[signature]
+[public_key]
+</code></pre></div></div>
+
+<p>and the relevancy scan in pseudocode:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>outpoint = struct { txid, index };
+
+relevant_txs = {};  /* txid -&gt; tx */
+utxos = {};         /* outpoint */
+balance = 0;
+
+for (tx in blockchain.txs) {
+
+    /* 1 */
+    for (txout in tx.outputs) {
+        if (!is_p2pkh_output(txout.script)) {
+            continue;
+        }
+        if (txout.script contains hash160(keypair.public_key)) {
+            relevant_txs.add(tx);
+
+            outpoint = outpoint(tx.id, txout.index);
+            utxos.add(outpoint);
+            balance += txout.value;
+        }
+    }
+
+    /* 2 */
+    for (txin in tx.inputs) {
+        if (!is_p2pkh_input(txin.script)) {
+            continue;
+        }
+        if (txin.script contains keypair.public_key) {
+            relevant_txs.add(tx);
+
+            outpoint = txin.outpoint;
+            previous_tx = relevant_txs[outpoint.txid];
+            prev_txout = previous_tx.outputs[outpoint.index];
+            utxos.remove(outpoint);
+            balance -= prev_txout.value;
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>(1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the <em>output value</em> of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance.</p>
+
+<p>(2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases.</p>
+
+<p>Incidentally, you may notice that the relevant transactions form the <em>history</em> of a wallet.</p>
+
+<h4 id="utxos">UTXOs</h4>
+
+<p>So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions.</p>
+
+<p>We can also compute the wallet balance from the UTXOs:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>balance = 0;
+
+for (outpoint in utxos) {
+    unspent_tx = relevant_txs[outpoint.txid];
+    unspent_txout = unspent_tx.outputs[outpoint.index];
+    balance += unspent_txout.value;
+}
+</code></pre></div></div>
+
+<h3 id="modularization">Modularization</h3>
+
+<p>From an architectural perspective, a wallet software can be split into 3 independent modules:</p>
+
+<ol>
+  <li>Signing module.</li>
+  <li>Public addresses module.</li>
+  <li>Networking module.</li>
+</ol>
+
+<p>Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. <a href="https://www.bitcointrezor.com/">TREZOR</a> is a well-known example of hybrid wallet where the signing module is even pushed to an external device.</p>
+
+<h4 id="signing">Signing</h4>
+
+<p>This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong <a href="https://en.wikipedia.org/wiki/Two-factor_authentication">2-factor authentication</a>.</p>
+
+<p><img src="http://www.firebrick.co.uk/images/otp.jpg" alt="One-Time Password device" /></p>
+
+<p>Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two.</p>
+
+<p><img src="https://www.bitcointrezor.com/images/carousel_4.png" alt="TREZOR signing device" /></p>
+
+<p>Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys.</p>
+
+<h4 id="public-addresses">Public addresses</h4>
+
+<p>Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address.</p>
+
+<p>Public-key distribution would only make sense after learning about <a href="https://codinginmysleep.com/hd-wallets-in-plain-english/">deterministic wallets</a>, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions.</p>
+
+<h4 id="networking">Networking</h4>
+
+<p>The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks:</p>
+
+<ol>
+  <li>Connecting to the Bitcoin p2p network.</li>
+  <li>Synchronizing and keeping up with the blockchain.</li>
+  <li>Monitoring relevant transactions.</li>
+  <li>Publishing transactions.</li>
+</ol>
+
+<p>Especially task 1 and 2 can be a <a href="https://www.urbandictionary.com/define.php?term=pita">PITA</a>, look at the vague protocol description for <a href="https://en.bitcoin.it/wiki/Block_chain_download">blockchain download</a>. It’s no surprise that many wallet manifacturers -like <a href="https://electrum.org">Electrum</a> and <a href="https://mycelium.com">Mycelium</a>- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization.</p>
+
+<p>Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions.</p>
+
+<p>Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to <a href="https://bitcoin.stackexchange.com/questions/1077/what-is-the-coin-selection-algorithm">coin selection heuristics</a>. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain.</p>
+
+<h3 id="goodbye">Goodbye!</h3>
+
+<p>That’s all. From now on, you should be <em>way</em> more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series.</p>
+
+<p>This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth.</p>
+
+<p>And remember, all the code is on my <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub repository</a>.</p>
+
+<p>Keep mining!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+            <li><a href="/basic-blockchain-programming/standard-scripts/">Standard scripts</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

@@ -1,0 +1,339 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Serialization (pt. 2)</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Serialization (pt. 2)" />
+<meta property="og:title" content="Serialization (pt. 2)" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-two/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Serialization (pt. 2)" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1742247430" />
+<meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-two/" />
+
+
+<link rel="prev" href="/basic-blockchain-programming/keys-as-property/" title="Keys as property" />
+
+
+<link rel="next" href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742247430" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742247430" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742247430" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742247430" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742247430" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/basic-blockchain-programming/serialization-part-two/">
+        
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Serialization (pt. 2)" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 1, 2015</span>
+            <h2 itemprop="name">
+                
+                Serialization (pt. 2)
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    
+    <a href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)">&lt; prev</a>
+    
+    |
+    
+    <a href="/basic-blockchain-programming/keys-as-property/" title="Keys as property">next &gt;</a>
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Things get a little trickier when the length of a binary string can’t be predicted, but the solution is pretty straightforward: the string is prefixed with useful information about its length. The core of variable-length serialization is the <em>varint</em> pseudotype.</p>
+
+<!--more-->
+
+<h3 id="variable-integers">Variable integers</h3>
+
+<p>We’ve met 4 integer types so far: int8, int16, int32 and int64. What if we wanted to save memory on average though? With millions of transactions, the blockchain is likely to notice conservative efforts on integer serialization, hence the <em>varint</em> type.</p>
+
+<p>A varint may be of any of the above lengths, as long as such length is specified –except for int8– in an additional 1-byte prefix:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BBP_VARINT16</span> <span class="o">=</span> <span class="mh">0xfd</span><span class="p">,</span>
+    <span class="n">BBP_VARINT32</span> <span class="o">=</span> <span class="mh">0xfe</span><span class="p">,</span>
+    <span class="n">BBP_VARINT64</span> <span class="o">=</span> <span class="mh">0xff</span>
+<span class="p">}</span> <span class="n">bbp_varint_t</span><span class="p">;</span></code></pre></figure>
+
+<p>8-bit varints have no such prefix because they’re a value per se. A table will hopefully shed some light:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>size</th>
+      <th>value</th>
+      <th>encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">8c</code></td>
+      <td><code class="language-plaintext highlighter-rouge">8c</code></td>
+    </tr>
+    <tr>
+      <td>16-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">fd</code></em> <code class="language-plaintext highlighter-rouge">12 a4</code></td>
+    </tr>
+    <tr>
+      <td>32-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4 5b 78</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">fe</code></em> <code class="language-plaintext highlighter-rouge">12 a4 5b 78</code></td>
+    </tr>
+    <tr>
+      <td>64-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
+      <td><em><code class="language-plaintext highlighter-rouge">ff</code></em> <code class="language-plaintext highlighter-rouge">12 a4 5b 78 12 c4 56 d8</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>See how the varint prefix introduces the size of the number coming after. The only limitation of varint8 is that it’s unable to represent the <code class="language-plaintext highlighter-rouge">fd</code>-<code class="language-plaintext highlighter-rouge">ff</code> values as they have a special meaning, so a varint16 would be required.</p>
+
+<p>Check out <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/varint.h">varint.h</a> for a varint parsing implementation.</p>
+
+<h4 id="example">Example</h4>
+
+<p>Consider the byte string:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>13 9c fd 7d 80 44 6b a2 20 cc
+</code></pre></div></div>
+
+<p>as seen in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-varints.c">ex-varints.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">bytes</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x13</span><span class="p">,</span> <span class="mh">0x9c</span><span class="p">,</span> <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0x7d</span><span class="p">,</span>
+    <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x6b</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span>
+    <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0xcc</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>and the corresponding high-level structure:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">uint16_t</span> <span class="n">fixed1</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">var2</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">fixed3</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">fixed4</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">foo_t</span><span class="p">;</span></code></pre></figure>
+
+<p>The struct has 3 fixed-length integers and 1 variable-length integer (by contract). Since varints can hold up to 64-bit values, we need to allocate the largest size. Here’s how we proceed to decode the binary string into the struct:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">foo_t</span> <span class="n">decoded</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="n">varlen</span><span class="p">;</span>
+
+<span class="n">decoded</span><span class="p">.</span><span class="n">fixed1</span> <span class="o">=</span> <span class="n">bbp_eint16</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)</span><span class="n">bytes</span><span class="p">);</span>
+<span class="n">decoded</span><span class="p">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">bbp_varint_get</span><span class="p">(</span><span class="n">bytes</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+<span class="n">decoded</span><span class="p">.</span><span class="n">fixed3</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">bytes</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">varlen</span><span class="p">));</span>
+<span class="n">decoded</span><span class="p">.</span><span class="n">fixed4</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">bytes</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">varlen</span> <span class="o">+</span> <span class="mi">4</span><span class="p">);</span></code></pre></figure>
+
+<p>In other words:</p>
+
+<ol>
+  <li>The first field is an int16: <code class="language-plaintext highlighter-rouge">9c13</code>.</li>
+  <li>Go ahead and move to <code class="language-plaintext highlighter-rouge">bytes + 2</code> (int16 takes 2 bytes).</li>
+  <li><code class="language-plaintext highlighter-rouge">bytes + 2</code> holds <code class="language-plaintext highlighter-rouge">fd</code> and announces a varint16.</li>
+  <li>Skip to the following 2 bytes.</li>
+  <li>The second field is <code class="language-plaintext highlighter-rouge">807d</code>.</li>
+  <li>Go ahead and move to <code class="language-plaintext highlighter-rouge">bytes + 5</code> (varint16 takes <code class="language-plaintext highlighter-rouge">varlen = 3</code> bytes).</li>
+  <li>The third field is an int32: <code class="language-plaintext highlighter-rouge">20a26b44</code>.</li>
+  <li>The fourth field is an int8: <code class="language-plaintext highlighter-rouge">cc</code>.</li>
+</ol>
+
+<h3 id="variable-data">Variable data</h3>
+
+<p>Now that you’re able to read a varint, deserializing variable data is a no-brainer. Technically, variable data is just some binary data prefixed with a varint holding its length. Consider the 13-bytes string:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fd 0a 00 e3 03 41 8b a6
+20 e1 b7 83 60
+</code></pre></div></div>
+
+<p>as seen in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-vardata.c">ex-vardata.c</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">uint8_t</span> <span class="n">bytes</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0x0a</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span>
+    <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0xa6</span><span class="p">,</span>
+    <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0xe1</span><span class="p">,</span> <span class="mh">0xb7</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span>
+    <span class="mh">0x60</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Here’s the decoding process:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="n">varlen</span><span class="p">;</span>
+<span class="kt">uint8_t</span> <span class="n">data</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+
+<span class="n">len</span> <span class="o">=</span> <span class="n">bbp_varint_get</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">varlen</span><span class="p">);</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bytes</span> <span class="o">+</span> <span class="n">varlen</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span></code></pre></figure>
+
+<p>Like in the previous example, we find a varint16 at the beginning of the array holding the value <code class="language-plaintext highlighter-rouge">0a</code>, that is 10 in decimal base. 10 is the length of the data coming next, so we read 10 bytes starting from <code class="language-plaintext highlighter-rouge">byte + 3</code> because a varint16 takes <code class="language-plaintext highlighter-rouge">varlen = 3</code> bytes. That’s it!</p>
+
+<p>The same applies for variable strings, you just encode them in UTF-8 before serialization.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to serialize variable-length data for the blockchain. You’re fully set to exploit the bigger entities!</p>
+
+<p>In the <a href="/basic-blockchain-programming/keys-as-property/">next article</a> I’ll teach you some concepts about <em>keys</em> and blockchain property. Please share this post if you enjoyed it and use the form below for questions and comments!</p>
+
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://www.linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-two/">The first transaction (pt. 2)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/the-first-transaction-part-one/">The first transaction (pt. 1)</a></li>
+            
+            <li><a href="/basic-blockchain-programming/inside-transactions/">Inside transactions</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+            <a href="/basic-blockchain-programming/keys-as-property/" title="Keys as property">Newer <i class="fa fa-chevron-right"></i></a>
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="https://www.linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742247430" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>
