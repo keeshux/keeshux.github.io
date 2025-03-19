@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Frontend development is easy</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Frontend development is easy" />
+<meta property="og:title" content="Frontend development is easy" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1742394494" />
+<meta property="og:url" content="https://davidederosa.com/2025/03/frontend-development-is-easy/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Frontend development is easy" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1742394494" />
+<meta name="twitter:url" content="https://davidederosa.com/2025/03/frontend-development-is-easy/" />
+
+<link rel="canonical" href="https://davidederosa.com/2025/03/frontend-development-is-easy/" />
+
+
+<link rel="next" href="/2025/03/rewriting-passepartout-for-v3/" title="Rewriting Passepartout for v3" />
+
+
+<link rel="stylesheet" href="/s/main.css?1742394494" />
+<link rel="stylesheet" href="/s/main-mobile.css?1742394494" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1742394494" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1742394494" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1742394494" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Mar 19, 2025</span>
+            <h2 itemprop="name">
+                
+                Frontend development is easy
+                
+            </h2>
+            
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>If you are a developer, you heard this statement at least once. While I believe that any comparison is pointless because <em>everything</em> is about programming, I’d like to add some complexities often neglected in frontend development, within the context of client/server software.</p>
+
+<h2 id="take-it-seriously">Take it seriously</h2>
+
+<p>Frontend is not a toy. What I find frequent in frontend developers is the <em>recklessness</em> of their choices. Backend developers tend to be more conservative because they are the ones receiving that phone call at night when a service is down, but this doesn’t mean that a frontend bug couldn’t have terrible consequences.</p>
+
+<p>Some people claim that backend is harder than frontend because of the “more serious” problems it has to solve:</p>
+
+<ul>
+  <li>Performance</li>
+  <li>Scalability</li>
+  <li>Robustness</li>
+  <li>Concurrency</li>
+</ul>
+
+<p>For some reason, those qualities are considered less of a priority for a well-written client, but they are equally important and sometimes <em>more</em> important. Users may spot slow, sluggish, power-hungry, buggy apps from a distance.</p>
+
+<p>It’s also true that if you skip native backend software like web servers or databases, which are a <em>big deal</em>, most developers out there are doing simple web services. Let’s be honest: nowadays, most of the above difficulties are not dealt with at the programming level, they are delegated to long-established SaaS platforms. This is great, but only because backend developers are –in my experience– generally more aware of how things happen under the hood.</p>
+
+<p>Sadly, frontend frameworks lead developers in the opposite direction: they make you forget the consequences of bad programming practices. They deviate from the importance of appropriate data structures and algorithms. They convince you that modern machines can endure any load. They overcomplicate code with tons of boilerplate. They waste your time moving your focus on things that nobody cares about e.g. “is that a view or a view model?”. They make you lose the foundations of programming.</p>
+
+<p>The result is a far west full of cowboys writing inefficient, dangerous code, but this is not a problem of the frontend itself.</p>
+
+<h2 id="never-rely-on-a-backend">Never rely on a backend</h2>
+
+<p>Not all apps are web-oriented, and <a href="https://passepartoutvpn.app">Passepartout</a> is an example of frontend development without a backend. Or, better said, frontend development with an uncontrolled backend.</p>
+
+<p>What does this imply? You take <em>direct responsibility</em> for your software. In a world where most apps interact with external APIs, it’s appalling how often frontend developers operate in the best-case scenario where everything works as expected.</p>
+
+<p>I wonder how many write code that, to name a few:</p>
+
+<ul>
+  <li>Expects malformed responses</li>
+  <li>Expects no responses</li>
+  <li>Handles timeouts</li>
+  <li>Works fully offline</li>
+  <li>Works headless (without views)</li>
+  <li>Migrates persistent data without data loss</li>
+</ul>
+
+<p>This is your responsibility, not the external backend’s, and you do that by giving your frontend <em>a local backend</em> with business logic to rely on. At that point, the presence of an external backend will be of marginal importance.</p>
+
+<h2 id="domain-before-ui">Domain before UI</h2>
+
+<p>Business logic is another concept that, historically, the backend is more used to than the frontend. I believe that backend developers don’t see the immediate effect of their work until late, whereas
+it takes a few minutes to create a meaningful UI. The instant gratification that comes from “it works!” may indefinitely delay the key decisions to take early in software development.</p>
+
+<p>Presentation is the highest layer in software design, yet in frontend development, the importance of UI is constantly glorified. No surprise, non-tech people and the industry in general judge software from the UI, but frontend developers should prioritize the <em>domain</em> like any other non-UI developer does.</p>
+
+<p>Any software should make sense regardless of having a UI, or a remote API, and frontend makes no exception: UI is no more than the visual representation of a domain. I believe that this simple rule also <em>dignifies</em> frontend apps for making them way more meaningful than “a couple of screens”.</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>How much time do you waste interpreting users’ feedback for the lack of better options? What if you are in a real hurry to solve a frontend problem in production? Clients live in the most unpredictable environments, yet the troubleshooting of their errors is often deferred to backend monitoring.</p>
+
+<p>Logging, proper error handling, profiling, and tracking tools are a superpower, but as long as the backend takes care of that, the frontend couldn’t care less. Drop the backend, and troubleshooting becomes a nightmare. Along the lines of “never rely on a backend”, do your homework and invest decent time in logging at least. Make it a requirement, even more than tests. It’s tedious, it’s time-consuming, but it truly pays off when SHTF.</p>
+
+<p>Logging is a fundamental trait of software robustness, and it takes a lot of practice to describe what code does through human-readable text in a way that will help your future self later. No software is exempt from the need for logging.</p>
+
+<h2 id="in-conclusion">In conclusion</h2>
+
+<p>Frontend is the face of our product, but UI is only a small part of it. Over the years, the overuse of client-side JavaScript frameworks has made frontend software less of an example of good software design. At the end of the day, though, all design principles still apply, and frontend development deserves the same care and rigor as any other layer of software development.</p>
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        <li><a href="https://x.com/keeshux" title="Follow me on X" target="_blank"><i class="fab fa-x-twitter"></i>Follow</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/">Deploying to the App Store: The cost you didn't expect</a></li>
+            
+            <li><a href="/2025/03/the-path-to-an-obscure-crash/">The path to an obscure crash</a></li>
+            
+            <li><a href="/basic-blockchain-programming/wallet-software/">Wallet software</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/2025/03/rewriting-passepartout-for-v3/" title="Rewriting Passepartout for v3"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1742394494" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

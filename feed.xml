@@ -1,8 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-18T00:06:40+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Rewriting Passepartout for v3</title><link href="https://davidederosa.com/2025/03/rewriting-passepartout-for-v3/" rel="alternate" type="text/html" title="Rewriting Passepartout for v3" /><published>2025-03-11T00:00:00+01:00</published><updated>2025-03-11T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/rewriting-passepartout-for-v3</id><content type="html" xml:base="https://davidederosa.com/2025/03/rewriting-passepartout-for-v3/"><![CDATA[<p>For software to live a long life, it must grow together with our experience. If our skills improve at a faster pace than we maintain our software, its design will start to drift away from our standards and expectations. If we let the gap increase for too long, it will eventually be impossible to catch up, and we’ll end up hating our creations.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-03-19T15:28:14+01:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Frontend development is easy</title><link href="https://davidederosa.com/2025/03/frontend-development-is-easy/" rel="alternate" type="text/html" title="Frontend development is easy" /><published>2025-03-19T00:00:00+01:00</published><updated>2025-03-19T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/frontend-development-is-easy</id><content type="html" xml:base="https://davidederosa.com/2025/03/frontend-development-is-easy/"><![CDATA[<p>If you are a developer, you heard this statement at least once. While I believe that any comparison is pointless because <em>everything</em> is about programming, I’d like to add some complexities often neglected in frontend development, within the context of client/server software.</p>
+
+<h2 id="take-it-seriously">Take it seriously</h2>
+
+<p>Frontend is not a toy. What I find frequent in frontend developers is the <em>recklessness</em> of their choices. Backend developers tend to be more conservative because they are the ones receiving that phone call at night when a service is down, but this doesn’t mean that a frontend bug couldn’t have terrible consequences.</p>
+
+<p>Some people claim that backend is harder than frontend because of the “more serious” problems it has to solve:</p>
+
+<ul>
+  <li>Performance</li>
+  <li>Scalability</li>
+  <li>Robustness</li>
+  <li>Concurrency</li>
+</ul>
+
+<p>For some reason, those qualities are considered less of a priority for a well-written client, but they are equally important and sometimes <em>more</em> important. Users may spot slow, sluggish, power-hungry, buggy apps from a distance.</p>
+
+<p>It’s also true that if you skip native backend software like web servers or databases, which are a <em>big deal</em>, most developers out there are doing simple web services. Let’s be honest: nowadays, most of the above difficulties are not dealt with at the programming level, they are delegated to long-established SaaS platforms. This is great, but only because backend developers are –in my experience– generally more aware of how things happen under the hood.</p>
+
+<p>Sadly, frontend frameworks lead developers in the opposite direction: they make you forget the consequences of bad programming practices. They deviate from the importance of appropriate data structures and algorithms. They convince you that modern machines can endure any load. They overcomplicate code with tons of boilerplate. They waste your time moving your focus on things that nobody cares about e.g. “is that a view or a view model?”. They make you lose the foundations of programming.</p>
+
+<p>The result is a far west full of cowboys writing inefficient, dangerous code, but this is not a problem of the frontend itself.</p>
+
+<h2 id="never-rely-on-a-backend">Never rely on a backend</h2>
+
+<p>Not all apps are web-oriented, and <a href="https://passepartoutvpn.app">Passepartout</a> is an example of frontend development without a backend. Or, better said, frontend development with an uncontrolled backend.</p>
+
+<p>What does this imply? You take <em>direct responsibility</em> for your software. In a world where most apps interact with external APIs, it’s appalling how often frontend developers operate in the best-case scenario where everything works as expected.</p>
+
+<p>I wonder how many write code that, to name a few:</p>
+
+<ul>
+  <li>Expects malformed responses</li>
+  <li>Expects no responses</li>
+  <li>Handles timeouts</li>
+  <li>Works fully offline</li>
+  <li>Works headless (without views)</li>
+  <li>Migrates persistent data without data loss</li>
+</ul>
+
+<p>This is your responsibility, not the external backend’s, and you do that by giving your frontend <em>a local backend</em> with business logic to rely on. At that point, the presence of an external backend will be of marginal importance.</p>
+
+<h2 id="domain-before-ui">Domain before UI</h2>
+
+<p>Business logic is another concept that, historically, the backend is more used to than the frontend. I believe that backend developers don’t see the immediate effect of their work until late, whereas
+it takes a few minutes to create a meaningful UI. The instant gratification that comes from “it works!” may indefinitely delay the key decisions to take early in software development.</p>
+
+<p>Presentation is the highest layer in software design, yet in frontend development, the importance of UI is constantly glorified. No surprise, non-tech people and the industry in general judge software from the UI, but frontend developers should prioritize the <em>domain</em> like any other non-UI developer does.</p>
+
+<p>Any software should make sense regardless of having a UI, or a remote API, and frontend makes no exception: UI is no more than the visual representation of a domain. I believe that this simple rule also <em>dignifies</em> frontend apps for making them way more meaningful than “a couple of screens”.</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>How much time do you waste interpreting users’ feedback for the lack of better options? What if you are in a real hurry to solve a frontend problem in production? Clients live in the most unpredictable environments, yet the troubleshooting of their errors is often deferred to backend monitoring.</p>
+
+<p>Logging, proper error handling, profiling, and tracking tools are a superpower, but as long as the backend takes care of that, the frontend couldn’t care less. Drop the backend, and troubleshooting becomes a nightmare. Along the lines of “never rely on a backend”, do your homework and invest decent time in logging at least. Make it a requirement, even more than tests. It’s tedious, it’s time-consuming, but it truly pays off when SHTF.</p>
+
+<p>Logging is a fundamental trait of software robustness, and it takes a lot of practice to describe what code does through human-readable text in a way that will help your future self later. No software is exempt from the need for logging.</p>
+
+<h2 id="in-conclusion">In conclusion</h2>
+
+<p>Frontend is the face of our product, but UI is only a small part of it. Over the years, the overuse of client-side JavaScript frameworks has made frontend software less of an example of good software design. At the end of the day, though, all design principles still apply, and frontend development deserves the same care and rigor as any other layer of software development.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><summary type="html"><![CDATA[If you are a developer, you heard this statement at least once. While I believe that any comparison is pointless because everything is about programming, I’d like to add some complexities often neglected in frontend development, within the context of client/server software. Take it seriously Frontend is not a toy. What I find frequent in frontend developers is the recklessness of their choices. Backend developers tend to be more conservative because they are the ones receiving that phone call at night when a service is down, but this doesn’t mean that a frontend bug couldn’t have terrible consequences. Some people claim that backend is harder than frontend because of the “more serious” problems it has to solve: Performance Scalability Robustness Concurrency For some reason, those qualities are considered less of a priority for a well-written client, but they are equally important and sometimes more important. Users may spot slow, sluggish, power-hungry, buggy apps from a distance. It’s also true that if you skip native backend software like web servers or databases, which are a big deal, most developers out there are doing simple web services. Let’s be honest: nowadays, most of the above difficulties are not dealt with at the programming level, they are delegated to long-established SaaS platforms. This is great, but only because backend developers are –in my experience– generally more aware of how things happen under the hood. Sadly, frontend frameworks lead developers in the opposite direction: they make you forget the consequences of bad programming practices. They deviate from the importance of appropriate data structures and algorithms. They convince you that modern machines can endure any load. They overcomplicate code with tons of boilerplate. They waste your time moving your focus on things that nobody cares about e.g. “is that a view or a view model?”. They make you lose the foundations of programming. The result is a far west full of cowboys writing inefficient, dangerous code, but this is not a problem of the frontend itself. Never rely on a backend Not all apps are web-oriented, and Passepartout is an example of frontend development without a backend. Or, better said, frontend development with an uncontrolled backend. What does this imply? You take direct responsibility for your software. In a world where most apps interact with external APIs, it’s appalling how often frontend developers operate in the best-case scenario where everything works as expected. I wonder how many write code that, to name a few: Expects malformed responses Expects no responses Handles timeouts Works fully offline Works headless (without views) Migrates persistent data without data loss This is your responsibility, not the external backend’s, and you do that by giving your frontend a local backend with business logic to rely on. At that point, the presence of an external backend will be of marginal importance. Domain before UI Business logic is another concept that, historically, the backend is more used to than the frontend. I believe that backend developers don’t see the immediate effect of their work until late, whereas it takes a few minutes to create a meaningful UI. The instant gratification that comes from “it works!” may indefinitely delay the key decisions to take early in software development. Presentation is the highest layer in software design, yet in frontend development, the importance of UI is constantly glorified. No surprise, non-tech people and the industry in general judge software from the UI, but frontend developers should prioritize the domain like any other non-UI developer does. Any software should make sense regardless of having a UI, or a remote API, and frontend makes no exception: UI is no more than the visual representation of a domain. I believe that this simple rule also dignifies frontend apps for making them way more meaningful than “a couple of screens”. Troubleshooting How much time do you waste interpreting users’ feedback for the lack of better options? What if you are in a real hurry to solve a frontend problem in production? Clients live in the most unpredictable environments, yet the troubleshooting of their errors is often deferred to backend monitoring. Logging, proper error handling, profiling, and tracking tools are a superpower, but as long as the backend takes care of that, the frontend couldn’t care less. Drop the backend, and troubleshooting becomes a nightmare. Along the lines of “never rely on a backend”, do your homework and invest decent time in logging at least. Make it a requirement, even more than tests. It’s tedious, it’s time-consuming, but it truly pays off when SHTF. Logging is a fundamental trait of software robustness, and it takes a lot of practice to describe what code does through human-readable text in a way that will help your future self later. No software is exempt from the need for logging. In conclusion Frontend is the face of our product, but UI is only a small part of it. Over the years, the overuse of client-side JavaScript frameworks has made frontend software less of an example of good software design. At the end of the day, though, all design principles still apply, and frontend development deserves the same care and rigor as any other layer of software development.]]></summary></entry><entry><title type="html">Rewriting Passepartout for v3</title><link href="https://davidederosa.com/2025/03/rewriting-passepartout-for-v3/" rel="alternate" type="text/html" title="Rewriting Passepartout for v3" /><published>2025-03-11T00:00:00+01:00</published><updated>2025-03-11T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/rewriting-passepartout-for-v3</id><content type="html" xml:base="https://davidederosa.com/2025/03/rewriting-passepartout-for-v3/"><![CDATA[<p>For software to live a long life, it must grow together with our experience. If our skills improve at a faster pace than we maintain our software, its design will start to drift away from our standards and expectations. If we let the gap increase for too long, it will eventually be impossible to catch up, and we’ll end up hating our creations.</p>
 
 <h2 id="version-2-was-a-mess">Version 2 was a mess</h2>
 
-<p>Passepartout used to be two separate iOS and macOS apps, with all the complications that this implies. In 2022, I used Passepartout to learn <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> –I considered Flutter initially– and make v2 a partially multiplatform app. Partially because the macOS app was a hybrid <a href="https://developer.apple.com/mac-catalyst/">Catalyst/iPad</a> app, a terrible choice if I think of it today. I don’t even know why I did it, but whatever.</p>
+<p><a href="https://passepartoutvpn.app">Passepartout</a> used to be two separate iOS and macOS apps, with all the complications that this implies. In 2022, I used Passepartout to learn <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> –I considered Flutter initially– and make v2 a partially multiplatform app. Partially because the macOS app was a hybrid <a href="https://developer.apple.com/mac-catalyst/">Catalyst/iPad</a> app, a terrible choice if I think of it today. I don’t even know why I did it, but whatever.</p>
 
 <p>The conclusions I drew after v2:</p>
 
@@ -108,7 +169,7 @@
 
 <p>In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once.</p>
 
-<p>Stay in touch.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="ci/cd" /><summary type="html"><![CDATA[Passepartout has had a solid and unique CI/CD workflow for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV. I dare to say, automated releases are hardly (if ever) seen in open-source *OS apps. fastlane, created by Felix Krause, and GitHub Actions helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools. Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general. It’s just an app, right? Many people are confident that The Idea is the most valuable aspect of a product. Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with. The App Store requirements will beat you Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on. Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release. Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there. The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this. The fear of change Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might refrain from changing. Some relatable examples: If I change the UI, I will have to change the screenshots for X languages and Y platforms. If I alter some inner logic, I will get a rejection from Apple. If I introduce a regression, I will get bad reviews. Even if I have a hotfix in time, Apple will push my release back for silly reasons. It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure. Stagnation is the hidden cost of expensive deployment. You MUST learn to automate The key to keeping focus on the product is automation. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect. If you find yourself doing 3+ times the same task, automate it. If a task doesn’t need constant interaction, automate it. If a task is sensitive to human mistakes, automate it. Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers. Continuous integration is underused! After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about continuous integration. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot. In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once. Stay in touch.]]></summary></entry><entry><title type="html">The path to an obscure crash</title><link href="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/" rel="alternate" type="text/html" title="The path to an obscure crash" /><published>2025-03-02T00:00:00+01:00</published><updated>2025-03-02T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/the-path-to-an-obscure-crash</id><content type="html" xml:base="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/"><![CDATA[<p>One month after its first, painful release, Passepartout v3 is close to being stable.</p>
+<p>Stay in touch.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="ci/cd" /><summary type="html"><![CDATA[Passepartout has had a solid and unique CI/CD workflow for years, from Git commits straight to the App Store. For iPhone, iPad, Mac, and Apple TV. I dare to say, automated releases are hardly (if ever) seen in open-source *OS apps. fastlane, created by Felix Krause, and GitHub Actions helped me immensely with the fast turnaround of Passepartout releases. In the era of LLMs, you have no excuses to waste time for not using these incredible tools. Let me show why CI/CD is one of the most important and underestimated aspects of making indie software, or software in general. It’s just an app, right? Many people are confident that The Idea is the most valuable aspect of a product. Unfortunately, if you developed an app for the App Store, at any level of complexity, you know how exhausting the whole process is. There is so much more than “writing the code”, which is nothing trivial to start with. The App Store requirements will beat you Choosing the icons. Crafting the screenshots. Writing the metadata. Picking the categories. Localizations. The business model. In-app purchases. Sorting out the legal aspects. The App Review process. And so on. Wait, have I mentioned the codesigning process? Development, Ad-Hoc, Distribution. Multiple platforms. Debug and Release. Especially at the beginning, it’s overwhelming and discouraging. We’ve all been there. The 15-30% cut that Apple takes from your revenue is almost a marginal cost compared to all this. The fear of change Here’s a very subtle side-effect of the above: once your tedious setup finally works, you might refrain from changing. Some relatable examples: If I change the UI, I will have to change the screenshots for X languages and Y platforms. If I alter some inner logic, I will get a rejection from Apple. If I introduce a regression, I will get bad reviews. Even if I have a hotfix in time, Apple will push my release back for silly reasons. It goes without saying, this is an atrocious outcome for your product. If you work alone with no one to delegate these annoyances to, you risk falling into the ultimate recipe for failure. Stagnation is the hidden cost of expensive deployment. You MUST learn to automate The key to keeping focus on the product is automation. It’s boring at first, but in the long run, it’s your best bet against the inevitable frustration of using App Store Connect. If you find yourself doing 3+ times the same task, automate it. If a task doesn’t need constant interaction, automate it. If a task is sensitive to human mistakes, automate it. Observe your routine and you will soon realize how many hours you are wasting on dumb tasks, time you could have spent on useful features for your customers. Continuous integration is underused! After 15 years working with Apple devices, I can still confirm this trend: the vast majority of iOS developers don’t know jack about continuous integration. Which is crazy because fastlane has been around since 2014. GitHub Actions has a shorter history, but there have always been alternatives: Travis-CI, GitLab, Circle-CI, and whatnot. In the next posts, I’ll show you how I used fastlane and GitHub Actions to automate the release of Passepartout for iOS, macOS, and tvOS at once. Stay in touch.]]></summary></entry><entry><title type="html">The path to an obscure crash</title><link href="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/" rel="alternate" type="text/html" title="The path to an obscure crash" /><published>2025-03-02T00:00:00+01:00</published><updated>2025-03-02T00:00:00+01:00</updated><id>https://davidederosa.com/2025/03/the-path-to-an-obscure-crash</id><content type="html" xml:base="https://davidederosa.com/2025/03/the-path-to-an-obscure-crash/"><![CDATA[<p>One month after its first, painful release, <a href="https://passepartoutvpn.app">Passepartout</a> v3 is close to being stable.</p>
 
 <p>However, a couple of regressions were still haunting me.</p>
 
@@ -377,7 +438,206 @@ for (outpoint in utxos) {
 
 <p>And remember, all the code is on my <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub repository</a>.</p>
 
-<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry><entry><title type="html">The first transaction (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" rel="alternate" type="text/html" title="The first transaction (pt. 1)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/"><![CDATA[<p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
+<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry><entry><title type="html">The first transaction (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" rel="alternate" type="text/html" title="The first transaction (pt. 2)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/"><![CDATA[<p>The <a href="/basic-blockchain-programming/the-first-transaction-part-one/">first part</a> covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.</p>
+
+<!--more-->
+
+<h3 id="the-input-script">The input script</h3>
+
+<p>As a result of <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>, we built the signable message for our input. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c">ex-tx-sign.c</a> we’ll reuse the message as a starting point.</p>
+
+<h4 id="producing-the-signature">Producing the signature</h4>
+
+<p>Rather than the message itself, we’ll sign its hash256 digest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
+46 43 ed b3 53 fd a5 23
+8a 9a 3d 44 49 16 76 78
+8e fd d2 5d d6 48 55 ba
+</code></pre></div></div>
+
+<p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
+16 73 62 2a c8 a5 b0 45
+fc 3e a4 af 70 f7 27 f3
+f9 e9 2b dd 3a 1d dc 42
+</code></pre></div></div>
+
+<p>This is one DER signature I yielded (yours will differ):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
+ba 6a fb a1 2a 6f 27 de
+76 7d d4 d0 64 17 de f6
+65 bd 10 0b c6 8c 42 84
+5c 75 2a 8f 02 20 5e 86
+f5 e0 54 b2 c6 ca c5 d6
+63 66 4e 35 77 9f b0 34
+38 7c 07 84 8b c7 72 44
+42 ca cf 65 93 24 
+</code></pre></div></div>
+
+<h4 id="flag-and-assembly">Flag and assembly</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
+82 00 6e 93 98 a6 98 6e
+da 61 fe 91 67 4c 3a 10
+8c 39 94 75 bf 1e 73 8f
+19 df c2 db 11 db 1d 28
+</code></pre></div></div>
+
+<p>we’re finally able to build our P2PKH input script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
+2a ba 6a fb a1 2a 6f 27
+de 76 7d d4 d0 64 17 de
+f6 65 bd 10 0b c6 8c 42
+84 5c 75 2a 8f 02 20 5e
+86 f5 e0 54 b2 c6 ca c5
+d6 63 66 4e 35 77 9f b0
+34 38 7c 07 84 8b c7 72
+44 42 ca cf 65 93 24 01
+
+21 02 82 00 6e 93 98 a6
+98 6e da 61 fe 91 67 4c
+3a 10 8c 39 94 75 bf 1e
+73 8f 19 df c2 db 11 db
+1d 28
+</code></pre></div></div>
+
+<p>Yes, the signing process is possibly the most annoying and error-prone part of our work.</p>
+
+<h3 id="packing-the-transaction">Packing the transaction</h3>
+
+<p>We’re all set to pack the transaction from our inputs and outputs. Let’s look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a>.</p>
+
+<h4 id="inputs-and-outputs">Inputs and outputs</h4>
+
+<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
+
+<p>We use the macro to create our input, whereas the outputs code is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a> as is:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
+        <span class="s">"30440220111a482aba6afba12a6f27de767dd4d06..."</span><span class="p">,</span>
+        <span class="s">"0282006e9398a6986eda61fe91674c3a108c39947..."</span><span class="p">,</span>
+        <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
+
+<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
+        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span>
+<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
+        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
+
+<h4 id="final-structure">Final structure</h4>
+
+<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins</span><span class="p">;</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">rawtx_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
+<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
+01 00 00 00
+
+/* number of inputs (varint) */
+01
+
+/* UTXO txid (hash256, little-endian) */
+f3 a2 7f 48 5f 98 33 c8
+31 8c 49 04 03 30 7f ef
+13 97 12 1b 5d d8 fe 70
+77 72 36 e7 37 1c 4e f3
+
+/* UTXO index (32-bit) */
+00 00 00 00
+
+/* input script (varint + data) */
+6a 47 30 44 02 20 11 1a
+48 2a ba 6a fb a1 2a 6f
+27 de 76 7d d4 d0 64 17
+de f6 65 bd 10 0b c6 8c
+42 84 5c 75 2a 8f 02 20
+5e 86 f5 e0 54 b2 c6 ca
+c5 d6 63 66 4e 35 77 9f
+b0 34 38 7c 07 84 8b c7
+72 44 42 ca cf 65 93 24
+01 21 02 82 00 6e 93 98
+a6 98 6e da 61 fe 91 67
+4c 3a 10 8c 39 94 75 bf
+1e 73 8f 19 df c2 db 11
+db 1d 28 
+
+/* UTXO sequence */
+ff ff ff ff
+
+/* number of outputs (varint) */
+02
+
+/* output value (64-bit) */
+e0 fe 7e 01 00 00 00 00
+
+/* output script (varint + data) */
+19 76 a9 14 18 ba 14 b3
+68 22 95 cb 05 23 0e 31
+fe cb 00 08 92 40 66 08
+88 ac
+
+/* change output value (64-bit) */
+e0 84 b0 03 00 00 00 00
+
+/* change output script (varint + data) */
+19 76 a9 14 6b f1 9e 55
+f9 4d 98 6b 46 40 c1 54
+d8 64 69 93 41 91 95 11
+88 ac
+
+/* locktime (32-bit) */
+00 00 00 00
+</code></pre></div></div>
+
+<p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
+2d d9 c8 97 39 5c e5 1f
+dd 35 e6 35 9e dd 28 55
+c6 0f f8 23 d8 d6 57 d1 
+</code></pre></div></div>
+
+<h4 id="publishing-to-the-network">Publishing to the network</h4>
+
+<p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
+
+<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
+
+<p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
+
+<p><img src="/s/f/basic-blockchain-programming/tx-push-error.png" alt="Transaction push error" /></p>
+
+<p>Don’t worry, that’s because I already published it by myself. See how it looks like <a href="https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1">on a block explorer</a>.</p>
+
+<h3 id="get-the-code">Get the code!</h3>
+
+<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
+
+<h3 id="next-block-in-chain">Next block in chain?</h3>
+
+<p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
+
+<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry><entry><title type="html">The first transaction (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" rel="alternate" type="text/html" title="The first transaction (pt. 1)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/"><![CDATA[<p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
 
 <!--more-->
 
@@ -630,206 +890,7 @@ d8 64 69 93 41 91 95 11
 
 <p>You learned that the first step in transaction building is obtaining the UTXO set of a keypair. Outputs define the value we need to gather. Transaction output value must not exceed gathered UTXO value. Change outputs solve the indivisibility problem of UTXOs. UTXO scripts appear in the signable message of their corresponding inputs.</p>
 
-<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The core business of the Bitcoin blockchain technology is definitely building transactions. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.]]></summary></entry><entry><title type="html">The first transaction (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" rel="alternate" type="text/html" title="The first transaction (pt. 2)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/"><![CDATA[<p>The <a href="/basic-blockchain-programming/the-first-transaction-part-one/">first part</a> covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.</p>
-
-<!--more-->
-
-<h3 id="the-input-script">The input script</h3>
-
-<p>As a result of <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>, we built the signable message for our input. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c">ex-tx-sign.c</a> we’ll reuse the message as a starting point.</p>
-
-<h4 id="producing-the-signature">Producing the signature</h4>
-
-<p>Rather than the message itself, we’ll sign its hash256 digest:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
-46 43 ed b3 53 fd a5 23
-8a 9a 3d 44 49 16 76 78
-8e fd d2 5d d6 48 55 ba
-</code></pre></div></div>
-
-<p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-</code></pre></div></div>
-
-<p>This is one DER signature I yielded (yours will differ):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
-ba 6a fb a1 2a 6f 27 de
-76 7d d4 d0 64 17 de f6
-65 bd 10 0b c6 8c 42 84
-5c 75 2a 8f 02 20 5e 86
-f5 e0 54 b2 c6 ca c5 d6
-63 66 4e 35 77 9f b0 34
-38 7c 07 84 8b c7 72 44
-42 ca cf 65 93 24 
-</code></pre></div></div>
-
-<h4 id="flag-and-assembly">Flag and assembly</h4>
-
-<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
-82 00 6e 93 98 a6 98 6e
-da 61 fe 91 67 4c 3a 10
-8c 39 94 75 bf 1e 73 8f
-19 df c2 db 11 db 1d 28
-</code></pre></div></div>
-
-<p>we’re finally able to build our P2PKH input script:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
-2a ba 6a fb a1 2a 6f 27
-de 76 7d d4 d0 64 17 de
-f6 65 bd 10 0b c6 8c 42
-84 5c 75 2a 8f 02 20 5e
-86 f5 e0 54 b2 c6 ca c5
-d6 63 66 4e 35 77 9f b0
-34 38 7c 07 84 8b c7 72
-44 42 ca cf 65 93 24 01
-
-21 02 82 00 6e 93 98 a6
-98 6e da 61 fe 91 67 4c
-3a 10 8c 39 94 75 bf 1e
-73 8f 19 df c2 db 11 db
-1d 28
-</code></pre></div></div>
-
-<p>Yes, the signing process is possibly the most annoying and error-prone part of our work.</p>
-
-<h3 id="packing-the-transaction">Packing the transaction</h3>
-
-<p>We’re all set to pack the transaction from our inputs and outputs. Let’s look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a>.</p>
-
-<h4 id="inputs-and-outputs">Inputs and outputs</h4>
-
-<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
-
-<p>We use the macro to create our input, whereas the outputs code is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a> as is:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"30440220111a482aba6afba12a6f27de767dd4d06..."</span><span class="p">,</span>
-        <span class="s">"0282006e9398a6986eda61fe91674c3a108c39947..."</span><span class="p">,</span>
-        <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
-
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
-        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span>
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
-        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
-
-<h4 id="final-structure">Final structure</h4>
-
-<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">rawtx_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
-<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
-
-<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
-01 00 00 00
-
-/* number of inputs (varint) */
-01
-
-/* UTXO txid (hash256, little-endian) */
-f3 a2 7f 48 5f 98 33 c8
-31 8c 49 04 03 30 7f ef
-13 97 12 1b 5d d8 fe 70
-77 72 36 e7 37 1c 4e f3
-
-/* UTXO index (32-bit) */
-00 00 00 00
-
-/* input script (varint + data) */
-6a 47 30 44 02 20 11 1a
-48 2a ba 6a fb a1 2a 6f
-27 de 76 7d d4 d0 64 17
-de f6 65 bd 10 0b c6 8c
-42 84 5c 75 2a 8f 02 20
-5e 86 f5 e0 54 b2 c6 ca
-c5 d6 63 66 4e 35 77 9f
-b0 34 38 7c 07 84 8b c7
-72 44 42 ca cf 65 93 24
-01 21 02 82 00 6e 93 98
-a6 98 6e da 61 fe 91 67
-4c 3a 10 8c 39 94 75 bf
-1e 73 8f 19 df c2 db 11
-db 1d 28 
-
-/* UTXO sequence */
-ff ff ff ff
-
-/* number of outputs (varint) */
-02
-
-/* output value (64-bit) */
-e0 fe 7e 01 00 00 00 00
-
-/* output script (varint + data) */
-19 76 a9 14 18 ba 14 b3
-68 22 95 cb 05 23 0e 31
-fe cb 00 08 92 40 66 08
-88 ac
-
-/* change output value (64-bit) */
-e0 84 b0 03 00 00 00 00
-
-/* change output script (varint + data) */
-19 76 a9 14 6b f1 9e 55
-f9 4d 98 6b 46 40 c1 54
-d8 64 69 93 41 91 95 11
-88 ac
-
-/* locktime (32-bit) */
-00 00 00 00
-</code></pre></div></div>
-
-<p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
-2d d9 c8 97 39 5c e5 1f
-dd 35 e6 35 9e dd 28 55
-c6 0f f8 23 d8 d6 57 d1 
-</code></pre></div></div>
-
-<h4 id="publishing-to-the-network">Publishing to the network</h4>
-
-<p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
-
-<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
-
-<p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
-
-<p><img src="/s/f/basic-blockchain-programming/tx-push-error.png" alt="Transaction push error" /></p>
-
-<p>Don’t worry, that’s because I already published it by myself. See how it looks like <a href="https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1">on a block explorer</a>.</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
-
-<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry><entry><title type="html">Inside transactions</title><link href="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" rel="alternate" type="text/html" title="Inside transactions" /><published>2015-06-01T00:00:00+02:00</published><updated>2015-06-01T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/inside-transactions</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/inside-transactions/"><![CDATA[<p>With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.</p>
+<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The core business of the Bitcoin blockchain technology is definitely building transactions. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.]]></summary></entry><entry><title type="html">Inside transactions</title><link href="https://davidederosa.com/basic-blockchain-programming/inside-transactions/" rel="alternate" type="text/html" title="Inside transactions" /><published>2015-06-01T00:00:00+02:00</published><updated>2015-06-01T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/inside-transactions</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/inside-transactions/"><![CDATA[<p>With all things in place, we’re ready to examine what Bitcoin transactions are made of. All the loose ends about scripts will be tied up, plus you’ll practice some C code to accomplish our main mission, that is writing a raw transaction by hand.</p>
 
 <!--more-->
 
@@ -1240,269 +1301,7 @@ OP_CHECKSIG
 
 <p>You learned that only a standard subset of all possible scripts are accepted by the Bitcoin network. P2PKH scripts are the most common standard scripts you’ll find in the blockchain. Input and output scripts together form validation scripts. Miners execute validation scripts to either accept or reject a transaction.</p>
 
-<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 1)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/"><![CDATA[<p><em>Script</em> is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!</p>
-
-<!--more-->
-
-<h3 id="meet-machine-code">Meet machine code</h3>
-
-<p>A script is a computer program, and as a programmer you certainly know what a program is. A program takes an input, executes for some time, then returns an output. Programming languages are our tool to write programs that computers will understand, because most languages come with <em>compilers</em> that map human-friendly code to CPU operations, also known as <em>opcodes</em>.</p>
-
-<h4 id="opcodes">Opcodes</h4>
-
-<p>Opcodes include memory manipulation, math, loops, function calls and everything you find in procedural programming languages like C. They make up the spoken language of a CPU, the so-called <em>machine code</em>. Since bytes are computers’ preferred idiom, no wonder opcodes are bytes as well. As a result, machine code is a string of bytes representing operations to be executed on a CPU.</p>
-
-<p>Consider this piece of code in a high-level programming language like C:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">x</span> <span class="o">=</span> <span class="mh">0x23</span><span class="p">;</span>
-<span class="n">x</span> <span class="o">+=</span> <span class="mh">0x4b</span><span class="p">;</span>
-<span class="n">x</span> <span class="o">*=</span> <span class="mh">0x1e</span><span class="p">;</span></code></pre></figure>
-
-<p>Now suppose you want to compile and run this code on a hypothetical little-endian CPU with a single cell of 16-bit memory (a <em>register</em>) and the following set of opcodes:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-      <th>V</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SET(V)</td>
-      <td><code class="language-plaintext highlighter-rouge">ab</code> V</td>
-      <td>16-bit</td>
-    </tr>
-    <tr>
-      <td>ADD(V)</td>
-      <td><code class="language-plaintext highlighter-rouge">ac</code> V</td>
-      <td>16-bit</td>
-    </tr>
-    <tr>
-      <td>MUL(V)</td>
-      <td><code class="language-plaintext highlighter-rouge">ad</code> V</td>
-      <td>16-bit</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>The opcodes explained:</p>
-
-<ul>
-  <li>SET loads the register with the value V.</li>
-  <li>ADD adds V to the register.</li>
-  <li>MUL multiplies the register by V.</li>
-</ul>
-
-<p>A compiler for such a CPU would generate these 9 bytes of machine code:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ab 23 00 ac 4b 00 ad 1e 00
-</code></pre></div></div>
-
-<p>Here’s how it’s interpreted:</p>
-
-<ol>
-  <li>Load the register with the value <code class="language-plaintext highlighter-rouge">23</code>.</li>
-  <li>Add <code class="language-plaintext highlighter-rouge">4b</code> to the register, that is now <code class="language-plaintext highlighter-rouge">23 + 4b = 6e</code>.</li>
-  <li>Multiply the register by <code class="language-plaintext highlighter-rouge">1e</code>, yielding <code class="language-plaintext highlighter-rouge">6e * 1e = ce4</code>.</li>
-</ol>
-
-<p>The register holds the final result, that is <code class="language-plaintext highlighter-rouge">ce4</code>.</p>
-
-<h4 id="stack-memory">Stack memory</h4>
-
-<p>Most of the time, we need to track complex program states with <em>variables</em>. In C, depending on whether a variable is allocated statically or with <code class="language-plaintext highlighter-rouge">malloc</code>, it’s stored in a differently arranged memory. While <code class="language-plaintext highlighter-rouge">malloc</code>-ed data is accessed like an element in a very big array, static variables are pushed to and popped from a pile of items called <em>stack</em>. A stack operates in a LIFO fashion (Last In First Out), meaning that the last item you push will be the first to pop out.</p>
-
-<p>Consider this dummy function:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="cm">/* 1 */</span>
-
-    <span class="cm">/* 2 */</span>
-    <span class="kt">uint8_t</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">0x12</span><span class="p">;</span>
-    <span class="kt">uint16_t</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">0xa4</span><span class="p">;</span>
-    <span class="kt">uint32_t</span> <span class="n">c</span> <span class="o">=</span> <span class="mh">0x2a5e7</span><span class="p">;</span>
-
-    <span class="cm">/* 3 */</span>
-    <span class="kt">uint32_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
-
-    <span class="k">return</span> <span class="n">d</span><span class="p">;</span>
-
-    <span class="cm">/* 4 */</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>The stack is initially empty (1):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-</code></pre></div></div>
-
-<p>Then, three variables are pushed (2):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12]
-[12, a4 00]
-[12, a4 00, e7 a5 02 00]
-</code></pre></div></div>
-
-<p>A fourth variable is assigned the sum of the others and pushed onto the stack (3):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00, 9d a6 02 00]
-</code></pre></div></div>
-
-<p>The tip of the stack is the return value and is sent back to the function caller by other means. Each temporary stack variable is popped at the end of the block (4), because the push/pop operations must be balanced so that the stack always goes back to its initial state:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, a4 00, e7 a5 02 00]
-[12, a4 00]
-[12]
-[]
-</code></pre></div></div>
-
-<h3 id="the-script-machine-code">The Script machine code</h3>
-
-<p>Likewise, Bitcoin Core has its own “virtual processor” to interpret the <em>Script</em> machine code. Script features a rich set of opcodes, yet very limited compared to full-fledged CPUs like Intel’s, to name one. Some key facts about Script:</p>
-
-<ol>
-  <li>Script does not loop.</li>
-  <li>Script always terminates.</li>
-  <li>Script memory access is stack-based.</li>
-</ol>
-
-<p>In fact, point 1 implies 2. Point 3 means there’s no such thing like named variables in Script, you just do your calculations on a stack. Typically, the stack items you push become the operands of subsequent opcodes. At the end of the script, the top stack item is the return value.</p>
-
-<p>Before presenting real world scripts, let’s first enumerate some opcodes. For a full set please check out the official <a href="https://en.bitcoin.it/wiki/Script">wiki page</a>.</p>
-
-<h4 id="constants">Constants</h4>
-
-<p>The following opcodes push the numbers 0-16 onto the stack:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_0</code></td>
-      <td><code class="language-plaintext highlighter-rouge">00</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_1</code>-<code class="language-plaintext highlighter-rouge">OP_16</code></td>
-      <td><code class="language-plaintext highlighter-rouge">51</code>-<code class="language-plaintext highlighter-rouge">60</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>By convention, <code class="language-plaintext highlighter-rouge">OP_0</code> and <code class="language-plaintext highlighter-rouge">OP_1</code> also express the boolean <code class="language-plaintext highlighter-rouge">OP_FALSE</code> (zero) and <code class="language-plaintext highlighter-rouge">OP_TRUE</code> (non-zero).</p>
-
-<p>Example:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>54 57 00 60
-</code></pre></div></div>
-
-<p>or:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OP_4 OP_7 OP_0 OP_16
-</code></pre></div></div>
-
-<p>Here’s how the stack evolves:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[4]
-[4, 7]
-[4, 7, 0]
-[4, 7, 0, 16]
-</code></pre></div></div>
-
-<p>The return value is the top item, so the script returns 16. Quite pointless, I know, but it’s a start.</p>
-
-<h4 id="push-data">Push data</h4>
-
-<p>Several opcodes are provided to push custom data. They differ in the size of the operands:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-      <th>L (length)</th>
-      <th>D (data)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4c</code> L D</td>
-      <td>8-bit</td>
-      <td>L bytes</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA2</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4d</code> L D</td>
-      <td>16-bit</td>
-      <td>L bytes</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">OP_PUSHDATA4</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4e</code> L D</td>
-      <td>32-bit</td>
-      <td>L bytes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>For example, if your data length can be stored as a 8-bit number, then <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> is your best choice. Look at this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4c 14 11 06 03 55 04 8a
-0c 70 3e 63 2e 31 26 30
-24 06 6c 95 20 30
-</code></pre></div></div>
-
-<p>The first byte is clearly a <code class="language-plaintext highlighter-rouge">OP_PUSHDATA1</code> opcode, followed by a 1-byte length of <code class="language-plaintext highlighter-rouge">14</code> that is decimal 20. So, 20 bytes of data are coming next. The effect of this instruction is that such data is pushed onto the stack:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[11 06 03 55 04 8a 0c 70
- 3e 63 2e 31 26 30 24 06
- 6c 95 20 30]
-</code></pre></div></div>
-
-<p>Indeed –like with <a href="/basic-blockchain-programming/serialization-part-two/">varints</a>–, there’s a special encoding for very short data. If an opcode lies between <code class="language-plaintext highlighter-rouge">01</code> and <code class="language-plaintext highlighter-rouge">4b</code> (included), it’s a push data operation where the opcode itself is the length in bytes:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>opcode</th>
-      <th>encoding</th>
-      <th>L (length)</th>
-      <th>D (data)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>L</td>
-      <td>L D</td>
-      <td><code class="language-plaintext highlighter-rouge">01</code>-<code class="language-plaintext highlighter-rouge">4b</code></td>
-      <td>L bytes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>For example, in the string:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>07 8f 49 b2 e2 ec 7c 44
-</code></pre></div></div>
-
-<p>the opcode <code class="language-plaintext highlighter-rouge">07</code> means that 7 bytes of data are to be pushed:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[8f 49 b2 e2 ec 7c 44]
-</code></pre></div></div>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned a little bit about machine code and opcodes. Script is a simple low-level language understood by miners software. Script state is tracked with stack memory.</p>
-
-<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/">next article</a> I’ll show you opcodes that do something more than just pushing data. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="assembly" /><category term="opcode" /><category term="stack" /><summary type="html"><![CDATA[Script is a simple scripting language, as well as the core of Bitcoin transaction processing. If you ever wrote assembly code you’ll find this article very easy to understand –probably entertaining–, otherwise it might well be one of the most challenging. Keep focused!]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
+<p>In the <a href="/basic-blockchain-programming/inside-transactions/">next article</a> we’ll finally start analyzing <em>transactions</em>. You’re about to make sense of the Bitcoin magic. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transactions" /><category term="script" /><category term="p2pkh" /><summary type="html"><![CDATA[I told you what a script is, but not exactly what it’s needed for. By the way, in the article about transaction processing I gave you an overview of how bitcoins move around by introducing transaction inputs and outputs. We’re about to connect the dots.]]></summary></entry><entry><title type="html">The Bitcoin Script language (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/" rel="alternate" type="text/html" title="The Bitcoin Script language (pt. 2)" /><published>2015-05-25T00:00:00+02:00</published><updated>2015-05-25T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-two/"><![CDATA[<p>In the <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/">first part</a> I introduced the Script opcodes for constants and push data. We’re slowly approaching the scripts you’ll include in real transactions. Specifically, we’re bound to deal with hashes and ECDSA signatures at some point, that’s why Script has even opcodes for crypto functions.</p>
 
 <!--more-->
 
