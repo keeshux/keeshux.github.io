@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Cross-platform Swift on Windows: Part 1" />
 <meta property="og:title" content="Cross-platform Swift on Windows: Part 1" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1744580129" />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1744580564" />
 <meta property="og:url" content="https://davidederosa.com/2025/04/cross-platform-swift-on-windows-part-1/" />
 
 <!-- Twitter -->
@@ -35,7 +35,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Cross-platform Swift on Windows: Part 1" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1744580129" />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1744580564" />
 <meta name="twitter:url" content="https://davidederosa.com/2025/04/cross-platform-swift-on-windows-part-1/" />
 
 <link rel="canonical" href="https://davidederosa.com/2025/04/cross-platform-swift-on-windows-part-1/" />
@@ -44,14 +44,14 @@
 <link rel="next" href="/2025/03/who-cares-about-performance/" title="Who cares about performance?" />
 
 
-<link rel="stylesheet" href="/s/main.css?1744580129" />
-<link rel="stylesheet" href="/s/main-mobile.css?1744580129" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1744580129" />
+<link rel="stylesheet" href="/s/main.css?1744580564" />
+<link rel="stylesheet" href="/s/main-mobile.css?1744580564" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1744580564" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1744580129" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1744580129" />
+<link rel="shortcut icon" href="/s/favicon.ico?1744580564" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1744580564" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -117,7 +117,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <p>When I made Partout from the ashes of <a href="https://github.com/passepartoutvpn/tunnelkit">TunnelKit</a>, I put special care into making the library core as lean as possible. No dependencies, no OS implementations, pure Swift. This mantra paid off very well in the long run because you realize how basic the Swift runtime is when you leave the comfortable macOS environment: a stripped version of the Foundation and Dispatch frameworks, not even Combine, and little more. I promise, this will hit you hard the first time.</p>
 
-<p>I was equally shocked, yet positively, when <code class="language-plaintext highlighter-rouge">async</code> methods worked out of the box. This is not about Swift, though, rather about Windows. The level of discomfort I feel when I use Windows puts me in a constant disbelief when things, eventually, work as intended. As in “this is Windows, nothing can work without Visual Studio”.</p>
+<p>I was equally shocked, yet positively, when <code class="language-plaintext highlighter-rouge">async</code> methods worked out of the box. This is not about Swift, though, rather about Windows. The level of discomfort I feel when I use Windows puts me in a constant disbelief when things, eventually, work as intended. As in “this is Windows, nothing can work without Visual Studio”. Fun fact: Swift requires the Visual Studio Build Tools.</p>
 
 <p><strong>Challenge #1: Only depend on Foundation.</strong></p>
 
@@ -135,7 +135,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <p>Assuming that this is the case, you should treat ObjC like any other “foreign” language, which is with an external build tool. Once you build the ObjC code as a static library (e.g. with a <code class="language-plaintext highlighter-rouge">Makefile</code>), you have the option to add it as a binary target to the SwiftPM manifest. The same way you would do with Rust or Go, to name some. Unfortunately, this degrades the otherwise neat automation of SwiftPM.</p>
 
-<p>Currently, I’m exploring a solution to reuse my ObjC code as is with <a href="https://www.mingw-w64.org/">MinGW64</a> and <a href="https://www.gnustep.org/">GNUstep</a>, as you can see in the screenshot below. So far, so good, though I’m still concerned with how MSYS2/MinGW64 handles the binary architectures.</p>
+<p>Currently, I’m exploring a solution to reuse my ObjC code as is with <a href="https://www.mingw-w64.org/">MinGW64</a> and <a href="https://www.gnustep.org/">GNUstep</a>, as you can see in the screenshot below (forgive my swearing after hours of frustrating attempts…). So far, so good, though I’m still concerned with how MSYS2/MinGW64 handles the binary architectures.</p>
 
 <p><strong>Challenge #2: Prefer C over ObjC, if you can.</strong></p>
 
@@ -225,7 +225,7 @@ gtag('config', 'G-DWPG2HZ9FS');
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1744580129" async="async"></script>
+        <script src="/s/main.js?1744580564" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
