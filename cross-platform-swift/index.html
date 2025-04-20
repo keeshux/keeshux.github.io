@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Cross-platform Swift: Introduction</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Cross-platform Swift: Introduction" />
+<meta property="og:title" content="Cross-platform Swift: Introduction" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/swift/swift.png?1745107279" />
+<meta property="og:url" content="https://davidederosa.com/cross-platform-swift/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Cross-platform Swift: Introduction" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/swift/swift.png?1745107279" />
+<meta name="twitter:url" content="https://davidederosa.com/cross-platform-swift/" />
+
+<link rel="canonical" href="https://davidederosa.com/cross-platform-swift/" />
+
+
+<link rel="next" href="/2025/03/who-cares-about-performance/" title="Who cares about performance?" />
+
+
+<link rel="stylesheet" href="/s/main.css?1745107279" />
+<link rel="stylesheet" href="/s/main-mobile.css?1745107279" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1745107279" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1745107279" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745107279" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/cross-platform-swift/">
+        
+        <img src="/s/f/swift/swift-150.png" alt="Cross-platform Swift: Introduction" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Apr 13, 2025</span>
+            <h2 itemprop="name">
+                
+                Cross-platform Swift: Introduction
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">series</a>:
+    
+    &lt; prev
+    
+    |
+    
+    next &gt;
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+<header class="post-series-toc">
+    
+    <h3>Table of contents (ongoing)</h3>
+    
+    <ol>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li><a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">Cross-platform Swift: Introduction</a></li>
+        
+        
+    </ol>
+</header>
+
+
+        <p>As <a href="https://github.com/passepartoutvpn/partout">Partout</a>, my Swift framework for VPN and network configuration on Apple devices, has slowly gained shape, I set foot in an ambitious and novel, pioneering goal: <strong>making Partout a truly multiplatform Swift library</strong>.</p>
+
+<p>It’s challenging, but it’s fun, and it’s the way to port <a href="https://passepartoutvpn.app">Passepartout</a> beyond the Apple platforms. So, here, I will progressively share my discoveries and encourage other people to give Swift a chance as a portable language. The language itself is fantastic. Using it outside Xcode? Not as much, but I’ve observed the trends over the years, and overall, things are getting better.</p>
+
+<p>This <a href="https://developer.apple.com/videos/play/wwdc2024/10197/">video from WWDC 2024</a> where the speaker uses Neovim + CMake made me reflect on the increasing efforts that Apple is making to push Swift into the outer world. Endorsing Neovim to develop Swift is an incredible marketing move to expand on Linux primarily, but I don’t mind it because both Neovim and Swift are amazing products.</p>
+
+<p>Bear with me, this is a <em>very experimental</em> work in progress, that’s why I’d rather start with architectural concepts, and delve into technical details only after confirming that my approaches do well in practice.</p>
+
+<h2 id="leaving-the-apple-toolchain">Leaving the Apple toolchain</h2>
+
+<p>I picked Windows as the starting point of my journey. Windows is as far as one can go with Swift, so if my library works there, porting it to Android and Linux should be easier. In this post I’ll outline some fundamental principles to keep in mind before touching any code.</p>
+
+<p><em>Downloading Swift with WinGet</em>
+<img src="/s/posts/2025-04-13-01.png" alt="Downloading Swift with WinGet" /></p>
+
+<h3 id="1-start-with-a-lean-core">1. Start with a lean core</h3>
+
+<p>When I made Partout from the ashes of <a href="https://github.com/passepartoutvpn/tunnelkit">TunnelKit</a>, I put special care into making the library core as lean as possible. No dependencies, no OS implementations, pure Swift. This mantra paid off very well in the long run because you realize how basic the Swift runtime is when you leave the comfortable macOS environment: a stripped version of the Foundation and Dispatch frameworks, not even Combine, and little more. I promise, this will hit you hard the first time.</p>
+
+<p>I was equally shocked, yet positively, when <code class="language-plaintext highlighter-rouge">async</code> methods worked out of the box. This is not about Swift, though, rather about Windows. The level of discomfort I feel when I use Windows puts me in a constant disbelief when things, eventually, work as intended. As in “this is Windows, nothing can work without Visual Studio”. Fun fact: Swift requires the Visual Studio Build Tools.</p>
+
+<p><strong>Challenge #1: Only depend on Foundation.</strong></p>
+
+<h3 id="2-objc-no-thanks">2. ObjC? No, thanks</h3>
+
+<p>Another painful wake-up call: the Swift toolchain does not support ObjC targets in SwiftPM on non-Apple. There are three scenarios:</p>
+
+<ol>
+  <li>If you depend on 3rd party Swift packages based on ObjC code, move on to something else. Most of the time there will be better options.</li>
+  <li>If you need to write low-level code with Swift, prefer some well-crafted C routines. You’ll thank yourself later.</li>
+  <li>If you (like me) have legacy ObjC code –a good amount of my OpenVPN implementation is written in ObjC for performance reasons–, hear me out: it’s going to cause you trouble.</li>
+</ol>
+
+<p>As far as I can tell, there are no easy shortcuts to resolve point 3. Keep in mind that the first challenge still applies: pray that your ObjC codebase only depends on Foundation or libraries that <em>you</em> bundle –thus excluding Apple frameworks, or you’re basically screwed.</p>
+
+<p>Assuming that this is the case, you should treat ObjC like any other “foreign” language, which is with an external build tool. Once you build the ObjC code as a static library (e.g. with a <code class="language-plaintext highlighter-rouge">Makefile</code>), you have the option to add it as a binary target to the SwiftPM manifest. The same way you would do with Rust or Go, to name some. Unfortunately, this degrades the otherwise neat automation of SwiftPM.</p>
+
+<p>Currently, I’m exploring a solution to reuse my ObjC code as is with <a href="https://www.mingw-w64.org/">MinGW64</a> and <a href="https://www.gnustep.org/">GNUstep</a>, as you can see in the screenshot below (forgive my swearing after hours of frustrating attempts…). So far, so good, though I’m still concerned with how MSYS2/MinGW64 handles the binary architectures.</p>
+
+<p><strong>Challenge #2: Prefer C over ObjC, if you can.</strong></p>
+
+<p><em>Compiling ObjC with MinGW + GNUstep</em>
+<img src="/s/posts/2025-04-13-02.png" alt="Compiling ObjC with MinGW + GNUstep" /></p>
+
+<h3 id="3-implementations">3. Implementations</h3>
+
+<p>I still want to use the keychain and Network Extension on Apple systems. A lean core will inevitably lead to taking Swift targets depending on them out of the core and be imported conditionally. These are the “leaves” of the library, the ones where we have the most freedom, even on the programming language.</p>
+
+<p>When it comes to Partout, this is of the utmost importance because it involves how the VPN functionality is implemented on each operating system. While this is clear to me on Apple (Network Extension), for Windows, I’m looking into the <a href="https://github.com/microsoft/UwpVpnPluginSample">Universal Windows Platform (UWP)</a>. As proof of the freedom we have in this area, the VPN code for Partout on Windows will likely be C#.</p>
+
+<p><strong>Challenge #3: Isolate implementation targets.</strong></p>
+
+<h3 id="4-c-is-the-common-denominator">4. C is the common denominator</h3>
+
+<p>Sad to say, but it doesn’t really matter how cool your Swift library is (replace with any other language). The well-thought classes, the scalable design, the smart patterns, the tricky use of OOP: forget about any of those by the time you expose the library to a different programming language. Nobody cares, really, because interoperability is done in C.</p>
+
+<p>Have you wondered how to expose a Swift protocol with an associatedtype to a Python library, an object with a lifetime, or even just a String? Well, the answer is straightforward: you don’t do that. Instead, you expose C wrappers from Swift with <a href="https://forums.swift.org/t/formalizing-cdecl/40677">@_cdecl</a>, which despite the leading underscore seems to be widely accepted as a pseudostable feature. It goes without saying, you will be limited to the standard C types.</p>
+
+<p>This will be a late stage of the refactoring, today I’m not worried. A solid approach to challenge #1 would definitely make this easier.</p>
+
+<p><strong>Challenge #4: Make your public interface a C API.</strong></p>
+
+<h2 id="bottom-line">Bottom line</h2>
+
+<p>I’m still in the early stages of bringing Swift to Windows, Android, and Linux with Partout, but the path is starting to reveal itself. Keep your core lean and pure Swift, avoid Objective-C where you can, isolate OS-specific implementations, and remember that C is the common ground across platforms. It’s experimental, sometimes frustrating, but genuinely fun—and worth sharing as it unfolds. Expect more on this throughout 2025.</p>
+
+        
+    </div>
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="/feed.xml" title="Follow the blog" target="_blank"><i class="fa-solid fa-rss"></i>Subscribe</a></li>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/2025/03/frontend-development-is-easy/">Frontend development is easy</a></li>
+            
+            <li><a href="/2025/03/rewriting-passepartout-for-v3/">Rewriting Passepartout for v3</a></li>
+            
+            <li><a href="/2025/03/deploying-to-the-app-store-the-cost-you-didn-t-expect/">Deploying to the App Store: The cost you didn't expect</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/2025/03/who-cares-about-performance/" title="Who cares about performance?"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+    <a href="/feed.xml" title="Follow the blog" class="fa-solid fa-rss"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1745107279" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>
