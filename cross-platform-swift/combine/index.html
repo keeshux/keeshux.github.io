@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Cross-platform Swift: Combine" />
 <meta property="og:title" content="Cross-platform Swift: Combine" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/f/swift/swift.png?1745430650" />
+<meta property="og:image" content="https://davidederosa.com/s/f/swift/swift.png?1745439239" />
 <meta property="og:url" content="https://davidederosa.com/cross-platform-swift/combine/" />
 
 <!-- Twitter -->
@@ -35,7 +35,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Cross-platform Swift: Combine" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/swift/swift.png?1745430650" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/swift/swift.png?1745439239" />
 <meta name="twitter:url" content="https://davidederosa.com/cross-platform-swift/combine/" />
 
 <link rel="canonical" href="https://davidederosa.com/cross-platform-swift/combine/" />
@@ -44,14 +44,14 @@
 <link rel="next" href="/cross-platform-swift/" title="Cross-platform Swift: Introduction" />
 
 
-<link rel="stylesheet" href="/s/main.css?1745430650" />
-<link rel="stylesheet" href="/s/main-mobile.css?1745430650" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1745430650" />
+<link rel="stylesheet" href="/s/main.css?1745439239" />
+<link rel="stylesheet" href="/s/main-mobile.css?1745439239" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1745439239" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1745430650" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745430650" />
+<link rel="shortcut icon" href="/s/favicon.ico?1745439239" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745439239" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -219,7 +219,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <h2 id="porting-to-asyncsequence">Porting to AsyncSequence</h2>
 
-<p>If you remember, the purpose of Combine is manipulating a sequence of asynchronous values. Swift offers implementations of <code class="language-plaintext highlighter-rouge">AsyncSequence</code> to accomplish the same in a linear fashion, typical of the async/await model.</p>
+<p>If you remember, the purpose of Combine is manipulating a sequence of asynchronous values. Swift offers implementations of <a href="https://developer.apple.com/documentation/swift/asyncsequence"><code class="language-plaintext highlighter-rouge">AsyncSequence</code></a> like <a href="https://developer.apple.com/documentation/swift/asyncstream"><code class="language-plaintext highlighter-rouge">AsyncStream</code></a> and <a href="https://developer.apple.com/documentation/swift/asyncthrowingstream"><code class="language-plaintext highlighter-rouge">AsyncThrowingStream</code></a> to accomplish the same in a linear fashion, typical of the async/await model.</p>
 
 <p>What in Combine was:</p>
 
@@ -259,7 +259,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <p>We lack such a counterpart in Swift, so I went to <a href="https://github.com/keeshux/subject-streams">roll out my own</a>.</p>
 
-<p>My <code class="language-plaintext highlighter-rouge">PassthroughStream</code> and <code class="language-plaintext highlighter-rouge">CurrentValueStream</code> implement a simple pub/sub pattern with <code class="language-plaintext highlighter-rouge">AsyncStream</code> and strict Swift 6.1 Concurrency. They have become the building blocks of all my asynchronous publishers in cross-platform Swift, and by keeping behavior and naming close to Combine (e.g. the <code class="language-plaintext highlighter-rouge">.send()</code> method), the refactoring was easier to manage.</p>
+<p>My <a href="https://github.com/keeshux/subject-streams/blob/master/Sources/SubjectStreams/PassthroughStream.swift"><code class="language-plaintext highlighter-rouge">PassthroughStream</code></a> and <a href="https://github.com/keeshux/subject-streams/blob/master/Sources/SubjectStreams/CurrentValueStream.swift"><code class="language-plaintext highlighter-rouge">CurrentValueStream</code></a> implement a simple pub/sub pattern with <code class="language-plaintext highlighter-rouge">AsyncStream</code> and strict Swift 6.1 Concurrency. They have become the building blocks of all my asynchronous publishers in cross-platform Swift, and by keeping behavior and naming close to Combine (e.g. the <code class="language-plaintext highlighter-rouge">.send()</code> method), the refactoring was easier to manage.</p>
 
 <p>Steps:</p>
 
@@ -271,7 +271,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <h2 id="bottom-line">Bottom line</h2>
 
-<p>Leaving Combine behind is a disruptive step towards both Swift 6 and cross-platform. Personally, I don’t fully trust the implementation of <code class="language-plaintext highlighter-rouge">AsyncSequence</code>, but what are we left with? Apple is forcing developers towards Concurrency, and soon there will be no choice but to embrace it. And I’m glad, because it’s finally bringing consistency to the language.</p>
+<p>Leaving Combine behind is a disruptive step towards both Swift 6 and cross-platform. Personally, I still don’t fully trust the behavior of <code class="language-plaintext highlighter-rouge">AsyncSequence</code>, but what are we left with? Apple is forcing developers towards Concurrency, and soon there will be no choice but to embrace it. And I’m glad, because it’s finally bringing consistency to the language.</p>
 
 <p>We’re close to building the Partout core on both Windows and Linux. In the next article, I will cover some quirks you will face with SwiftPM.</p>
 
@@ -391,7 +391,7 @@ gtag('config', 'G-DWPG2HZ9FS');
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1745430650" async="async"></script>
+        <script src="/s/main.js?1745439239" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
