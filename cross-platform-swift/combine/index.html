@@ -1,0 +1,397 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Cross-platform Swift: Combine</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Cross-platform Swift: Combine" />
+<meta property="og:title" content="Cross-platform Swift: Combine" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/swift/swift.png?1745430650" />
+<meta property="og:url" content="https://davidederosa.com/cross-platform-swift/combine/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Cross-platform Swift: Combine" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/swift/swift.png?1745430650" />
+<meta name="twitter:url" content="https://davidederosa.com/cross-platform-swift/combine/" />
+
+<link rel="canonical" href="https://davidederosa.com/cross-platform-swift/combine/" />
+
+
+<link rel="next" href="/cross-platform-swift/" title="Cross-platform Swift: Introduction" />
+
+
+<link rel="stylesheet" href="/s/main.css?1745430650" />
+<link rel="stylesheet" href="/s/main-mobile.css?1745430650" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1745430650" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1745430650" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745430650" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/cross-platform-swift/combine/">
+        
+        <img src="/s/f/swift/swift-150.png" alt="Cross-platform Swift: Combine" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Apr 23, 2025</span>
+            <h2 itemprop="name">
+                
+                Cross-platform Swift: Combine
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">series</a>:
+    
+    <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">&lt; prev</a>
+    
+    |
+    
+    next &gt;
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+<header class="post-series-toc">
+    
+    <h3>Table of contents (ongoing)</h3>
+    
+    <ol>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li>
+            <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">
+                
+                Cross-platform Swift: Introduction
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/cross-platform-swift/combine/" title="Cross-platform Swift: Combine">
+                
+                <strong>Cross-platform Swift: Combine</strong>
+                
+            </a>
+        </li>
+        
+        
+    </ol>
+</header>
+
+
+        <p>The very first goal of porting may sound simple: a successful build. Once you manage to just compile your package, the worst is definitely behind you.</p>
+
+<p>Keep in mind that this is not a series about how to port Apple frameworks or SwiftUI to other platforms, it’s about the bare Swift language. I want to show you how Xcode may trick you into thinking that some patterns are a key part of Swift, whereas they should be avoided if you plan to leave the Apple ecosystem at some point.</p>
+
+<p>Today, I’ll talk about a kind of infamous framework for Swift developers: <em>Combine</em>.</p>
+
+<h2 id="combine-is-unofficially-obsolete">Combine is unofficially obsolete</h2>
+
+<p>When the compiler suddenly stopped at some occurrence of <code class="language-plaintext highlighter-rouge">import Combine</code>, I was beaten. Combine has been a fundamental piece of reactive programming for the last 5+ years, and any recent Swift codebase uses Combine to some extent. The scary question was: to what extent was I using it?</p>
+
+<p>Let me digress a moment. There is a big problem with Combine, and it’s not about the developers using it. Apple is well-known for disrupting its own frameworks regardless of any backward-compatibility, and Combine is one of those examples where Apple took a different turn without offering a full replacement. Initially, it seemed that SwiftUI was all about Combine, but the introduction of Concurrency made the poor framework an outcast. Unsurprisingly, <code class="language-plaintext highlighter-rouge">ObservableObject</code> and <code class="language-plaintext highlighter-rouge">@Published</code> are also unavailable outside Apple Swift, but if you’ve been a diligent programmer, you’ve probably learned that those constructs only make sense with SwiftUI.</p>
+
+<p>The fact that Combine has never been integrated into the Swift language, reveals that Concurrency is how Swift (and Apple) wants you to perform asynchronous programming from now on. Does Swift natively offer a substitute for the long list of Combine operators? Hell, no, and that’s why people still use Combine.</p>
+
+<p>Back to my question. Luckily, my use of Combine in Partout was quite basic, except for one <code class="language-plaintext highlighter-rouge">.combineLatest3()</code> that was worth half the effort.</p>
+
+<h2 id="porting-to-asyncsequence">Porting to AsyncSequence</h2>
+
+<p>If you remember, the purpose of Combine is manipulating a sequence of asynchronous values. Swift offers implementations of <code class="language-plaintext highlighter-rouge">AsyncSequence</code> to accomplish the same in a linear fashion, typical of the async/await model.</p>
+
+<p>What in Combine was:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subscription</span> <span class="o">=</span> <span class="nf">somePublisherOfStrings</span><span class="p">()</span> <span class="c1">// AnyPublisher&lt;String, Never&gt;</span>
+    <span class="o">.</span><span class="nf">removeDuplicates</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">sink</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"String: </span><span class="se">\(</span><span class="nv">$0</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>becomes this with <code class="language-plaintext highlighter-rouge">AsyncStream</code>:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subscription</span> <span class="o">=</span> <span class="kt">Task</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">var</span> <span class="nv">previous</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">for</span> <span class="k">await</span> <span class="n">string</span> <span class="k">in</span> <span class="nf">someStreamOfStrings</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// AsyncStream&lt;String&gt;</span>
+        <span class="k">guard</span> <span class="n">string</span> <span class="o">!=</span> <span class="n">previous</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"String: </span><span class="se">\(</span><span class="nv">$0</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">string</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, a typical way to spawn Combine publishers is with <em>subjects</em> (<code class="language-plaintext highlighter-rouge">PassthroughSubject</code> and <code class="language-plaintext highlighter-rouge">CurrentValueSubject</code>), that are multicast emitters of values. Multiple programs can subscribe to a subject, listen to its sequence of values, and manipulate them before delivery with the rich offer of Combine operators.</p>
+
+<p>Let’s consider this typical pattern:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="kd">class</span> <span class="kt">RandomGenerator</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">generator</span> <span class="o">=</span> <span class="kt">PassthroughSubject</span><span class="o">&lt;</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span><span class="p">()</span>
+
+    <span class="k">var</span> <span class="nv">publisher</span><span class="p">:</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="n">generator</span><span class="o">.</span><span class="nf">eraseToAnyPublisher</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We lack such a counterpart in Swift, so I went to <a href="https://github.com/keeshux/subject-streams">roll out my own</a>.</p>
+
+<p>My <code class="language-plaintext highlighter-rouge">PassthroughStream</code> and <code class="language-plaintext highlighter-rouge">CurrentValueStream</code> implement a simple pub/sub pattern with <code class="language-plaintext highlighter-rouge">AsyncStream</code> and strict Swift 6.1 Concurrency. They have become the building blocks of all my asynchronous publishers in cross-platform Swift, and by keeping behavior and naming close to Combine (e.g. the <code class="language-plaintext highlighter-rouge">.send()</code> method), the refactoring was easier to manage.</p>
+
+<p>Steps:</p>
+
+<ul>
+  <li>Replace Combine subjects with <a href="https://github.com/keeshux/subject-streams"><em>subject streams</em></a></li>
+  <li>Return an <code class="language-plaintext highlighter-rouge">AsyncStream</code> from a subject with <code class="language-plaintext highlighter-rouge">.subscribe()</code></li>
+  <li>Replace <code class="language-plaintext highlighter-rouge">AnyCancellable</code> with <code class="language-plaintext highlighter-rouge">Task</code> and <code class="language-plaintext highlighter-rouge">for [try] await</code> loops (<code class="language-plaintext highlighter-rouge">weak self</code> here)</li>
+</ul>
+
+<h2 id="bottom-line">Bottom line</h2>
+
+<p>Leaving Combine behind is a disruptive step towards both Swift 6 and cross-platform. Personally, I don’t fully trust the implementation of <code class="language-plaintext highlighter-rouge">AsyncSequence</code>, but what are we left with? Apple is forcing developers towards Concurrency, and soon there will be no choice but to embrace it. And I’m glad, because it’s finally bringing consistency to the language.</p>
+
+<p>We’re close to building the Partout core on both Windows and Linux. In the next article, I will cover some quirks you will face with SwiftPM.</p>
+
+
+        
+    </div>
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="/feed.xml" title="Follow the blog" target="_blank"><i class="fa-solid fa-rss"></i>Subscribe</a></li>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/2025/03/who-cares-about-performance/">Who cares about performance?</a></li>
+            
+            <li><a href="/2025/03/frontend-development-is-easy/">Frontend development is easy</a></li>
+            
+            <li><a href="/2025/03/rewriting-passepartout-for-v3/">Rewriting Passepartout for v3</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+    <a href="/feed.xml" title="Follow the blog" class="fa-solid fa-rss"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1745430650" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

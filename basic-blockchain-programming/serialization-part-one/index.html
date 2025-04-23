@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Serialization (pt. 1)" />
 <meta property="og:title" content="Serialization (pt. 1)" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1745255104" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1745430650" />
 <meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 
 <!-- Twitter -->
@@ -35,7 +35,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="Serialization (pt. 1)" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1745255104" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1745430650" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
@@ -46,14 +46,14 @@
 <link rel="next" href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes" />
 
 
-<link rel="stylesheet" href="/s/main.css?1745255104" />
-<link rel="stylesheet" href="/s/main-mobile.css?1745255104" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1745255104" />
+<link rel="stylesheet" href="/s/main.css?1745430650" />
+<link rel="stylesheet" href="/s/main-mobile.css?1745430650" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1745430650" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1745255104" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745255104" />
+<link rel="shortcut icon" href="/s/favicon.ico?1745430650" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745430650" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -129,6 +129,199 @@ gtag('config', 'G-DWPG2HZ9FS');
         
 
         
+<header class="post-series-toc">
+    
+    <h3>Table of contents</h3>
+    
+    <ol>
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">
+                
+                A developer-oriented series about Bitcoin
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes">
+                
+                Bytes and hashes
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/serialization-part-one/" title="Serialization (pt. 1)">
+                
+                <strong>Serialization (pt. 1)</strong>
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)">
+                
+                Serialization (pt. 2)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/keys-as-property/" title="Keys as property">
+                
+                Keys as property
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/elliptic-curve-keys/" title="Elliptic-curve keys">
+                
+                Elliptic-curve keys
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/elliptic-curve-digital-signatures/" title="Elliptic-curve digital signatures">
+                
+                Elliptic-curve digital signatures
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/network-interoperability-part-one/" title="Network interoperability (pt. 1)">
+                
+                Network interoperability (pt. 1)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/network-interoperability-part-two/" title="Network interoperability (pt. 2)">
+                
+                Network interoperability (pt. 2)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/scripts-in-transaction-processing/" title="Scripts in transaction processing">
+                
+                Scripts in transaction processing
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-one/" title="The Bitcoin Script language (pt. 1)">
+                
+                The Bitcoin Script language (pt. 1)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/bitcoin-script-language-part-two/" title="The Bitcoin Script language (pt. 2)">
+                
+                The Bitcoin Script language (pt. 2)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/standard-scripts/" title="Standard scripts">
+                
+                Standard scripts
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/inside-transactions/" title="Inside transactions">
+                
+                Inside transactions
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/the-first-transaction-part-one/" title="The first transaction (pt. 1)">
+                
+                The first transaction (pt. 1)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/the-first-transaction-part-two/" title="The first transaction (pt. 2)">
+                
+                The first transaction (pt. 2)
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/basic-blockchain-programming/wallet-software/" title="Wallet software">
+                
+                Wallet software
+                
+            </a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </ol>
+</header>
+
 
         <p>Enough of theory, we’re up to some real code! Before treating full-blown entities, though, you need to learn how to serialize generic data through a small set a primitives. Think of C variables, we certainly want to know what <code class="language-plaintext highlighter-rouge">int</code> and <code class="language-plaintext highlighter-rouge">char</code> mean before defining a custom <code class="language-plaintext highlighter-rouge">struct</code>.</p>
 
@@ -265,6 +458,92 @@ c7 f9 be ba 87 ea 81 b2
         
     </div>
     
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            Keep reading: <a href="/basic-blockchain-programming/serialization-part-two/">Serialization (pt. 2)</a>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+    
 
 
 
@@ -283,11 +562,11 @@ c7 f9 be ba 87 ea 81 b2
         <p>See also:</p>
         <ul>
             
+            <li><a href="/cross-platform-swift/">Cross-platform Swift: Introduction</a></li>
+            
             <li><a href="/2025/03/who-cares-about-performance/">Who cares about performance?</a></li>
             
             <li><a href="/2025/03/frontend-development-is-easy/">Frontend development is easy</a></li>
-            
-            <li><a href="/2025/03/rewriting-passepartout-for-v3/">Rewriting Passepartout for v3</a></li>
             
         </ul>
     </aside>
@@ -325,7 +604,7 @@ c7 f9 be ba 87 ea 81 b2
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1745255104" async="async"></script>
+        <script src="/s/main.js?1745430650" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
