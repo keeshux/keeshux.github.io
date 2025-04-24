@@ -1,4 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-04-23T22:23:30+02:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Cross-platform Swift: Combine</title><link href="https://davidederosa.com/cross-platform-swift/combine/" rel="alternate" type="text/html" title="Cross-platform Swift: Combine" /><published>2025-04-23T00:00:00+02:00</published><updated>2025-04-23T00:00:00+02:00</updated><id>https://davidederosa.com/cross-platform-swift/cross-platform-swift-combine</id><content type="html" xml:base="https://davidederosa.com/cross-platform-swift/combine/"><![CDATA[<p>The very first goal of porting may sound simple: a successful build. Once you manage to just compile your package, the worst is definitely behind you.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-04-24T17:11:39+02:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Scripting and open-source adoption</title><link href="https://davidederosa.com/2025/04/scripting-for-adoption/" rel="alternate" type="text/html" title="Scripting and open-source adoption" /><published>2025-04-24T00:00:00+02:00</published><updated>2025-04-24T00:00:00+02:00</updated><id>https://davidederosa.com/2025/04/scripting-for-adoption</id><content type="html" xml:base="https://davidederosa.com/2025/04/scripting-for-adoption/"><![CDATA[<p>Recently, I stumbled upon an <a href="https://www.youtube.com/watch?v=p0Q3oDY9A5s">old video by ThePrimeagen</a> where he claimed he’d quit using Vim for good after its major update.</p>
+
+<p>For those who don’t know, <a href="https://www.vim.org/">Vim</a> is a <em>ubiquitous</em> text editor, especially popular among avid terminal-oriented users. It is a legendary software, but it has a steep learning curve, to the point that “quitting Vim” <a href="https://stackoverflow.com/questions/11828270/how-do-i-exit-vim">has become a meme</a> for being notoriously unintuitive.</p>
+
+<p><a href="https://twitch.tv/theprimeagen">ThePrimeagen</a> is a prominent Twitch streamer, and a stark advocate of <a href="https://neovim.io/">Neovim</a>, a fork of the original Vim editor. In his video, he makes a solid point about the stubbornness of Vim maintainers to stick with a custom scripting language. On the other hand, Neovim, promotes the well-known <a href="https://www.lua.org/">Lua</a> language for its powerful plugin system. This alone determined his final choice to stick with Neovim, and as of 2025, I doubt he has changed his mind.</p>
+
+<h2 id="the-delusion-behind-open-source">The delusion behind open-source</h2>
+
+<p>This story is somewhat related to what I’m trying now that I work full-time on <a href="https://passepartoutvpn.app">Passepartout</a>. Passepartout is an open-source project in that its code is public, but there are almost no code contributions, just issues. There are good reasons behind this.</p>
+
+<p>Many of those who create some sort of open-source software think that it must be interesting by default, just because it’s open and available for free. Rarely will they realize that <em>popuplar</em> free software not only is popular <em>for being free</em>, so they live the delusion that the open-source model “doesn’t work”.</p>
+
+<p>For example, pick any GNU tool (grep, sed, make, …) or even Linux. They became popular because they were <em>useful</em>. Being free and <em>understandable</em> software made them thrive through public contributions, but this was never the first step.</p>
+
+<p>The interest in contributing to an open-source project is determined by multiple factors, in order of importance:</p>
+
+<ol>
+  <li>Goals</li>
+  <li>Well-written documentation and directions</li>
+  <li>Welcoming community</li>
+  <li>Technical stack</li>
+  <li>Stable software architecture</li>
+</ol>
+
+<p>Now, observe how any well-known free software apply to 1-5 in that order.</p>
+
+<h2 id="vim-and-the-self-conscious-tech">Vim and the self-conscious tech</h2>
+
+<p>Given that both Vim and Neovim are amazing and well-documented products, their tech paths reconnect with the initial backstory.</p>
+
+<p>Lua makes Neovim <em>infinitely</em> more attractive than Vim when it comes to adoption and open-source, and the choice of Vimscript over Lua may even determine the death of Vim in the long run. I don’t know the “drama” that resulted in the fork of Neovim, but I wouldn’t exclude that Vim took its relevance for granted just for being the OG of the two. In fact, I don’t think that Vim today can claim being cooler than Neovim other than for being the original one.</p>
+
+<p>Even if a software is well-crafted, it’s evident that a Pascal application will only attract a handful of developers, whereas JavaScript would open up to the entire globe, and the same applies to Vimscript versus Lua. If your software is written for yourself and requires developers to learn a new technology to contribute, either it is <em>the ultimate cool</em>, or you might well end up yelling at your echo chamber.</p>
+
+<h2 id="passepartout-adds-a-javascript-api">Passepartout adds a JavaScript API</h2>
+
+<p>While I invest a lot in making the software architecture as accessible as I can, I haven’t spent as much time in documenting <em>how</em> to start contributing to the codebase. I know myself how intimidating it is to submit a PR to someone else’s repository, so it’s crucial that we, the maintainers, provide a viable entry point to those willing to collaborate. A welcoming, non-judging community also reduces the friction of the first public contribution.</p>
+
+<p>One part that I’ve always found potentially accessible was the Providers API, which is how Passepartout auto-compiles VPN configurations for a plethora of provider servers. Nevertheless, no one ever contributed a single provider, and no wonder: providers were generated in CI with a convoluted set of undocumented Ruby scripts. Who on Earth would want to touch that mess?</p>
+
+<p>When I found out about <a href="https://developer.apple.com/documentation/javascriptcore">JavaScriptCore</a> to solve a different problem, I suddenly realized how scripting could be a lower barrier to enter the Passepartout codebase, as there are way more JavaScript than Swift developers out there.</p>
+
+<p>With the help of AI, I rapidly converted the old Ruby legacy to a brand new <a href="https://github.com/passepartoutvpn/api-source">Node.js implementation</a> that most developers would find easy to understand, develop, and test without even installing the app. Then I started documenting <a href="https://github.com/passepartoutvpn/api-source?tab=readme-ov-file#new-providers">how to submit a provider</a> step by step. This doesn’t imply that people will start adding new providers today, but offering accessible tools and documentation is a <em>strict</em> requirement for that to happen.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Open-source success isn’t about being free, it’s about being accessible. Tools like Neovim thrive because they choose approachable technologies like Lua, making contributions easier. Similarly, by adopting JavaScript for scripting, Passepartout lowers its barrier to entry and opens the door to wider community involvement. If you want contributors, you must meet them where they are.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="lua" /><category term="javascript" /><category term="vim" /><category term="neovim" /><category term="open-source" /><summary type="html"><![CDATA[Recently, I stumbled upon an old video by ThePrimeagen where he claimed he’d quit using Vim for good after its major update. For those who don’t know, Vim is a ubiquitous text editor, especially popular among avid terminal-oriented users. It is a legendary software, but it has a steep learning curve, to the point that “quitting Vim” has become a meme for being notoriously unintuitive. ThePrimeagen is a prominent Twitch streamer, and a stark advocate of Neovim, a fork of the original Vim editor. In his video, he makes a solid point about the stubbornness of Vim maintainers to stick with a custom scripting language. On the other hand, Neovim, promotes the well-known Lua language for its powerful plugin system. This alone determined his final choice to stick with Neovim, and as of 2025, I doubt he has changed his mind. The delusion behind open-source This story is somewhat related to what I’m trying now that I work full-time on Passepartout. Passepartout is an open-source project in that its code is public, but there are almost no code contributions, just issues. There are good reasons behind this. Many of those who create some sort of open-source software think that it must be interesting by default, just because it’s open and available for free. Rarely will they realize that popuplar free software not only is popular for being free, so they live the delusion that the open-source model “doesn’t work”. For example, pick any GNU tool (grep, sed, make, …) or even Linux. They became popular because they were useful. Being free and understandable software made them thrive through public contributions, but this was never the first step. The interest in contributing to an open-source project is determined by multiple factors, in order of importance: Goals Well-written documentation and directions Welcoming community Technical stack Stable software architecture Now, observe how any well-known free software apply to 1-5 in that order. Vim and the self-conscious tech Given that both Vim and Neovim are amazing and well-documented products, their tech paths reconnect with the initial backstory. Lua makes Neovim infinitely more attractive than Vim when it comes to adoption and open-source, and the choice of Vimscript over Lua may even determine the death of Vim in the long run. I don’t know the “drama” that resulted in the fork of Neovim, but I wouldn’t exclude that Vim took its relevance for granted just for being the OG of the two. In fact, I don’t think that Vim today can claim being cooler than Neovim other than for being the original one. Even if a software is well-crafted, it’s evident that a Pascal application will only attract a handful of developers, whereas JavaScript would open up to the entire globe, and the same applies to Vimscript versus Lua. If your software is written for yourself and requires developers to learn a new technology to contribute, either it is the ultimate cool, or you might well end up yelling at your echo chamber. Passepartout adds a JavaScript API While I invest a lot in making the software architecture as accessible as I can, I haven’t spent as much time in documenting how to start contributing to the codebase. I know myself how intimidating it is to submit a PR to someone else’s repository, so it’s crucial that we, the maintainers, provide a viable entry point to those willing to collaborate. A welcoming, non-judging community also reduces the friction of the first public contribution. One part that I’ve always found potentially accessible was the Providers API, which is how Passepartout auto-compiles VPN configurations for a plethora of provider servers. Nevertheless, no one ever contributed a single provider, and no wonder: providers were generated in CI with a convoluted set of undocumented Ruby scripts. Who on Earth would want to touch that mess? When I found out about JavaScriptCore to solve a different problem, I suddenly realized how scripting could be a lower barrier to enter the Passepartout codebase, as there are way more JavaScript than Swift developers out there. With the help of AI, I rapidly converted the old Ruby legacy to a brand new Node.js implementation that most developers would find easy to understand, develop, and test without even installing the app. Then I started documenting how to submit a provider step by step. This doesn’t imply that people will start adding new providers today, but offering accessible tools and documentation is a strict requirement for that to happen. Conclusions Open-source success isn’t about being free, it’s about being accessible. Tools like Neovim thrive because they choose approachable technologies like Lua, making contributions easier. Similarly, by adopting JavaScript for scripting, Passepartout lowers its barrier to entry and opens the door to wider community involvement. If you want contributors, you must meet them where they are.]]></summary></entry><entry><title type="html">Cross-platform Swift: Combine</title><link href="https://davidederosa.com/cross-platform-swift/combine/" rel="alternate" type="text/html" title="Cross-platform Swift: Combine" /><published>2025-04-23T00:00:00+02:00</published><updated>2025-04-23T00:00:00+02:00</updated><id>https://davidederosa.com/cross-platform-swift/cross-platform-swift-combine</id><content type="html" xml:base="https://davidederosa.com/cross-platform-swift/combine/"><![CDATA[<p>The very first goal of porting may sound simple: a successful build. Once you manage to just compile your package, the worst is definitely behind you.</p>
 
 <p>Keep in mind that this is not a series about how to port Apple frameworks or SwiftUI to other platforms, it’s about the bare Swift language. I want to show you how Xcode may trick you into thinking that some patterns are a key part of Swift, whereas they should be avoided if you plan to leave the Apple ecosystem at some point.</p>
 
@@ -865,257 +911,4 @@ c6 0f f8 23 d8 d6 57 d1
 
 <p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
 
-<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry><entry><title type="html">The first transaction (pt. 1)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/" rel="alternate" type="text/html" title="The first transaction (pt. 1)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-one/"><![CDATA[<p>The core business of the Bitcoin blockchain technology is definitely building <em>transactions</em>. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.</p>
-
-<!--more-->
-
-<h3 id="how-to-build-a-p2pkh-transaction">How to build a P2PKH transaction</h3>
-
-<p>In order to build a transaction, an ECDSA keypair alone is not enough. We need the blockchain history of the keypair at our disposal, or better said, the transactions sending value to the address associated with our keypair. Then, we’ll use the ECDSA private key to produce signatures for such transaction outputs, so that they become inputs to our transaction.</p>
-
-<p>Given:</p>
-
-<ul>
-  <li>An ECDSA keypair <em>K</em>.</li>
-  <li>A third-party P2PKH output address <em>A</em>.</li>
-  <li>The amount <em>S</em> to transfer in satoshis.</li>
-</ul>
-
-<p>we want to send <em>S</em> satoshis to address <em>A</em> via our keypair <em>K</em>. Here’s the overall procedure:</p>
-
-<ol>
-  <li>Scan the blockchain for the relevant UTXOs to <em>K</em>.</li>
-  <li>Build a transaction output from <em>S</em> and <em>A</em>.</li>
-  <li>Gather enough input value from the UTXOs to reach <em>S</em>.</li>
-  <li>For each input, generate the subject of its signature.</li>
-  <li>Generate ECDSA signatures for each input subject.</li>
-  <li>Pack the transaction.</li>
-</ol>
-
-<p>Let’s start from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>.</p>
-
-<h4 id="the-utxo-set">The UTXO set</h4>
-
-<p>At the very beginning of an ECDSA keypair history, the derived P2PKH address has no transaction outputs associated with it and therefore has no bitcoin value for the blockchain. When someone later publishes a transaction that sends bitcoins to our address, the keypair suddenly becomes a valuable asset. Consider our now famous Testnet address:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK
-</code></pre></div></div>
-
-<p>and its <a href="https://www.biteasy.com/testnet/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK">blockchain history</a>. Among all transactions, <a href="https://api.biteasy.com/testnet/v1/addresses/mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK/unspent-outputs">three outputs</a> are still unspent at the time of writing:</p>
-
-<ol>
-  <li><a href="https://blockstream.info/testnet/tx/f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"><code class="language-plaintext highlighter-rouge">f34e1c37e736...a2f3</code></a></li>
-  <li><a href="https://blockstream.info/testnet/tx/65216856608dba6b74e1ea202eb712f64d340bc8cf48b8db5624447b15bd20c6"><code class="language-plaintext highlighter-rouge">65216856608d...20c6</code></a></li>
-  <li><a href="https://blockstream.info/testnet/tx/6b580bada66ebde408a5c24f44e5a27aa5108922cadfb20726ea6ce194a53934"><code class="language-plaintext highlighter-rouge">6b580bada66e...3934</code></a></li>
-</ol>
-
-<p>totalling a 0.951 BTC output value (= 95100000 satoshis). Specifically, these are the outputs sending money to our address:</p>
-
-<ul>
-  <li>The first output of tx 1 (0.87 BTC).</li>
-  <li>The first output of tx 2 (0.001 BTC).</li>
-  <li>The second output of tx 3 (0.08 BTC).</li>
-</ul>
-
-<p>If you now translate the words into data structures:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">&lt;f34e1c37e736...a2f3, 0&gt;</code></li>
-  <li><code class="language-plaintext highlighter-rouge">&lt;65216856608d...20c6, 0&gt;</code></li>
-  <li><code class="language-plaintext highlighter-rouge">&lt;6b580bada66e...3934, 1&gt;</code></li>
-</ul>
-
-<p>you have the UTXO outpoints for our keypair/wallet. Besides making up the balance of the wallet, the importance of the UTXO set lies in that it contains the outpoints we can reuse to build our own transactions. After spending an UTXO in a transaction input, it’s removed from the set because an UTXO is always spent in its entirety.</p>
-
-<p>For what it’s worth, scanning UTXOs would require a lot of networking code, so building a wallet history from web explorers is a quick alternative. This will cost you some privacy though, as you generally don’t want to share your addresses with untrusted services.</p>
-
-<h4 id="the-destination-output">The destination output</h4>
-
-<p>You should know by now how to build a P2PKH transaction output. Say we want to send 0.251 BTC (25100000 satoshis, little-endian):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e0 fe 7e 01 00 00 00 00
-</code></pre></div></div>
-
-<p>to this address:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mhmhRnN58ki9zbRJ63mpNGQXoYvdMXZsXt
-</code></pre></div></div>
-
-<p>that decodes to the following hash160 digest:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>18 ba 14 b3 68 22 95 cb
-05 23 0e 31 fe cb 00 08
-92 40 66 08
-</code></pre></div></div>
-
-<p>Here’s the first output of our transaction:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* value (0.251 BTC) */
-e0 fe 7e 01 00 00 00 00
-
-/* script length */
-19
-
-/* P2PKH script */
-76 a9 14 18 ba 14 b3 68
-22 95 cb 05 23 0e 31 fe
-cb 00 08 92 40 66 08 88
-ac
-</code></pre></div></div>
-
-<p>I wrote a convenient C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for building P2PKH outputs from a value and a hash160:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txout_t</span> <span class="o">*</span><span class="n">txout</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">uint64_t</span> <span class="n">value</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hash160</span><span class="p">);</span></code></pre></figure>
-
-<p>Basically, the hash160 bytes are enclosed in the <code class="language-plaintext highlighter-rouge">OP_DUP OP_HASH160</code> and <code class="language-plaintext highlighter-rouge">OP_EQUALVERIFY OP_CHECKSIG</code> opcodes. Hexes are interpreted from left to right and are therefore encoded little-endian. We use the macro to easily create our first output:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
-        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span></code></pre></figure>
-
-<h4 id="gathering-the-inputs">Gathering the inputs</h4>
-
-<p>Our UTXO set is worth &lt;0.87, 0.001, 0.08&gt; BTC respectively, so the first one:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;f34e1c37e736...a2f3, 0&gt;
-</code></pre></div></div>
-
-<p>is just enough for a 0.251 BTC output. In fact our input value exceeds the output value by 0.619 BTC, which are silently returned to the transaction miner as a fee. We know an UTXO cannot be spent partially, and since the fee is somewhat relevant to us, we add a second output for <em>change</em>.</p>
-
-<p>Our final transaction will have one input and two outputs, the second being a change output that returns the exceeding input value to our own address. Here’s the second output of our transaction:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* value (0.619 BTC) */
-e0 84 b0 03 00 00 00 00
-
-/* script length */
-19
-
-/* P2PKH script */
-76 a9 14 6b f1 9e 55 f9
-4d 98 6b 46 40 c1 54 d8
-64 69 93 41 91 95 11 88
-ac
-</code></pre></div></div>
-
-<p>On the other hand, it’s quite obvious that output value cannot possibly exceed input value. Non-coinbase transactions never create bitcoin value. This is our second output in code:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
-        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
-
-<h4 id="building-the-signature-subject">Building the signature subject</h4>
-
-<p>This is tricky if not even controversial, because the subject of transaction signatures is not the transaction itself. When studying ECDSA signatures, you learned that the signing process takes three steps:</p>
-
-<ol>
-  <li>Generate an ECDSA keypair.</li>
-  <li>Create a message.</li>
-  <li>Sign the message with the private key to produce a signature.</li>
-</ol>
-
-<p>The problem here is that a Bitcoin transaction cannot be signed the usual way, since signatures are actually part of the transaction, namely the input scripts. The approach has to be different. In fact, we’ll produce a different signature for each transaction input, which in turn will embed it in its P2PKH script.</p>
-
-<p>In practice, for each input <em>I</em>, the message to be signed is a slightly modified version of the transaction where:</p>
-
-<ol>
-  <li>The <em>I</em> script is set to the output script of the UTXO it refers to.</li>
-  <li>Input scripts other than <em>I</em> are truncated to zero-length.</li>
-  <li>A <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag is appended.</li>
-</ol>
-
-<p>For a single input transaction we won’t need to truncate any other input script:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">prev_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">87000000</span><span class="p">,</span>
-        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span>
-<span class="n">bbp_txin_create_signable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins_sign</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prev_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span></code></pre></figure>
-
-<p>We have the outputs and the signable inputs, so we go ahead and construct the message:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins_sign</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">msg_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
-<span class="n">msg</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">msg_len</span><span class="p">);</span>
-<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span></code></pre></figure>
-
-<p>The external functions all come from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a>:</p>
-
-<ul>
-  <li>From the previous post, you know that the <code class="language-plaintext highlighter-rouge">bbp_tx_size</code> and <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code> functions take care of sizing and serializing a transaction structure to raw bytes.</li>
-  <li>The <code class="language-plaintext highlighter-rouge">bbp_outpoint_fill</code> function fills a <code class="language-plaintext highlighter-rouge">bbp_outpoint_t</code> structure from an UTXO. The UTXO reference consist of a previous transaction txid and the output index within the transaction.</li>
-  <li>The <code class="language-plaintext highlighter-rouge">bbp_txin_create_signable</code> function creates a fake input for our message by copying the corresponding UTXO script.</li>
-</ul>
-
-<p>Since we’ll sign all transaction inputs, we set the <code class="language-plaintext highlighter-rouge">flag</code> parameter to <code class="language-plaintext highlighter-rouge">SIGHASH_ALL</code> (<code class="language-plaintext highlighter-rouge">01</code>). Beware that it’s here padded to 32-bit for no apparent reason.</p>
-
-<h4 id="the-final-message">The final message</h4>
-
-<p>Here’s the subject of our input signature:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
-01 00 00 00
-
-/* number of inputs (varint) */
-01
-
-/* input UTXO txid (hash256, little-endian) */
-f3 a2 7f 48 5f 98 33 c8
-31 8c 49 04 03 30 7f ef
-13 97 12 1b 5d d8 fe 70
-77 72 36 e7 37 1c 4e f3
-
-/* input UTXO index (32-bit) */
-00 00 00 00
-
-/* input UTXO script (varint + data) */
-19 76 a9 14 6b f1 9e 55
-f9 4d 98 6b 46 40 c1 54
-d8 64 69 93 41 91 95 11
-88 ac
-
-/* input sequence */
-ff ff ff ff
-
-/* number of outputs (varint) */
-02
-
-/* output value (64-bit) */
-e0 fe 7e 01 00 00 00 00
-
-/* output script (varint + data) */
-19 76 a9 14 18 ba 14 b3
-68 22 95 cb 05 23 0e 31
-fe cb 00 08 92 40 66 08
-88 ac
-
-/* change output value (64-bit) */
-e0 84 b0 03 00 00 00 00
-
-/* change output script (varint + data) */
-19 76 a9 14 6b f1 9e 55
-f9 4d 98 6b 46 40 c1 54
-d8 64 69 93 41 91 95 11
-88 ac
-
-/* locktime (32-bit) */
-00 00 00 00
-
-/* SIGHASH (32-bit) */
-01 00 00 00
-</code></pre></div></div>
-
-<p>Compare the above bytes to the <code class="language-plaintext highlighter-rouge">msg</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>. This is also the message against which the <code class="language-plaintext highlighter-rouge">OP_CHECKSIG</code> opcode validates an input signature.</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned that the first step in transaction building is obtaining the UTXO set of a keypair. Outputs define the value we need to gather. Transaction output value must not exceed gathered UTXO value. Change outputs solve the indivisibility problem of UTXOs. UTXO scripts appear in the signable message of their corresponding inputs.</p>
-
-<p>In the <a href="/basic-blockchain-programming/the-first-transaction-part-two/">next article</a> we’ll sign and pack our raw transaction. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The core business of the Bitcoin blockchain technology is definitely building transactions. I’ll show you the necessary steps to write your own P2PKH transactions, that is the kind of standard transactions you’ll find most often in the blockchain.]]></summary></entry></feed>
+<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry></feed>

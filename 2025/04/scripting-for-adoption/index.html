@@ -1,0 +1,282 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Scripting and open-source adoption</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Scripting and open-source adoption" />
+<meta property="og:title" content="Scripting and open-source adoption" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1745507499" />
+<meta property="og:url" content="https://davidederosa.com/2025/04/scripting-for-adoption/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Scripting and open-source adoption" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1745507499" />
+<meta name="twitter:url" content="https://davidederosa.com/2025/04/scripting-for-adoption/" />
+
+<link rel="canonical" href="https://davidederosa.com/2025/04/scripting-for-adoption/" />
+
+
+<link rel="next" href="/cross-platform-swift/combine/" title="Cross-platform Swift: Combine" />
+
+
+<link rel="stylesheet" href="/s/main.css?1745507499" />
+<link rel="stylesheet" href="/s/main-mobile.css?1745507499" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1745507499" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1745507499" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1745507499" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+
+        <div>
+            <span class="post-date" itemprop="datepublished">Apr 24, 2025</span>
+            <h2 itemprop="name">
+                
+                Scripting and open-source adoption
+                
+            </h2>
+            
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>Recently, I stumbled upon an <a href="https://www.youtube.com/watch?v=p0Q3oDY9A5s">old video by ThePrimeagen</a> where he claimed he’d quit using Vim for good after its major update.</p>
+
+<p>For those who don’t know, <a href="https://www.vim.org/">Vim</a> is a <em>ubiquitous</em> text editor, especially popular among avid terminal-oriented users. It is a legendary software, but it has a steep learning curve, to the point that “quitting Vim” <a href="https://stackoverflow.com/questions/11828270/how-do-i-exit-vim">has become a meme</a> for being notoriously unintuitive.</p>
+
+<p><a href="https://twitch.tv/theprimeagen">ThePrimeagen</a> is a prominent Twitch streamer, and a stark advocate of <a href="https://neovim.io/">Neovim</a>, a fork of the original Vim editor. In his video, he makes a solid point about the stubbornness of Vim maintainers to stick with a custom scripting language. On the other hand, Neovim, promotes the well-known <a href="https://www.lua.org/">Lua</a> language for its powerful plugin system. This alone determined his final choice to stick with Neovim, and as of 2025, I doubt he has changed his mind.</p>
+
+<h2 id="the-delusion-behind-open-source">The delusion behind open-source</h2>
+
+<p>This story is somewhat related to what I’m trying now that I work full-time on <a href="https://passepartoutvpn.app">Passepartout</a>. Passepartout is an open-source project in that its code is public, but there are almost no code contributions, just issues. There are good reasons behind this.</p>
+
+<p>Many of those who create some sort of open-source software think that it must be interesting by default, just because it’s open and available for free. Rarely will they realize that <em>popuplar</em> free software not only is popular <em>for being free</em>, so they live the delusion that the open-source model “doesn’t work”.</p>
+
+<p>For example, pick any GNU tool (grep, sed, make, …) or even Linux. They became popular because they were <em>useful</em>. Being free and <em>understandable</em> software made them thrive through public contributions, but this was never the first step.</p>
+
+<p>The interest in contributing to an open-source project is determined by multiple factors, in order of importance:</p>
+
+<ol>
+  <li>Goals</li>
+  <li>Well-written documentation and directions</li>
+  <li>Welcoming community</li>
+  <li>Technical stack</li>
+  <li>Stable software architecture</li>
+</ol>
+
+<p>Now, observe how any well-known free software apply to 1-5 in that order.</p>
+
+<h2 id="vim-and-the-self-conscious-tech">Vim and the self-conscious tech</h2>
+
+<p>Given that both Vim and Neovim are amazing and well-documented products, their tech paths reconnect with the initial backstory.</p>
+
+<p>Lua makes Neovim <em>infinitely</em> more attractive than Vim when it comes to adoption and open-source, and the choice of Vimscript over Lua may even determine the death of Vim in the long run. I don’t know the “drama” that resulted in the fork of Neovim, but I wouldn’t exclude that Vim took its relevance for granted just for being the OG of the two. In fact, I don’t think that Vim today can claim being cooler than Neovim other than for being the original one.</p>
+
+<p>Even if a software is well-crafted, it’s evident that a Pascal application will only attract a handful of developers, whereas JavaScript would open up to the entire globe, and the same applies to Vimscript versus Lua. If your software is written for yourself and requires developers to learn a new technology to contribute, either it is <em>the ultimate cool</em>, or you might well end up yelling at your echo chamber.</p>
+
+<h2 id="passepartout-adds-a-javascript-api">Passepartout adds a JavaScript API</h2>
+
+<p>While I invest a lot in making the software architecture as accessible as I can, I haven’t spent as much time in documenting <em>how</em> to start contributing to the codebase. I know myself how intimidating it is to submit a PR to someone else’s repository, so it’s crucial that we, the maintainers, provide a viable entry point to those willing to collaborate. A welcoming, non-judging community also reduces the friction of the first public contribution.</p>
+
+<p>One part that I’ve always found potentially accessible was the Providers API, which is how Passepartout auto-compiles VPN configurations for a plethora of provider servers. Nevertheless, no one ever contributed a single provider, and no wonder: providers were generated in CI with a convoluted set of undocumented Ruby scripts. Who on Earth would want to touch that mess?</p>
+
+<p>When I found out about <a href="https://developer.apple.com/documentation/javascriptcore">JavaScriptCore</a> to solve a different problem, I suddenly realized how scripting could be a lower barrier to enter the Passepartout codebase, as there are way more JavaScript than Swift developers out there.</p>
+
+<p>With the help of AI, I rapidly converted the old Ruby legacy to a brand new <a href="https://github.com/passepartoutvpn/api-source">Node.js implementation</a> that most developers would find easy to understand, develop, and test without even installing the app. Then I started documenting <a href="https://github.com/passepartoutvpn/api-source?tab=readme-ov-file#new-providers">how to submit a provider</a> step by step. This doesn’t imply that people will start adding new providers today, but offering accessible tools and documentation is a <em>strict</em> requirement for that to happen.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Open-source success isn’t about being free, it’s about being accessible. Tools like Neovim thrive because they choose approachable technologies like Lua, making contributions easier. Similarly, by adopting JavaScript for scripting, Passepartout lowers its barrier to entry and opens the door to wider community involvement. If you want contributors, you must meet them where they are.</p>
+
+
+        
+    </div>
+    
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="/feed.xml" title="Follow the blog" target="_blank"><i class="fa-solid fa-rss"></i>Subscribe</a></li>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/cross-platform-swift/">Cross-platform Swift: Introduction</a></li>
+            
+            <li><a href="/2025/03/who-cares-about-performance/">Who cares about performance?</a></li>
+            
+            <li><a href="/2025/03/frontend-development-is-easy/">Frontend development is easy</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/cross-platform-swift/combine/" title="Cross-platform Swift: Combine"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+    <a href="/feed.xml" title="Follow the blog" class="fa-solid fa-rss"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1745507499" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>
