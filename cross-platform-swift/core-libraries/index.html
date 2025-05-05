@@ -1,0 +1,458 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Cross-platform Swift: Core libraries</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Cross-platform Swift: Core libraries" />
+<meta property="og:title" content="Cross-platform Swift: Core libraries" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/f/swift/swift.png?1746454783" />
+<meta property="og:url" content="https://davidederosa.com/cross-platform-swift/core-libraries/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="Cross-platform Swift: Core libraries" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/swift/swift.png?1746454783" />
+<meta name="twitter:url" content="https://davidederosa.com/cross-platform-swift/core-libraries/" />
+
+<link rel="canonical" href="https://davidederosa.com/cross-platform-swift/core-libraries/" />
+
+
+<link rel="next" href="/2025/04/scripting-and-open-source-adoption/" title="Scripting and open-source adoption" />
+
+
+<link rel="stylesheet" href="/s/main.css?1746454783" />
+<link rel="stylesheet" href="/s/main-mobile.css?1746454783" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1746454783" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1746454783" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1746454783" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+<div class="post-icon">
+    <a href="/cross-platform-swift/core-libraries/">
+        
+        <img src="/s/f/swift/swift-150.png" alt="Cross-platform Swift: Core libraries" />
+        
+    </a>
+</div>
+
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 5, 2025</span>
+            <h2 itemprop="name">
+                
+                Cross-platform Swift: Core libraries
+                
+            </h2>
+            
+
+
+
+
+
+
+<div class="post-list post-series-links">
+    part of a <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">series</a>:
+    
+    <a href="/cross-platform-swift/combine/" title="Cross-platform Swift: Combine">&lt; prev</a>
+    
+    |
+    
+    next &gt;
+    
+</div>
+
+
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+<header class="post-series-toc">
+    
+    <h3>Table of contents (ongoing)</h3>
+    
+    <ol>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li>
+            <a href="/cross-platform-swift/" title="Cross-platform Swift: Introduction">
+                
+                Cross-platform Swift: Introduction
+                
+            </a>
+        </li>
+        
+        
+        
+        <li>
+            <a href="/cross-platform-swift/combine/" title="Cross-platform Swift: Combine">
+                
+                Cross-platform Swift: Combine
+                
+            </a>
+        </li>
+        
+        
+        
+        
+        
+        <li>
+            <a href="/cross-platform-swift/core-libraries/" title="Cross-platform Swift: Core libraries">
+                
+                <strong>Cross-platform Swift: Core libraries</strong>
+                
+            </a>
+        </li>
+        
+        
+    </ol>
+</header>
+
+
+        <p>When programming Swift in Xcode, we take for granted a few things that are in fact different when you compile on other platforms. Here I show you those I stumbled upon, and how I worked around some limitations of the bare Swift toolchain.</p>
+
+<h2 id="foundation">Foundation</h2>
+
+<p>Have you ever compiled Swift code without importing <a href="https://developer.apple.com/documentation/foundation/"><code class="language-plaintext highlighter-rouge">Foundation</code></a>? Do you even think it’s possible? Look at the most basic Swift template in Xcode:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//</span>
+<span class="c1">//  File.swift</span>
+<span class="c1">//  Passepartout</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by Davide De Rosa on 5/5/25.</span>
+<span class="c1">//</span>
+
+<span class="kd">import</span> <span class="kt">Foundation</span>
+</code></pre></div></div>
+
+<p>which in Objective-C would be:</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//</span>
+<span class="c1">//  File.m</span>
+<span class="c1">//  Passepartout</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by Davide De Rosa on 5/5/25.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;
+</span></code></pre></div></div>
+
+<p>Let’s cut it short to the bad news: <strong><code class="language-plaintext highlighter-rouge">Foundation</code> is not part of the Swift language</strong>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Foundation</code> is, however, available as an import in the prebuilt Swift toolchains for non-Apple platforms. Why is that? Over the years, those pseudo-implicit imports may have convinced most of us that <code class="language-plaintext highlighter-rouge">Foundation</code> has always been a standard library. First, as an Objective-C wrapper of <a href="https://developer.apple.com/documentation/corefoundation/"><code class="language-plaintext highlighter-rouge">CoreFoundation</code></a>. Later, as an integral part of Swift.</p>
+
+<p>The maintainers of the otherwise modern Apple language are well aware of this heavy legacy, so they created a replacement of <code class="language-plaintext highlighter-rouge">Foundation</code> that is not bound to the Apple SDK. Beware that if you build the Swift toolchain by yourself, <code class="language-plaintext highlighter-rouge">Foundation</code> is not included by default. What this tells me is that maybe, <em>maybe</em>, <code class="language-plaintext highlighter-rouge">Foundation</code> will also depart from Swift some day. You were warned.</p>
+
+<p>Below are a few <code class="language-plaintext highlighter-rouge">Foundation</code> entities that many developers are familiar with:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Data</code> for binary data (bridging ObjC <code class="language-plaintext highlighter-rouge">NSData</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">Date</code> for dates and timestamps (briding ObjC <code class="language-plaintext highlighter-rouge">NSDate</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">JSONEncoder</code> and <code class="language-plaintext highlighter-rouge">JSONDecoder</code> (these are pure Swift)</li>
+  <li><code class="language-plaintext highlighter-rouge">URL</code>, <code class="language-plaintext highlighter-rouge">URLSession</code> and tasks (bridigng ObjC <code class="language-plaintext highlighter-rouge">NSURL</code> and <code class="language-plaintext highlighter-rouge">NSURLSession</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">FileManager</code></li>
+  <li>A bunch of other <code class="language-plaintext highlighter-rouge">NS</code>-prefixed stuff</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">Foundation</code> import is not as a comprehensive as on Apple. This new version has opt-in modules due to the dependencies that they imply:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">FoundationNetworking</code> for <code class="language-plaintext highlighter-rouge">URL</code> and <code class="language-plaintext highlighter-rouge">URLSession</code>, due to the dependency on <code class="language-plaintext highlighter-rouge">libcurl</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FoundationXML</code> for <code class="language-plaintext highlighter-rouge">XMLParser</code>, due to the dependency on <code class="language-plaintext highlighter-rouge">libxml2</code></li>
+</ul>
+
+<p>Can you get rid of all this stuff already? I doubt you can, unless you started a new project knowing these gotchas beforehand. In my case, I need to keep the burden of this non-standard library, at least until Swift will have a richer standard library.</p>
+
+<p>Last but not least, <code class="language-plaintext highlighter-rouge">Foundation</code> comes with the <a href="https://developer.apple.com/documentation/dispatch">Grand Central Dispatch</a> API, but listen to me: it’s time you learn <a href="https://developer.apple.com/documentation/swift/concurrency"><code class="language-plaintext highlighter-rouge">Concurrency</code></a>.</p>
+
+<h2 id="swift-standard-library">Swift standard library</h2>
+
+<p>You heard that, Swift has a <a href="https://developer.apple.com/documentation/swift/swift-standard-library"><em>standard library</em></a>, but few would be able to delineate its boundaries. The Apple documentation certainly doesn’t help when figuring out what comes from the language, and what comes from <code class="language-plaintext highlighter-rouge">Foundation</code>.</p>
+
+<p>A partial list:</p>
+
+<ul>
+  <li>Primitive types: <code class="language-plaintext highlighter-rouge">Bool</code>, <code class="language-plaintext highlighter-rouge">Int</code>, <code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">Double</code>, …, but <em>not</em> <code class="language-plaintext highlighter-rouge">Data</code> or <code class="language-plaintext highlighter-rouge">Date</code>!</li>
+  <li>Protocols: <code class="language-plaintext highlighter-rouge">Comparable</code>, <code class="language-plaintext highlighter-rouge">Equatable</code>, <code class="language-plaintext highlighter-rouge">Hashable</code>, <code class="language-plaintext highlighter-rouge">Identifiable</code>, <code class="language-plaintext highlighter-rouge">Codable</code>, …</li>
+  <li>Collections: <code class="language-plaintext highlighter-rouge">Array</code>, <code class="language-plaintext highlighter-rouge">Dictionary</code>, <code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Collection</code>, …</li>
+  <li>Flow constructs: <code class="language-plaintext highlighter-rouge">Result</code>, <code class="language-plaintext highlighter-rouge">Error</code></li>
+  <li>String description protocols: <code class="language-plaintext highlighter-rouge">CustomStringConvertible</code> and variations</li>
+</ul>
+
+<p>Thank God, <code class="language-plaintext highlighter-rouge">Concurrency</code> is also part of the library.</p>
+
+<h2 id="platform-specific-packages">Platform-specific packages</h2>
+
+<p>When developing on macOS, you may notice that standard C functions are implicitly bridged to Swift code. This autocompletion is proof:</p>
+
+<p><img src="/s/f/cross-platform-swift/xcode-c-autocompletion.png" alt="C autocompletion of memcpy in Xcode" /></p>
+
+<p>The other Swift environments behave differently, and honestly, I prefer it that way. I’d rather import things explicitly when needed. Therefore, the compiler will stop at C symbols in Swift code out of the box. Windows in particular doesn’t follow the POSIX naming, and some symbols come from very differently named headers. For example, the first symbol that triggered a compiler failure for me was <code class="language-plaintext highlighter-rouge">AF_INET</code>, which on Windows is part of <code class="language-plaintext highlighter-rouge">WinSock2.h</code>.</p>
+
+<p>While the header names are relevant in C code, Swift remains a bit more agnostic by hiding them behind platform-specific packages:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">import WinSDK</code> on Windows</li>
+  <li><code class="language-plaintext highlighter-rouge">import Linux</code> on Linux</li>
+  <li><code class="language-plaintext highlighter-rouge">import Android</code> on Android</li>
+</ul>
+
+<p>The imports still require some <code class="language-plaintext highlighter-rouge">#if</code> conditionals here and there. At that point, you may incur into a few C symbols that are only available on Apple platforms, like any variation of <code class="language-plaintext highlighter-rouge">NSEC_PER_*</code> in my library. In that case, I guess that the quickest solution is to redefine those symbols yourself, unless you can refactor your code to not use them at all.</p>
+
+<h2 id="objective-c-runtime">Objective-C runtime</h2>
+
+<p>The need for the Objective-C runtime in your Swift code may be incredibly subtle. Look at a linker error I faced:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lld-link: error: undefined symbol: objc_autoreleaseReturnValue
+</code></pre></div></div>
+
+<p>I was lucky to catch the issue in a place where the compiler could not provide any hint. The culprit was a class of the Partout API that was using the <a href="https://developer.apple.com/documentation/javascriptcore"><code class="language-plaintext highlighter-rouge">JavaScriptCore</code></a> framework, which in turn required Swift closures to be Objective-C blocks to inject custom functions into the JavaScript code. If you’ve never seen that, here’s a bit of the offending code:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">inject</span><span class="p">(</span><span class="s">"getText"</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="n">vm</span><span class="o">.</span><span class="n">getText</span> <span class="k">as</span> <span class="kd">@convention</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="p">?)</span>
+</code></pre></div></div>
+
+<p>Frankly, I wondered why the code compiled at all, so I tried to put <code class="language-plaintext highlighter-rouge">@objc</code> on top of a Swift class on Linux:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>File.swift:1:2: error: Objective-C interoperability is disabled
+</code></pre></div></div>
+
+<p>Gosh, then why does <code class="language-plaintext highlighter-rouge">@convention(block)</code> compile on non-Apple, if the linker is always bound to fail? I have no idea, but look at your code carefully if it compiles fine but the linker complains about some Objective-C runtime or obscure <code class="language-plaintext highlighter-rouge">NS*</code> entity.</p>
+
+<p>Fun fact: <code class="language-plaintext highlighter-rouge">JavaScriptCore</code> is an Objective-C framework with iOS 16 as the <em>minimum target</em>, which deceived me into seeing it as a “new thing”.</p>
+
+<h2 id="bottom-line">Bottom line</h2>
+
+<p>Stick with pure Swift as much as you can, and when you use <code class="language-plaintext highlighter-rouge">Foundation</code>, do it with a grain of salt: the Swift standard library is much smaller than you think. Spot any Objective-C sorcery, and kill it for good.</p>
+
+<p>In the next article, I will show you how conditionals and dependency injection allows us to still use frameworks that are not available on all platforms.</p>
+
+
+        
+    </div>
+    
+    
+        
+            
+        
+    
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="/feed.xml" title="Follow the blog" target="_blank"><i class="fa-solid fa-rss"></i>Subscribe</a></li>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/cross-platform-swift/combine/">Cross-platform Swift: Combine</a></li>
+            
+            <li><a href="/cross-platform-swift/">Cross-platform Swift: Introduction</a></li>
+            
+            <li><a href="/2025/03/who-cares-about-performance/">Who cares about performance?</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/2025/04/scripting-and-open-source-adoption/" title="Scripting and open-source adoption"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+    <a href="/feed.xml" title="Follow the blog" class="fa-solid fa-rss"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1746454783" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>

@@ -1,4 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-05-04T19:20:34+02:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Scripting and open-source adoption</title><link href="https://davidederosa.com/2025/04/scripting-and-open-source-adoption/" rel="alternate" type="text/html" title="Scripting and open-source adoption" /><published>2025-04-24T00:00:00+02:00</published><updated>2025-04-24T00:00:00+02:00</updated><id>https://davidederosa.com/2025/04/scripting-and-open-source-adoption</id><content type="html" xml:base="https://davidederosa.com/2025/04/scripting-and-open-source-adoption/"><![CDATA[<p>Recently, I stumbled upon an <a href="https://www.youtube.com/watch?v=p0Q3oDY9A5s">old video by ThePrimeagen</a> where he claimed he’d quit using Vim for good after its major update.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://davidederosa.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://davidederosa.com/" rel="alternate" type="text/html" /><updated>2025-05-05T16:19:43+02:00</updated><id>https://davidederosa.com/feed.xml</id><title type="html">Davide De Rosa</title><subtitle>I make software. I look around me.</subtitle><author><name>Davide De Rosa</name></author><entry><title type="html">Cross-platform Swift: Core libraries</title><link href="https://davidederosa.com/cross-platform-swift/core-libraries/" rel="alternate" type="text/html" title="Cross-platform Swift: Core libraries" /><published>2025-05-05T00:00:00+02:00</published><updated>2025-05-05T00:00:00+02:00</updated><id>https://davidederosa.com/cross-platform-swift/cross-platform-swift-core-libraries</id><content type="html" xml:base="https://davidederosa.com/cross-platform-swift/core-libraries/"><![CDATA[<p>When programming Swift in Xcode, we take for granted a few things that are in fact different when you compile on other platforms. Here I show you those I stumbled upon, and how I worked around some limitations of the bare Swift toolchain.</p>
+
+<h2 id="foundation">Foundation</h2>
+
+<p>Have you ever compiled Swift code without importing <a href="https://developer.apple.com/documentation/foundation/"><code class="language-plaintext highlighter-rouge">Foundation</code></a>? Do you even think it’s possible? Look at the most basic Swift template in Xcode:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//</span>
+<span class="c1">//  File.swift</span>
+<span class="c1">//  Passepartout</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by Davide De Rosa on 5/5/25.</span>
+<span class="c1">//</span>
+
+<span class="kd">import</span> <span class="kt">Foundation</span>
+</code></pre></div></div>
+
+<p>which in Objective-C would be:</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//</span>
+<span class="c1">//  File.m</span>
+<span class="c1">//  Passepartout</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by Davide De Rosa on 5/5/25.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;
+</span></code></pre></div></div>
+
+<p>Let’s cut it short to the bad news: <strong><code class="language-plaintext highlighter-rouge">Foundation</code> is not part of the Swift language</strong>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Foundation</code> is, however, available as an import in the prebuilt Swift toolchains for non-Apple platforms. Why is that? Over the years, those pseudo-implicit imports may have convinced most of us that <code class="language-plaintext highlighter-rouge">Foundation</code> has always been a standard library. First, as an Objective-C wrapper of <a href="https://developer.apple.com/documentation/corefoundation/"><code class="language-plaintext highlighter-rouge">CoreFoundation</code></a>. Later, as an integral part of Swift.</p>
+
+<p>The maintainers of the otherwise modern Apple language are well aware of this heavy legacy, so they created a replacement of <code class="language-plaintext highlighter-rouge">Foundation</code> that is not bound to the Apple SDK. Beware that if you build the Swift toolchain by yourself, <code class="language-plaintext highlighter-rouge">Foundation</code> is not included by default. What this tells me is that maybe, <em>maybe</em>, <code class="language-plaintext highlighter-rouge">Foundation</code> will also depart from Swift some day. You were warned.</p>
+
+<p>Below are a few <code class="language-plaintext highlighter-rouge">Foundation</code> entities that many developers are familiar with:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Data</code> for binary data (bridging ObjC <code class="language-plaintext highlighter-rouge">NSData</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">Date</code> for dates and timestamps (briding ObjC <code class="language-plaintext highlighter-rouge">NSDate</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">JSONEncoder</code> and <code class="language-plaintext highlighter-rouge">JSONDecoder</code> (these are pure Swift)</li>
+  <li><code class="language-plaintext highlighter-rouge">URL</code>, <code class="language-plaintext highlighter-rouge">URLSession</code> and tasks (bridigng ObjC <code class="language-plaintext highlighter-rouge">NSURL</code> and <code class="language-plaintext highlighter-rouge">NSURLSession</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">FileManager</code></li>
+  <li>A bunch of other <code class="language-plaintext highlighter-rouge">NS</code>-prefixed stuff</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">Foundation</code> import is not as a comprehensive as on Apple. This new version has opt-in modules due to the dependencies that they imply:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">FoundationNetworking</code> for <code class="language-plaintext highlighter-rouge">URL</code> and <code class="language-plaintext highlighter-rouge">URLSession</code>, due to the dependency on <code class="language-plaintext highlighter-rouge">libcurl</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FoundationXML</code> for <code class="language-plaintext highlighter-rouge">XMLParser</code>, due to the dependency on <code class="language-plaintext highlighter-rouge">libxml2</code></li>
+</ul>
+
+<p>Can you get rid of all this stuff already? I doubt you can, unless you started a new project knowing these gotchas beforehand. In my case, I need to keep the burden of this non-standard library, at least until Swift will have a richer standard library.</p>
+
+<p>Last but not least, <code class="language-plaintext highlighter-rouge">Foundation</code> comes with the <a href="https://developer.apple.com/documentation/dispatch">Grand Central Dispatch</a> API, but listen to me: it’s time you learn <a href="https://developer.apple.com/documentation/swift/concurrency"><code class="language-plaintext highlighter-rouge">Concurrency</code></a>.</p>
+
+<h2 id="swift-standard-library">Swift standard library</h2>
+
+<p>You heard that, Swift has a <a href="https://developer.apple.com/documentation/swift/swift-standard-library"><em>standard library</em></a>, but few would be able to delineate its boundaries. The Apple documentation certainly doesn’t help when figuring out what comes from the language, and what comes from <code class="language-plaintext highlighter-rouge">Foundation</code>.</p>
+
+<p>A partial list:</p>
+
+<ul>
+  <li>Primitive types: <code class="language-plaintext highlighter-rouge">Bool</code>, <code class="language-plaintext highlighter-rouge">Int</code>, <code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">Double</code>, …, but <em>not</em> <code class="language-plaintext highlighter-rouge">Data</code> or <code class="language-plaintext highlighter-rouge">Date</code>!</li>
+  <li>Protocols: <code class="language-plaintext highlighter-rouge">Comparable</code>, <code class="language-plaintext highlighter-rouge">Equatable</code>, <code class="language-plaintext highlighter-rouge">Hashable</code>, <code class="language-plaintext highlighter-rouge">Identifiable</code>, <code class="language-plaintext highlighter-rouge">Codable</code>, …</li>
+  <li>Collections: <code class="language-plaintext highlighter-rouge">Array</code>, <code class="language-plaintext highlighter-rouge">Dictionary</code>, <code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Collection</code>, …</li>
+  <li>Flow constructs: <code class="language-plaintext highlighter-rouge">Result</code>, <code class="language-plaintext highlighter-rouge">Error</code></li>
+  <li>String description protocols: <code class="language-plaintext highlighter-rouge">CustomStringConvertible</code> and variations</li>
+</ul>
+
+<p>Thank God, <code class="language-plaintext highlighter-rouge">Concurrency</code> is also part of the library.</p>
+
+<h2 id="platform-specific-packages">Platform-specific packages</h2>
+
+<p>When developing on macOS, you may notice that standard C functions are implicitly bridged to Swift code. This autocompletion is proof:</p>
+
+<p><img src="/s/f/cross-platform-swift/xcode-c-autocompletion.png" alt="C autocompletion of memcpy in Xcode" /></p>
+
+<p>The other Swift environments behave differently, and honestly, I prefer it that way. I’d rather import things explicitly when needed. Therefore, the compiler will stop at C symbols in Swift code out of the box. Windows in particular doesn’t follow the POSIX naming, and some symbols come from very differently named headers. For example, the first symbol that triggered a compiler failure for me was <code class="language-plaintext highlighter-rouge">AF_INET</code>, which on Windows is part of <code class="language-plaintext highlighter-rouge">WinSock2.h</code>.</p>
+
+<p>While the header names are relevant in C code, Swift remains a bit more agnostic by hiding them behind platform-specific packages:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">import WinSDK</code> on Windows</li>
+  <li><code class="language-plaintext highlighter-rouge">import Linux</code> on Linux</li>
+  <li><code class="language-plaintext highlighter-rouge">import Android</code> on Android</li>
+</ul>
+
+<p>The imports still require some <code class="language-plaintext highlighter-rouge">#if</code> conditionals here and there. At that point, you may incur into a few C symbols that are only available on Apple platforms, like any variation of <code class="language-plaintext highlighter-rouge">NSEC_PER_*</code> in my library. In that case, I guess that the quickest solution is to redefine those symbols yourself, unless you can refactor your code to not use them at all.</p>
+
+<h2 id="objective-c-runtime">Objective-C runtime</h2>
+
+<p>The need for the Objective-C runtime in your Swift code may be incredibly subtle. Look at a linker error I faced:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lld-link: error: undefined symbol: objc_autoreleaseReturnValue
+</code></pre></div></div>
+
+<p>I was lucky to catch the issue in a place where the compiler could not provide any hint. The culprit was a class of the Partout API that was using the <a href="https://developer.apple.com/documentation/javascriptcore"><code class="language-plaintext highlighter-rouge">JavaScriptCore</code></a> framework, which in turn required Swift closures to be Objective-C blocks to inject custom functions into the JavaScript code. If you’ve never seen that, here’s a bit of the offending code:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">inject</span><span class="p">(</span><span class="s">"getText"</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="n">vm</span><span class="o">.</span><span class="n">getText</span> <span class="k">as</span> <span class="kd">@convention</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="p">?)</span>
+</code></pre></div></div>
+
+<p>Frankly, I wondered why the code compiled at all, so I tried to put <code class="language-plaintext highlighter-rouge">@objc</code> on top of a Swift class on Linux:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>File.swift:1:2: error: Objective-C interoperability is disabled
+</code></pre></div></div>
+
+<p>Gosh, then why does <code class="language-plaintext highlighter-rouge">@convention(block)</code> compile on non-Apple, if the linker is always bound to fail? I have no idea, but look at your code carefully if it compiles fine but the linker complains about some Objective-C runtime or obscure <code class="language-plaintext highlighter-rouge">NS*</code> entity.</p>
+
+<p>Fun fact: <code class="language-plaintext highlighter-rouge">JavaScriptCore</code> is an Objective-C framework with iOS 16 as the <em>minimum target</em>, which deceived me into seeing it as a “new thing”.</p>
+
+<h2 id="bottom-line">Bottom line</h2>
+
+<p>Stick with pure Swift as much as you can, and when you use <code class="language-plaintext highlighter-rouge">Foundation</code>, do it with a grain of salt: the Swift standard library is much smaller than you think. Spot any Objective-C sorcery, and kill it for good.</p>
+
+<p>In the next article, I will show you how conditionals and dependency injection allows us to still use frameworks that are not available on all platforms.</p>]]></content><author><name>Davide De Rosa</name></author><category term="development" /><category term="swift" /><category term="c" /><summary type="html"><![CDATA[When programming Swift in Xcode, we take for granted a few things that are in fact different when you compile on other platforms. Here I show you those I stumbled upon, and how I worked around some limitations of the bare Swift toolchain. Foundation Have you ever compiled Swift code without importing Foundation? Do you even think it’s possible? Look at the most basic Swift template in Xcode: // // File.swift // Passepartout // // Created by Davide De Rosa on 5/5/25. // import Foundation which in Objective-C would be: // // File.m // Passepartout // // Created by Davide De Rosa on 5/5/25. // #import &lt;Foundation/Foundation.h&gt; Let’s cut it short to the bad news: Foundation is not part of the Swift language. Foundation is, however, available as an import in the prebuilt Swift toolchains for non-Apple platforms. Why is that? Over the years, those pseudo-implicit imports may have convinced most of us that Foundation has always been a standard library. First, as an Objective-C wrapper of CoreFoundation. Later, as an integral part of Swift. The maintainers of the otherwise modern Apple language are well aware of this heavy legacy, so they created a replacement of Foundation that is not bound to the Apple SDK. Beware that if you build the Swift toolchain by yourself, Foundation is not included by default. What this tells me is that maybe, maybe, Foundation will also depart from Swift some day. You were warned. Below are a few Foundation entities that many developers are familiar with: Data for binary data (bridging ObjC NSData) Date for dates and timestamps (briding ObjC NSDate) JSONEncoder and JSONDecoder (these are pure Swift) URL, URLSession and tasks (bridigng ObjC NSURL and NSURLSession) FileManager A bunch of other NS-prefixed stuff The Foundation import is not as a comprehensive as on Apple. This new version has opt-in modules due to the dependencies that they imply: FoundationNetworking for URL and URLSession, due to the dependency on libcurl FoundationXML for XMLParser, due to the dependency on libxml2 Can you get rid of all this stuff already? I doubt you can, unless you started a new project knowing these gotchas beforehand. In my case, I need to keep the burden of this non-standard library, at least until Swift will have a richer standard library. Last but not least, Foundation comes with the Grand Central Dispatch API, but listen to me: it’s time you learn Concurrency. Swift standard library You heard that, Swift has a standard library, but few would be able to delineate its boundaries. The Apple documentation certainly doesn’t help when figuring out what comes from the language, and what comes from Foundation. A partial list: Primitive types: Bool, Int, String, Double, …, but not Data or Date! Protocols: Comparable, Equatable, Hashable, Identifiable, Codable, … Collections: Array, Dictionary, Set, Collection, … Flow constructs: Result, Error String description protocols: CustomStringConvertible and variations Thank God, Concurrency is also part of the library. Platform-specific packages When developing on macOS, you may notice that standard C functions are implicitly bridged to Swift code. This autocompletion is proof: The other Swift environments behave differently, and honestly, I prefer it that way. I’d rather import things explicitly when needed. Therefore, the compiler will stop at C symbols in Swift code out of the box. Windows in particular doesn’t follow the POSIX naming, and some symbols come from very differently named headers. For example, the first symbol that triggered a compiler failure for me was AF_INET, which on Windows is part of WinSock2.h. While the header names are relevant in C code, Swift remains a bit more agnostic by hiding them behind platform-specific packages: import WinSDK on Windows import Linux on Linux import Android on Android The imports still require some #if conditionals here and there. At that point, you may incur into a few C symbols that are only available on Apple platforms, like any variation of NSEC_PER_* in my library. In that case, I guess that the quickest solution is to redefine those symbols yourself, unless you can refactor your code to not use them at all. Objective-C runtime The need for the Objective-C runtime in your Swift code may be incredibly subtle. Look at a linker error I faced: lld-link: error: undefined symbol: objc_autoreleaseReturnValue I was lucky to catch the issue in a place where the compiler could not provide any hint. The culprit was a class of the Partout API that was using the JavaScriptCore framework, which in turn required Swift closures to be Objective-C blocks to inject custom functions into the JavaScript code. If you’ve never seen that, here’s a bit of the offending code: inject("getText", object: vm.getText as @convention(block) (String) -&gt; Any?) Frankly, I wondered why the code compiled at all, so I tried to put @objc on top of a Swift class on Linux: File.swift:1:2: error: Objective-C interoperability is disabled Gosh, then why does @convention(block) compile on non-Apple, if the linker is always bound to fail? I have no idea, but look at your code carefully if it compiles fine but the linker complains about some Objective-C runtime or obscure NS* entity. Fun fact: JavaScriptCore is an Objective-C framework with iOS 16 as the minimum target, which deceived me into seeing it as a “new thing”. Bottom line Stick with pure Swift as much as you can, and when you use Foundation, do it with a grain of salt: the Swift standard library is much smaller than you think. Spot any Objective-C sorcery, and kill it for good. In the next article, I will show you how conditionals and dependency injection allows us to still use frameworks that are not available on all platforms.]]></summary></entry><entry><title type="html">Scripting and open-source adoption</title><link href="https://davidederosa.com/2025/04/scripting-and-open-source-adoption/" rel="alternate" type="text/html" title="Scripting and open-source adoption" /><published>2025-04-24T00:00:00+02:00</published><updated>2025-04-24T00:00:00+02:00</updated><id>https://davidederosa.com/2025/04/scripting-and-open-source-adoption</id><content type="html" xml:base="https://davidederosa.com/2025/04/scripting-and-open-source-adoption/"><![CDATA[<p>Recently, I stumbled upon an <a href="https://www.youtube.com/watch?v=p0Q3oDY9A5s">old video by ThePrimeagen</a> where he claimed he’d quit using Vim for good after its major update.</p>
 
 <p>For those who don’t know, <a href="https://www.vim.org/">Vim</a> is a <em>ubiquitous</em> text editor, especially popular among avid terminal-oriented users. It is a legendary software, but it has a steep learning curve, to the point that “quitting Vim” <a href="https://stackoverflow.com/questions/11828270/how-do-i-exit-vim">has become a meme</a> for being notoriously unintuitive.</p>
 
@@ -714,203 +829,4 @@ for (outpoint in utxos) {
 
 <p>And remember, all the code is on my <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub repository</a>.</p>
 
-<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry><entry><title type="html">The first transaction (pt. 2)</title><link href="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/" rel="alternate" type="text/html" title="The first transaction (pt. 2)" /><published>2015-06-03T00:00:00+02:00</published><updated>2015-06-03T00:00:00+02:00</updated><id>https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two</id><content type="html" xml:base="https://davidederosa.com/basic-blockchain-programming/the-first-transaction-part-two/"><![CDATA[<p>The <a href="/basic-blockchain-programming/the-first-transaction-part-one/">first part</a> covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.</p>
-
-<!--more-->
-
-<h3 id="the-input-script">The input script</h3>
-
-<p>As a result of <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a>, we built the signable message for our input. In <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-sign.c">ex-tx-sign.c</a> we’ll reuse the message as a starting point.</p>
-
-<h4 id="producing-the-signature">Producing the signature</h4>
-
-<p>Rather than the message itself, we’ll sign its hash256 digest:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>62 44 98 0f a0 75 2e 5b
-46 43 ed b3 53 fd a5 23
-8a 9a 3d 44 49 16 76 78
-8e fd d2 5d d6 48 55 ba
-</code></pre></div></div>
-
-<p>with our <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-priv.pem">ECDSA private key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16 26 07 83 e4 0b 16 73
-16 73 62 2a c8 a5 b0 45
-fc 3e a4 af 70 f7 27 f3
-f9 e9 2b dd 3a 1d dc 42
-</code></pre></div></div>
-
-<p>This is one DER signature I yielded (yours will differ):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30 44 02 20 11 1a 48 2a
-ba 6a fb a1 2a 6f 27 de
-76 7d d4 d0 64 17 de f6
-65 bd 10 0b c6 8c 42 84
-5c 75 2a 8f 02 20 5e 86
-f5 e0 54 b2 c6 ca c5 d6
-63 66 4e 35 77 9f b0 34
-38 7c 07 84 8b c7 72 44
-42 ca cf 65 93 24 
-</code></pre></div></div>
-
-<h4 id="flag-and-assembly">Flag and assembly</h4>
-
-<p>The <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag (now 8-bit) is appended again to the signature, and together with the compressed <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ec-pub.pem">ECDSA public key</a>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>02
-82 00 6e 93 98 a6 98 6e
-da 61 fe 91 67 4c 3a 10
-8c 39 94 75 bf 1e 73 8f
-19 df c2 db 11 db 1d 28
-</code></pre></div></div>
-
-<p>we’re finally able to build our P2PKH input script:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>47 30 44 02 20 11 1a 48
-2a ba 6a fb a1 2a 6f 27
-de 76 7d d4 d0 64 17 de
-f6 65 bd 10 0b c6 8c 42
-84 5c 75 2a 8f 02 20 5e
-86 f5 e0 54 b2 c6 ca c5
-d6 63 66 4e 35 77 9f b0
-34 38 7c 07 84 8b c7 72
-44 42 ca cf 65 93 24 01
-
-21 02 82 00 6e 93 98 a6
-98 6e da 61 fe 91 67 4c
-3a 10 8c 39 94 75 bf 1e
-73 8f 19 df c2 db 11 db
-1d 28
-</code></pre></div></div>
-
-<p>Yes, the signing process is possibly the most annoying and error-prone part of our work.</p>
-
-<h3 id="packing-the-transaction">Packing the transaction</h3>
-
-<p>We’re all set to pack the transaction from our inputs and outputs. Let’s look at <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a>.</p>
-
-<h4 id="inputs-and-outputs">Inputs and outputs</h4>
-
-<p>Like I did for outputs, I also wrote a C macro in <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/tx.h">tx.h</a> for creating P2PKH inputs. The macro takes an UTXO outpoint, a signature, a public key and a <code class="language-plaintext highlighter-rouge">SIGHASH</code> flag:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="n">bbp_txin_t</span> <span class="o">*</span><span class="n">txin</span><span class="p">,</span> <span class="k">const</span> <span class="n">bbp_outpoint_t</span> <span class="o">*</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="n">bbp_sighash_t</span> <span class="n">flag</span><span class="p">);</span></code></pre></figure>
-
-<p>We use the macro to create our input, whereas the outputs code is taken from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-build.c">ex-tx-build.c</a> as is:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">bbp_outpoint_fill</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">bbp_txin_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">outpoint</span><span class="p">,</span>
-        <span class="s">"30440220111a482aba6afba12a6f27de767dd4d06..."</span><span class="p">,</span>
-        <span class="s">"0282006e9398a6986eda61fe91674c3a108c39947..."</span><span class="p">,</span>
-        <span class="n">BBP_SIGHASH_ALL</span><span class="p">);</span>
-
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">25100000</span><span class="p">,</span>
-        <span class="s">"18ba14b3682295cb05230e31fecb000892406608"</span><span class="p">);</span>
-<span class="n">bbp_txout_create_p2pkh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">61900000</span><span class="p">,</span>
-        <span class="s">"6bf19e55f94d986b4640c154d864699341919511"</span><span class="p">);</span></code></pre></figure>
-
-<h4 id="final-structure">Final structure</h4>
-
-<p>The easiest step is assembling the transaction structure and feeding it to <code class="language-plaintext highlighter-rouge">bbp_tx_serialize</code>:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">tx</span><span class="p">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">bbp_eint32</span><span class="p">(</span><span class="n">BBP_LITTLE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs_len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outs</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">ins</span><span class="p">;</span>
-<span class="n">tx</span><span class="p">.</span><span class="n">locktime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">rawtx_len</span> <span class="o">=</span> <span class="n">bbp_tx_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">rawtx</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">rawtx_len</span><span class="p">);</span>
-<span class="n">bbp_tx_serialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tx</span><span class="p">,</span> <span class="n">rawtx</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></code></pre></figure>
-
-<p>The <code class="language-plaintext highlighter-rouge">flag</code> parameter is set to <code class="language-plaintext highlighter-rouge">0</code> to pack a signed transaction instead of a signable message. The serialized transaction is:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* version (32-bit) */
-01 00 00 00
-
-/* number of inputs (varint) */
-01
-
-/* UTXO txid (hash256, little-endian) */
-f3 a2 7f 48 5f 98 33 c8
-31 8c 49 04 03 30 7f ef
-13 97 12 1b 5d d8 fe 70
-77 72 36 e7 37 1c 4e f3
-
-/* UTXO index (32-bit) */
-00 00 00 00
-
-/* input script (varint + data) */
-6a 47 30 44 02 20 11 1a
-48 2a ba 6a fb a1 2a 6f
-27 de 76 7d d4 d0 64 17
-de f6 65 bd 10 0b c6 8c
-42 84 5c 75 2a 8f 02 20
-5e 86 f5 e0 54 b2 c6 ca
-c5 d6 63 66 4e 35 77 9f
-b0 34 38 7c 07 84 8b c7
-72 44 42 ca cf 65 93 24
-01 21 02 82 00 6e 93 98
-a6 98 6e da 61 fe 91 67
-4c 3a 10 8c 39 94 75 bf
-1e 73 8f 19 df c2 db 11
-db 1d 28 
-
-/* UTXO sequence */
-ff ff ff ff
-
-/* number of outputs (varint) */
-02
-
-/* output value (64-bit) */
-e0 fe 7e 01 00 00 00 00
-
-/* output script (varint + data) */
-19 76 a9 14 18 ba 14 b3
-68 22 95 cb 05 23 0e 31
-fe cb 00 08 92 40 66 08
-88 ac
-
-/* change output value (64-bit) */
-e0 84 b0 03 00 00 00 00
-
-/* change output script (varint + data) */
-19 76 a9 14 6b f1 9e 55
-f9 4d 98 6b 46 40 c1 54
-d8 64 69 93 41 91 95 11
-88 ac
-
-/* locktime (32-bit) */
-00 00 00 00
-</code></pre></div></div>
-
-<p>and measures 225 bytes. The txid is obtained by performing hash256 on the transaction (big-endian):</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>99 96 e2 f6 4b 6a f0 23
-2d d9 c8 97 39 5c e5 1f
-dd 35 e6 35 9e dd 28 55
-c6 0f f8 23 d8 d6 57 d1 
-</code></pre></div></div>
-
-<h4 id="publishing-to-the-network">Publishing to the network</h4>
-
-<p>We made it, we’ve just built our first Bitcoin transaction! What’s next? Of course we want to commit our transaction to the blockchain. To do that, web services exist to save us the burden of communicating with the p2p network.</p>
-
-<p>For example, the <a href="https://tbtc.blockr.io/tx/push">Blockr push service</a> (Testnet in our scenario) comes handy to publish raw transactions to the blockchain. Insert a raw transaction like the <code class="language-plaintext highlighter-rouge">rawtx</code> output from <a href="https://github.com/keeshux/basic-blockchain-programming/blob/master/ex-tx-pack.c">ex-tx-pack.c</a> and you’re done, you can even double-check it before confirming. If you didn’t double-spend any of your UTXOs before and you’ve done everything correctly, you should see the transaction live after a few minutes. That is, as soon as it’s mined in a block.</p>
-
-<p>However, if you try to publish our sample transaction, you’ll get the following error:</p>
-
-<p><img src="/s/f/basic-blockchain-programming/tx-push-error.png" alt="Transaction push error" /></p>
-
-<p>Don’t worry, that’s because I already published it by myself. See how it looks like <a href="https://blockstream.info/testnet/tx/9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1">on a block explorer</a>.</p>
-
-<h3 id="get-the-code">Get the code!</h3>
-
-<p>Full source on <a href="https://github.com/keeshux/basic-blockchain-programming/">GitHub</a>.</p>
-
-<h3 id="next-block-in-chain">Next block in chain?</h3>
-
-<p>You learned how to sign transaction inputs and pack a raw blockchain transaction. The transaction identifier (txid) is the hash256 digest of the transaction bytes.</p>
-
-<p>In the <a href="/basic-blockchain-programming/wallet-software/">next article</a> we’ll have a look at <em>wallet software</em>. Please share this post if you enjoyed it and use the form below for questions and comments!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="transaction" /><category term="p2pkh" /><category term="utxo" /><category term="outpoint" /><category term="script" /><category term="hashing" /><category term="ecdsa" /><summary type="html"><![CDATA[The first part covered the basics of transaction building, like creating outputs from the destination addresses and gathering the needed input value. The most complicated part was constructing a message for the input signature. Now that we have one, we’re going to generate a signature and finally a script for the transaction input. The last step is about packing all the stuff together.]]></summary></entry></feed>
+<p>Keep mining!</p>]]></content><author><name>Davide De Rosa</name></author><category term="bitcoin" /><category term="bitcoin" /><category term="blockchain" /><category term="programming" /><category term="development" /><category term="wallet" /><category term="ecdsa" /><category term="thin client" /><category term="utxo" /><summary type="html"><![CDATA[Commonly, Bitcoin users rely on clients called wallets to create transactions and interact with the p2p network. Even Bitcoin Core is a wallet itself, besides being the official software for mining. Other well-known wallets are Electrum, Hive etc. Here I’ll try to describe the components of a wallet. Data model These are the typical data structures that a wallet maintains internally. Most of them accomplish the core business of the wallet, that is building transactions and broadcasting them to the Bitcoin network. Things like change addresses or encryption are convenient features yet not mandatory for a fully working implementation. Keypairs In the last paragraphs about the Bitcoin network, you learned how to create a primitive wallet. Given an ECDSA keypair, a basic Bitcoin wallet is made of: The WIF-encoded private key. The Base58Check-encoded hash160 of the public key, i.e. the P2PKH address. Real wallets actually create many keypairs, but stick with a single one for the sake of simplicity. In a tiered context, the keypair is the foundation of our data model and will “hold” our coins. Blockchain The blockchain component determines if a wallet is thin or heavyweight. Heavyweight wallets like Bitcoin Core are backed by a full blockchain, whereas thin wallets like Electrum and Hive only need a part of it or none at all, thus being suitable for slow connections or devices with limited capabilities like smartphones. “Heavy” really means it. At the time of writing, a Bitcoin Core wallet would take about 40GB of disk space to allocate the full blockchain locally, which includes all broadcast Bitcoin transactions since the beginning of time. And increasing. Conveniently, a thin client is much faster under the assumption that a normal user is not interested in every transaction in Bitcoin history. Instead, it will only download relevant transactions, that is transactions in which the user appears as a sender or a receiver. Focus on keypairs again. If our wallet only deals with standard P2PKH transactions –and most do–, we can safely assume that: The user is a receiver when his address appears in a transaction output script. The user is a sender when his public key appears in a transaction input script. Let’s see why. Consider the typical P2PKH output script: OP_DUP OP_HASH160 [hash160(public_key)] OP_EQUALVERIFY OP_CHECKSIG the typical P2PKH input script: [signature] [public_key] and the relevancy scan in pseudocode: outpoint = struct { txid, index }; relevant_txs = {}; /* txid -&gt; tx */ utxos = {}; /* outpoint */ balance = 0; for (tx in blockchain.txs) { /* 1 */ for (txout in tx.outputs) { if (!is_p2pkh_output(txout.script)) { continue; } if (txout.script contains hash160(keypair.public_key)) { relevant_txs.add(tx); outpoint = outpoint(tx.id, txout.index); utxos.add(outpoint); balance += txout.value; } } /* 2 */ for (txin in tx.inputs) { if (!is_p2pkh_input(txin.script)) { continue; } if (txin.script contains keypair.public_key) { relevant_txs.add(tx); outpoint = txin.outpoint; previous_tx = relevant_txs[outpoint.txid]; prev_txout = previous_tx.outputs[outpoint.index]; utxos.remove(outpoint); balance -= prev_txout.value; } } } (1) If any P2PKH transaction output contains the hash160 of our public key –our Bitcoin address–, the transaction is relevant to our wallet. Such an output associates more coins to our wallet keypair and contributes to the output value of the wallet. Until it’s spent, the output is an element of the UTXO set of the wallet, therefore increasing the balance. (2) If any P2PKH transaction input contains our public key, the transaction is relevant to our wallet. Such a transaction input spends coins associated with our wallet keypair, specifically it spends the output referenced by the input outpoint. The previous output is removed from the UTXO set because outputs are always spent in their entirety. After the spend, the balance decreases. Incidentally, you may notice that the relevant transactions form the history of a wallet. UTXOs So, given a keypair, the two criteria dramatically cut down the search time for relevant transactions in the blockchain, be it local (heavyweight wallet) or remote (thin wallet). To build new transactions, though, we must track the UTXO set, which appears to be a bonus result of the scanning process. All transaction outputs are initially added to the UTXOs, but they’re later removed if reused in another transaction as input outpoints. The final set provides us with the available outpoints for building new transactions. We can also compute the wallet balance from the UTXOs: balance = 0; for (outpoint in utxos) { unspent_tx = relevant_txs[outpoint.txid]; unspent_txout = unspent_tx.outputs[outpoint.index]; balance += unspent_txout.value; } Modularization From an architectural perspective, a wallet software can be split into 3 independent modules: Signing module. Public addresses module. Networking module. Most wallets are essentially monolithic, others are hybrid in that they sign transactions in a separate module. TREZOR is a well-known example of hybrid wallet where the signing module is even pushed to an external device. Signing This module is the only one holding sensitive data: the private key(s). It receives an unsigned transaction and returns a signed one, ready to be published to the Bitcoin network. Since the signing task involves just ECDSA, the module can be -and often is- conveniently implemented in hardware. This arrangement allows for strong 2-factor authentication. Think of OTP (One-Time Password) devices, those handy password generators designed to fit in your keyring. OTPs are often used for private banking to generate a login token that is only valid within a short time period. The token is the second step you take to enter your bank account after entering your credentials, and additional tokens can be requested for particularly sensitive operations. Your brain (the credentials) and the OTP device (the token) together protect the account. You won’t be able to log in in case you miss any of the two. Now look at the TREZOR. The TREZOR signing device is also part of a 2-factor authentication scheme, because the ability to create a transaction depends on 2 physically separate modules: the TREZOR itself (for the ECDSA keys) and a networking/blockchain software running on desktop or mobile (for the UTXOs). The device receives an unsigned transaction and signs it after manual confirmation. Then, the signed transaction is sent back to the network-connected software and finally broadcast. Again, the device alone won’t be able to build transactions because it has zero knowledge of the blockchain. Likewise, a transaction cannot be signed by the networked software as it has no access to the private keys. Public addresses Private and public keys are strongly related, still they can live in completely different contexts. In fact, they’re loosely coupled by nature. That’s why a wallet may opt for a public addresses distribution module. However, in our single keypair scenario such a module would be overkill, because we would be distributing just one public address. Public-key distribution would only make sense after learning about deterministic wallets, which I won’t deal with in this series. Plus, most wallets have this module conveniently merged into the networking component, since public addresses need to be constantly monitored for incoming transactions. Networking The networking module would sit in the middle of the other two, and it’s also the controller module. It’s in charge of several, sometimes complicated tasks: Connecting to the Bitcoin p2p network. Synchronizing and keeping up with the blockchain. Monitoring relevant transactions. Publishing transactions. Especially task 1 and 2 can be a PITA, look at the vague protocol description for blockchain download. It’s no surprise that many wallet manifacturers -like Electrum and Mycelium- have chosen to set up their own centralized synchronization network. Thin wallets are severely affected by the overwhelming complexity of blockchain synchronization. Task 3 is described in the above paragraph about the blockchain model, and requires the knowledge of the public key of our keypair. With the public key we’re able to monitor/restore both incoming and outcoming P2PKH transactions. Most importantly, the relevant transactions history determines the UTXO set of the wallet, which we’ll need to build new transactions. Task 4 is definitely the easiest, unless a wallet is advanced enough to pick the best UTXOs according to coin selection heuristics. After gathering the UTXOs and composing the unsigned transaction, it’s transmitted to the signing module. The unsigned transaction is signed and returned to the networking module, which in turn announces it to the Bitcoin network. Finally, it waits for the transaction to be mined in the upcoming blocks of the blockchain. Goodbye! That’s all. From now on, you should be way more comfortable with how Bitcoin works under the hood. Of course there’s much more to uncover, so I’m particularly interested in what topics you’d love to know more about. That’s why your feedback is golden, let me know in the comments what you enjoyed or didn’t about this series. This is free work and I won’t explicitly beg for donations. I’d rather be glad if you take your time to spread the word and share these articles with your friends or on social networks. After all, Bitcoin is far from being mainstream and significantly counts on word of mouth. And remember, all the code is on my GitHub repository. Keep mining!]]></summary></entry></feed>
