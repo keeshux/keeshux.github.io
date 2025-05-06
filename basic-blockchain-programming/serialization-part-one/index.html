@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Serialization (pt. 1)</title>
+<title>Basic blockchain programming: Serialization (pt. 1)</title>
 
 <meta name="author" content="Davide De Rosa" />
 <meta name="description" content="I make software. I look around me.">
@@ -23,37 +23,37 @@
 <!-- OpenGraph -->
 
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Serialization (pt. 1)" />
-<meta property="og:title" content="Serialization (pt. 1)" />
+<meta property="og:site_name" content="Basic blockchain programming: Serialization (pt. 1)" />
+<meta property="og:title" content="Basic blockchain programming: Serialization (pt. 1)" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1746548501" />
+<meta property="og:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1746562682" />
 <meta property="og:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 
 <!-- Twitter -->
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@keeshux" />
-<meta name="twitter:title" content="Serialization (pt. 1)" />
+<meta name="twitter:title" content="Basic blockchain programming: Serialization (pt. 1)" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1746548501" />
+<meta name="twitter:image" content="https://davidederosa.com/s/f/bitcoin/bitcoin.png?1746562682" />
 <meta name="twitter:url" content="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 
 <link rel="canonical" href="https://davidederosa.com/basic-blockchain-programming/serialization-part-one/" />
 
-<link rel="prev" href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)" />
+<link rel="prev" href="/basic-blockchain-programming/serialization-part-two/" title="Basic blockchain programming: Serialization (pt. 2)" />
 
 
-<link rel="next" href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes" />
+<link rel="next" href="/basic-blockchain-programming/bytes-and-hashes/" title="Basic blockchain programming: Bytes and hashes" />
 
 
-<link rel="stylesheet" href="/s/main.css?1746548501" />
-<link rel="stylesheet" href="/s/main-mobile.css?1746548501" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1746548501" />
+<link rel="stylesheet" href="/s/main.css?1746562682" />
+<link rel="stylesheet" href="/s/main-mobile.css?1746562682" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1746562682" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1746548501" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1746548501" />
+<link rel="shortcut icon" href="/s/favicon.ico?1746562682" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1746562682" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -90,7 +90,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 <div class="post-icon">
     <a href="/basic-blockchain-programming/serialization-part-one/">
         
-        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Serialization (pt. 1)" />
+        <img src="/s/f/bitcoin/bitcoin-150.png" alt="Basic blockchain programming: Serialization (pt. 1)" />
         
     </a>
 </div>
@@ -100,7 +100,7 @@ gtag('config', 'G-DWPG2HZ9FS');
             <span class="post-date" itemprop="datepublished">May 1, 2015</span>
             <h2 itemprop="name">
                 
-                Serialization (pt. 1)
+                Basic blockchain programming: Serialization (pt. 1)
                 
             </h2>
             
@@ -111,13 +111,13 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 
 <div class="post-list post-series-links">
-    part of a <a href="/basic-blockchain-programming/" title="A developer-oriented series about Bitcoin">series</a>:
+    part of a <a href="/basic-blockchain-programming/" title="Basic blockchain programming: A developer-oriented series about Bitcoin">series</a>:
     
-    <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes">&lt; prev</a>
+    <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Basic blockchain programming: Bytes and hashes">&lt; prev</a>
     
     |
     
-    <a href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)">next &gt;</a>
+    <a href="/basic-blockchain-programming/serialization-part-two/" title="Basic blockchain programming: Serialization (pt. 2)">next &gt;</a>
     
 </div>
 
@@ -552,7 +552,7 @@ c7 f9 be ba 87 ea 81 b2
     
         
             
-            Keep reading: <a href="/basic-blockchain-programming/serialization-part-two/">Serialization (pt. 2)</a>
+            Keep reading: <a href="/basic-blockchain-programming/serialization-part-two/">Basic blockchain programming: Serialization (pt. 2)</a>
             
         
     
@@ -600,13 +600,13 @@ c7 f9 be ba 87 ea 81 b2
     <ul>
         <li class="paginator-browser older">
             
-            <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Bytes and hashes"><i class="fa fa-chevron-left"></i> Older</a>
+            <a href="/basic-blockchain-programming/bytes-and-hashes/" title="Basic blockchain programming: Bytes and hashes"><i class="fa fa-chevron-left"></i> Older</a>
             
         </li><li class="paginator-browser home">
             <a href="/" class="fa fa-home"></a>
         </li><li class="paginator-browser newer">
             
-            <a href="/basic-blockchain-programming/serialization-part-two/" title="Serialization (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
+            <a href="/basic-blockchain-programming/serialization-part-two/" title="Basic blockchain programming: Serialization (pt. 2)">Newer <i class="fa fa-chevron-right"></i></a>
             
         </li>
     </ul>
@@ -629,7 +629,7 @@ c7 f9 be ba 87 ea 81 b2
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1746548501" async="async"></script>
+        <script src="/s/main.js?1746562682" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
