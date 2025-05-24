@@ -1,0 +1,310 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+    <head>
+        
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>A true case for Dependency Injection</title>
+
+<meta name="author" content="Davide De Rosa" />
+<meta name="description" content="I make software. I look around me.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-title" content="keeshux">
+
+<!-- OpenGraph -->
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="A true case for Dependency Injection" />
+<meta property="og:title" content="A true case for Dependency Injection" />
+<meta property="og:description" content="I make software. I look around me." />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1748102307" />
+<meta property="og:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
+
+<!-- Twitter -->
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@keeshux" />
+<meta name="twitter:title" content="A true case for Dependency Injection" />
+<meta name="twitter:description" content="I make software. I look around me." />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1748102307" />
+<meta name="twitter:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
+
+<link rel="canonical" href="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
+
+
+<link rel="next" href="/cross-platform-swift/core-libraries/" title="Cross-platform Swift: Core libraries" />
+
+
+<link rel="stylesheet" href="/s/main.css?1748102307" />
+<link rel="stylesheet" href="/s/main-mobile.css?1748102307" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1748102307" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+
+<link rel="shortcut icon" href="/s/favicon.ico?1748102307" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1748102307" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-DWPG2HZ9FS');
+</script>
+
+
+
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <nav id="menu">
+    <ul>
+        
+    </ul>
+</nav>
+
+            </header>
+            <div>
+                <header>
+                    <h1><a href="/">Davide De Rosa</a></h1>
+                </header>
+                <main>
+                    <article class="post post-full" itemscope itemtype="https://schema.org/Article">
+    <header>
+        
+
+        <div>
+            <span class="post-date" itemprop="datepublished">May 24, 2025</span>
+            <h2 itemprop="name">
+                
+                A true case for Dependency Injection
+                
+            </h2>
+            
+
+        </div>
+    </header>
+    <div class="post-body">
+        
+
+        
+
+        <p>When studying the foundations of a programming language, for example, during a career in Computer Science, very rarely are <em>design patterns</em> and the concept of <em>software architecture</em> presented in a way that can be transferred to real-world scenarios. Add to that, you may never use most of the well-known patterns, and it’s okay because you don’t want to be a hammer looking for a nail. You shouldn’t force a design pattern for the sake of using it.</p>
+
+<p><a href="#how-di-helps-me-scale-passepartout">Below</a>, I’ll show you how a popular design pattern helped me rework Passepartout to distribute it <a href="https://github.com/passepartoutvpn/passepartout/issues/231">outside of the App Store</a>, without messing too much with the existing and stable codebase.</p>
+
+<h3 id="experience-produces-patterns">Experience produces patterns</h3>
+
+<p>Patterns are simply an outcome of your programming experience, in that you recognize a common problem for which a common solution also exists. Yet, the amount of buzzwords in the online communities around what some erroneously call “architectures” is ridiculous –the MVVM acronym being the one I stand the least–, to the point that the poor newcomers may feel intimidated. The risk of being ostracized for not using “the right name for the thing” is real, even if the same thing could be named differently as soon as you visit a different community.</p>
+
+<p>But hey, listen, the reality is brighter: compilers don’t give a damn about the name you give to your grand architectures. The only names that matter, at the end of the day, are those coming from the syntax of the programming language you use.</p>
+
+<h3 id="popular-design-patterns">Popular design patterns</h3>
+
+<p>Some design patterns are especially popular, and their names are <em>de facto</em> universal:</p>
+
+<ul>
+  <li><a href="https://refactoring.guru/design-patterns/builder">Builder</a></li>
+  <li><a href="https://refactoring.guru/design-patterns/command">Command</a></li>
+  <li><a href="https://refactoring.guru/design-patterns/factory-method">Factory</a></li>
+  <li><a href="https://refactoring.guru/design-patterns/singleton">Singleton</a></li>
+  <li><a href="https://refactoring.guru/design-patterns/strategy">Strategy</a></li>
+  <li>…</li>
+</ul>
+
+<p>You’re bound to cross them at least once in your lifetime. If you like practice more than theory, you definitely used any of the above without the need to give them a name. These patterns are undoubtly useful, they resolve basic architectural problems and, contrary to some beliefs, by no means are they tied to OOP.</p>
+
+<p>Then there is <em>Dependency Injection</em> (DI). I hate giving this one a name, but there it is. More than a design pattern, DI is an <em>approach</em> to making software. I call it that way to avoid the terrible mistake of thinking that there is only one way to do it. I mean, if you’re a Java programmer, you don’t need the <a href="https://spring.io/projects/spring-framework">Spring Framework</a> to do DI.</p>
+
+<p>Here’s how I like to phrase it: <strong>DI is the act of decoupling your software from the underlying implementations of its dependencies.</strong></p>
+
+<h3 id="how-di-helps-me-scale-passepartout">How DI helps me scale Passepartout</h3>
+
+<p>Porting a VPN app outside of the Mac App Store is no trivial task, because the way it operates is radically different. The UI is still a frontend to the VPN backend, but the app and the VPN processes execute as different users. Specifically, the VPN is deployed as <a href="apple-sysex">System Extension</a>, and therefore runs as <code class="language-plaintext highlighter-rouge">root</code>.</p>
+
+<p>By leaving the App Store, I was about to lose a big chunk of features:</p>
+
+<ul>
+  <li>App Groups: required for app/VPN IPC (inter-process communication), data sharing, and logs</li>
+  <li>Shared keychain: used to persist the VPN profiles</li>
+  <li>In-app purchases</li>
+  <li>iCloud</li>
+</ul>
+
+<p>In-app purchases and iCloud could be replaced later, but the core functionality of Passepartout relied on both App Groups and the shared keychain. I hit a tough blocker.</p>
+
+<p>Here’s where DI comes to the rescue: you don’t change the business logic of your software, you rather change <em>how</em> that logic is implemented deep down in the leaves of the dependency tree. Remember, this is only possible if the two areas are sharply separated, which is the core principle behind DI. I still wanted to “share data between the app and the VPN process” (business logic), but I needed to change <em>how</em> that data was shared (dependency).</p>
+
+<p>The core library of Passepartout, <em>Partout,</em> is 100% pure Swift for this reason: the logic of the library is always the same, with the “low-level” implementations abstracted as <code class="language-plaintext highlighter-rouge">protocol</code>s, while the app is free to provide (inject) <em>truly</em> different implementations of such <code class="language-plaintext highlighter-rouge">protocol</code>s. In my case, it turned out that I could just craft new implementations for the standalone Mac app, whereas anything else would stay untouched.</p>
+
+<p>That’s it, and I can’t tell how thrilling it is when you see the magic of programming in action. This is a real-world situation where good practices and constant refactoring pay off. The new Mac app eventually works around the missing functionalities by dynamically replacing (<code class="language-plaintext highlighter-rouge">supportsAppGroups</code> is false in this case):</p>
+
+<ul>
+  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/Apple/UserDefaultsEnvironment.swift"><code class="language-plaintext highlighter-rouge">UserDefaultsEnvironment</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/App/NETunnelEnvironment.swift"><code class="language-plaintext highlighter-rouge">NETunnelEnvironment</code></a>, which does IPC by sending messages to the System Extension, rather than sharing data through the App Group <code class="language-plaintext highlighter-rouge">UserDefaults</code>. They both implement the <code class="language-plaintext highlighter-rouge">TunnelEnvironment</code> protocol, meant for app/VPN data sharing.</li>
+</ul>
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2F7ffe37ea0d9e280b7cafbeff1332d431173be2d4%2FPassepartout%2FShared%2FDependencies%252BPartout.swift%23L59-L77&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
+
+<ul>
+  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/KeychainNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">KeychainNEProtocolCoder</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/ProviderNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">ProviderNEProtocolCoder</code></a>, which installs the VPN profiles without the keychain, using the Network Extension map in <code class="language-plaintext highlighter-rouge">providerConfiguration</code>. They both implement the <code class="language-plaintext highlighter-rouge">NEProtocolCoder</code> protocol, meant for profile serialization.</li>
+</ul>
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2F7ffe37ea0d9e280b7cafbeff1332d431173be2d4%2FPassepartout%2FShared%2FDependencies%252BPartout.swift%23L40-L57&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
+
+<h3 id="do-you-really-need-di">Do you really need DI?</h3>
+
+<p>You’d better follow the DI approach early in your software development, but not immediately, because you may never need to convert a code module into a pluggable dependency. If you foresee that your software will scale enough to justify such an abstraction, then start pulling out third parties from your concrete classes.</p>
+
+<p>By the way, in many corporate projects people use DI because “everybody does”, rather than understanding the real benefits and tradeoffs. The overhead of maintaining abstract layers, or even third parties, for entities that will <em>always</em> have one implementation is sadly laughable. Please, do not avoid concrete classes just because you read that on some book. As I said in the beginning, you shouldn’t use a solution for a problem you don’t have, and most projects don’t need bulky external third parties to deal with their trivial dependencies. If you wasted hours to track down the order and lifecycle of the objects that an app creates on launch, you know what I’m talking about.</p>
+
+<p>Sometimes, it really seems that some modern programmers don’t know how to initialize objects in the first place. In that case, rather than a dependency injection engine –whatever that means–, why not go back to the basics?</p>
+
+
+        
+    </div>
+    
+    
+        
+            
+        
+    
+        
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+
+
+
+
+
+
+
+<aside class="sharing" id="sharing-me">
+    <ul>
+        <li><a href="/feed.xml" title="Follow the blog" target="_blank"><i class="fa-solid fa-rss"></i>Subscribe</a></li>
+        <li><a href="https://linkedin.com/in/davidederosa" title="Follow me on LinkedIn" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+    </ul>
+</aside>
+
+    <aside class="post-related">
+        <p>See also:</p>
+        <ul>
+            
+            <li><a href="/2025/04/scripting-and-open-source-adoption/">Scripting and open-source adoption</a></li>
+            
+            <li><a href="/cross-platform-swift/combine/">Cross-platform Swift: Combine</a></li>
+            
+            <li><a href="/cross-platform-swift/">Cross-platform Swift: Introduction</a></li>
+            
+        </ul>
+    </aside>
+    <div id="disqus_thread"></div>
+    <nav class="paginator">
+    <ul>
+        <li class="paginator-browser older">
+            
+            <a href="/cross-platform-swift/core-libraries/" title="Cross-platform Swift: Core libraries"><i class="fa fa-chevron-left"></i> Older</a>
+            
+        </li><li class="paginator-browser home">
+            <a href="/" class="fa fa-home"></a>
+        </li><li class="paginator-browser newer">
+            
+        </li>
+    </ul>
+</nav>
+
+</article>
+<script src="//keeshux.disqus.com/embed.js" async="async"></script>
+
+                </main>
+                <footer id="page-footer">
+                    <p id="social">
+    &copy; 2025 Davide De Rosa
+    <a href="https://github.com/keeshux" title="Browse my GitHub repository" class="fab fa-github"></a>
+    <a href="https://linkedin.com/in/davidederosa" title="Connect on LinkedIn" class="fab fa-linkedin"></a>
+    <a href="https://x.com/keeshux" title="Follow me on X" class="fab fa-x-twitter"></a>
+    <a href="/s/keeshux-gpg.txt" title="My GnuPG public key" class="fa fa-lock"></a>
+    <a href="/feed.xml" title="Follow the blog" class="fa-solid fa-rss"></a>
+</ul>
+
+                </footer>
+            </div>
+        </div>
+        <script src="/s/main.js?1748102307" async="async"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>
