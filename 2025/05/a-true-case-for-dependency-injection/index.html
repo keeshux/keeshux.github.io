@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="A true case for Dependency Injection" />
 <meta property="og:title" content="A true case for Dependency Injection" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1748103098" />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1748121822" />
 <meta property="og:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
 
 <!-- Twitter -->
@@ -35,7 +35,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="A true case for Dependency Injection" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1748103098" />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1748121822" />
 <meta name="twitter:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
 
 <link rel="canonical" href="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
@@ -44,14 +44,14 @@
 <link rel="next" href="/cross-platform-swift/core-libraries/" title="Cross-platform Swift: Core libraries" />
 
 
-<link rel="stylesheet" href="/s/main.css?1748103098" />
-<link rel="stylesheet" href="/s/main-mobile.css?1748103098" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1748103098" />
+<link rel="stylesheet" href="/s/main.css?1748121822" />
+<link rel="stylesheet" href="/s/main-mobile.css?1748121822" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1748121822" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1748103098" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1748103098" />
+<link rel="shortcut icon" href="/s/favicon.ico?1748121822" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1748121822" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -104,7 +104,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
         <p>When studying the foundations of a programming language, for example, during a career in Computer Science, very rarely are <em>design patterns</em> and the concept of <em>software architecture</em> presented in a way that can be transferred to real-world scenarios. Add to that, you may never use most of the well-known patterns, and it’s okay because you don’t want to be a hammer looking for a nail. You shouldn’t force a design pattern for the sake of using it.</p>
 
-<p><a href="#how-di-helps-me-scale-passepartout">Below</a>, I’ll show you how a popular design pattern helped me rework Passepartout to distribute it <a href="https://github.com/passepartoutvpn/passepartout/issues/231">outside of the App Store</a>, without messing too much with the existing and stable codebase.</p>
+<p><a href="#how-di-helps-me-scale-passepartout">Below</a>, I’ll show you how a popular design pattern helped me rework Passepartout for Mac to distribute it <a href="https://github.com/passepartoutvpn/passepartout/issues/231">outside of the App Store</a>, without messing too much with the existing and stable codebase.</p>
 
 <h3 id="experience-produces-patterns">Experience produces patterns</h3>
 
@@ -153,14 +153,34 @@ gtag('config', 'G-DWPG2HZ9FS');
 <p>That’s it, and I can’t tell how thrilling it is when you see the magic of programming in action. This is a real-world situation where good practices and constant refactoring pay off. The new Mac app eventually works around the missing functionalities by dynamically replacing (<code class="language-plaintext highlighter-rouge">supportsAppGroups</code> is false in this case):</p>
 
 <ul>
-  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/Apple/UserDefaultsEnvironment.swift"><code class="language-plaintext highlighter-rouge">UserDefaultsEnvironment</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/App/NETunnelEnvironment.swift"><code class="language-plaintext highlighter-rouge">NETunnelEnvironment</code></a>, which does IPC by sending messages to the System Extension, rather than sharing data through the App Group <code class="language-plaintext highlighter-rouge">UserDefaults</code>. They both implement the <code class="language-plaintext highlighter-rouge">TunnelEnvironment</code> protocol, meant for app/VPN data sharing.</li>
+  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/Apple/UserDefaultsEnvironment.swift"><code class="language-plaintext highlighter-rouge">UserDefaultsEnvironment</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/App/NETunnelEnvironment.swift"><code class="language-plaintext highlighter-rouge">NETunnelEnvironment</code></a>, which does IPC by sending messages to the System Extension, rather than sharing data through the App Group <code class="language-plaintext highlighter-rouge">UserDefaults</code>. They both implement the <code class="language-plaintext highlighter-rouge">TunnelEnvironmentReader</code> protocol, meant for reading VPN data from the app.</li>
 </ul>
 
-<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2F7ffe37ea0d9e280b7cafbeff1332d431173be2d4%2FPassepartout%2FShared%2FDependencies%252BPartout.swift%23L59-L77&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TunnelEnvironmentReader</span><span class="p">:</span> <span class="kt">Sendable</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="kd">func</span> <span class="n">environmentValue</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">TunnelEnvironmentKey</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span> <span class="k">where</span> <span class="kt">T</span><span class="p">:</span> <span class="kt">Decodable</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2F7ffe37ea0d9e280b7cafbeff1332d431173be2d4%2FPassepartout%2FShared%2FDependencies%252BPartout.swift%23L59-L76&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
 
 <ul>
-  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/KeychainNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">KeychainNEProtocolCoder</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/ProviderNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">ProviderNEProtocolCoder</code></a>, which installs the VPN profiles without the keychain, using the Network Extension map in <code class="language-plaintext highlighter-rouge">providerConfiguration</code>. They both implement the <code class="language-plaintext highlighter-rouge">NEProtocolCoder</code> protocol, meant for profile serialization.</li>
+  <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/KeychainNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">KeychainNEProtocolCoder</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/Serialization/ProviderNEProtocolCoder.swift"><code class="language-plaintext highlighter-rouge">ProviderNEProtocolCoder</code></a>, which installs the VPN profiles without the keychain, using the Network Extension map in <code class="language-plaintext highlighter-rouge">providerConfiguration</code>. They both implement the <code class="language-plaintext highlighter-rouge">NEProtocolCoder</code> protocol, meant for VPN profiles serialization.</li>
 </ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">NEProtocolCoder</span> <span class="o">=</span> <span class="kt">NEProtocolEncoder</span> <span class="o">&amp;</span> <span class="kt">NEProtocolDecoder</span>
+
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NEProtocolEncoder</span><span class="p">:</span> <span class="kt">Sendable</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="kd">func</span> <span class="nf">protocolConfiguration</span><span class="p">(</span><span class="n">from</span> <span class="nv">profile</span><span class="p">:</span> <span class="kt">Profile</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="p">(</span><span class="kt">Profile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">NETunnelProviderProtocol</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NEProtocolDecoder</span><span class="p">:</span> <span class="kt">Sendable</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">profile</span><span class="p">(</span><span class="n">from</span> <span class="nv">protocolConfiguration</span><span class="p">:</span> <span class="kt">NETunnelProviderProtocol</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Profile</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2Fpassepartoutvpn%2Fpassepartout%2Fblob%2F7ffe37ea0d9e280b7cafbeff1332d431173be2d4%2FPassepartout%2FShared%2FDependencies%252BPartout.swift%23L40-L57&amp;style=default&amp;type=code&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on&amp;showFullPath=on&amp;showCopy=on"></script>
 
@@ -304,7 +324,7 @@ gtag('config', 'G-DWPG2HZ9FS');
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1748103098" async="async"></script>
+        <script src="/s/main.js?1748121822" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
