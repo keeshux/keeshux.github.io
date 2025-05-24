@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="A true case for Dependency Injection" />
 <meta property="og:title" content="A true case for Dependency Injection" />
 <meta property="og:description" content="I make software. I look around me." />
-<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1748121951" />
+<meta property="og:image" content="https://davidederosa.com/s/keeshux.png?1748123248" />
 <meta property="og:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
 
 <!-- Twitter -->
@@ -35,7 +35,7 @@
 <meta name="twitter:site" content="@keeshux" />
 <meta name="twitter:title" content="A true case for Dependency Injection" />
 <meta name="twitter:description" content="I make software. I look around me." />
-<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1748121951" />
+<meta name="twitter:image" content="https://davidederosa.com/s/keeshux.png?1748123248" />
 <meta name="twitter:url" content="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
 
 <link rel="canonical" href="https://davidederosa.com/2025/05/a-true-case-for-dependency-injection/" />
@@ -44,14 +44,14 @@
 <link rel="next" href="/cross-platform-swift/core-libraries/" title="Cross-platform Swift: Core libraries" />
 
 
-<link rel="stylesheet" href="/s/main.css?1748121951" />
-<link rel="stylesheet" href="/s/main-mobile.css?1748121951" media="only screen and (max-width: 600px)" />
-<link rel="stylesheet" href="/s/syntax.css?1748121951" />
+<link rel="stylesheet" href="/s/main.css?1748123248" />
+<link rel="stylesheet" href="/s/main-mobile.css?1748123248" media="only screen and (max-width: 600px)" />
+<link rel="stylesheet" href="/s/syntax.css?1748123248" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:600,400" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
 
-<link rel="shortcut icon" href="/s/favicon.ico?1748121951" />
-<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1748121951" />
+<link rel="shortcut icon" href="/s/favicon.ico?1748123248" />
+<link rel="apple-touch-icon" href="/s/iphone-icon-precomposed.png?1748123248" />
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWPG2HZ9FS"></script>
@@ -133,7 +133,7 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <h3 id="how-di-helps-me-scale-passepartout">How DI helps me scale Passepartout</h3>
 
-<p>Porting a VPN app outside of the Mac App Store is no trivial task, because the way it operates is radically different. The UI is still a frontend to the VPN backend, but the app and the VPN processes execute as different users. Specifically, the VPN is deployed as <a href="apple-sysex">System Extension</a>, and therefore runs as <code class="language-plaintext highlighter-rouge">root</code>.</p>
+<p>Weeks ago, I decided to make Passepartout for Mac available <a href="https://github.com/passepartoutvpn/passepartout/issues/231">outside of the App Store</a>. Making such a VPN app standalone is no trivial task because the way it operates is radically different: the UI is still a frontend to the VPN backend, but the app and the VPN processes execute as different users, and they do not easily communicate. Specifically, the VPN is deployed as <a href="apple-sysex">System Extension</a>, and therefore runs as <code class="language-plaintext highlighter-rouge">root</code>.</p>
 
 <p>By leaving the App Store, I was about to lose a big chunk of features:</p>
 
@@ -146,11 +146,24 @@ gtag('config', 'G-DWPG2HZ9FS');
 
 <p>In-app purchases and iCloud could be postponed by stripping paid features, but the core functionality of Passepartout relied on both App Groups and the shared keychain. I hit a tough blocker.</p>
 
-<p>Here’s where DI comes to the rescue: <strong>you don’t change the business logic of your software</strong>, you rather change <em>how</em> that logic is implemented deep down in the leaves of the dependency tree. Remember, this is only possible if the two logics are sharply separated, which is the core principle behind DI. I still wanted to “share data between the app and the VPN process” (business logic), but I needed to change <em>how</em> that data was shared (dependency).</p>
+<p>Here’s where DI comes to the rescue: <strong>you don’t change the business logic of your software</strong>, you rather change <em>how</em> that logic is implemented deep down in the leaves of the dependency tree. I still wanted to “share data between the app and the VPN process” (business logic), but I needed to change <em>how</em> that data was shared (dependency). Remember, this isolation is only possible if the two concerns are sharply separated, but this is the core principle behind DI.</p>
 
 <p>The core library of Passepartout, <em>Partout,</em> is 100% pure Swift for this reason: the logic of the library is always the same, with the “low-level” implementations abstracted as <code class="language-plaintext highlighter-rouge">protocol</code>s, while the app is free to provide (inject) <em>truly</em> different implementations of such <code class="language-plaintext highlighter-rouge">protocol</code>s. In my case, it turned out that I could just craft new implementations for the standalone Mac app, whereas anything else would stay untouched.</p>
 
-<p>That’s it, and I can’t tell how thrilling it is when you see the magic of programming in action. This is a real-world situation where good practices and constant refactoring pay off. The new Mac app eventually works around the missing functionalities by dynamically replacing (<code class="language-plaintext highlighter-rouge">supportsAppGroups</code> is false in this case):</p>
+<h3 id="swap-out-the-broken-pieces">Swap out the broken pieces</h3>
+
+<p>The process is fairly simple:</p>
+
+<ul>
+  <li>For each dependency, identify the “broken” implementation of a <code class="language-plaintext highlighter-rouge">protocol</code></li>
+  <li>Write a new implementation, compatible with the target</li>
+  <li>Unit test behavior as per the <code class="language-plaintext highlighter-rouge">protocol</code> pre/post conditions</li>
+  <li>Swap the unsupported implementation with the new one</li>
+</ul>
+
+<p>After these steps, passing the tests would imply that the app will work like before, but regardless of being downloaded from the App Store or not. I can’t tell how thrilling it is when you see the magic of programming in action. This is a real-world situation where good practices and constant refactoring pay off.</p>
+
+<p>The new Mac app eventually works around the missing functionalities by dynamically replacing (<code class="language-plaintext highlighter-rouge">supportsAppGroups</code> is false in this case):</p>
 
 <ul>
   <li><a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/Apple/UserDefaultsEnvironment.swift"><code class="language-plaintext highlighter-rouge">UserDefaultsEnvironment</code></a> with <a href="https://github.com/passepartoutvpn/partout/blob/master/Sources/Platforms/AppleNE/App/NETunnelEnvironment.swift"><code class="language-plaintext highlighter-rouge">NETunnelEnvironment</code></a>, which does IPC by sending messages to the System Extension, rather than sharing data through the App Group <code class="language-plaintext highlighter-rouge">UserDefaults</code>. They both implement the <code class="language-plaintext highlighter-rouge">TunnelEnvironmentReader</code> protocol, meant for reading VPN data from the app.</li>
@@ -316,7 +329,7 @@ gtag('config', 'G-DWPG2HZ9FS');
                 </footer>
             </div>
         </div>
-        <script src="/s/main.js?1748121951" async="async"></script>
+        <script src="/s/main.js?1748123248" async="async"></script>
         <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </body>
 </html>
